@@ -3,47 +3,19 @@
 namespace Duil_App.Models
 {
     /// <summary>
-    /// Utilizadores da aplicação, podem ser empresas ou fábricas
+    /// Empresa que realiza a encomenda
     /// </summary>
-    public abstract class Clientes
+    public class Clientes : Empresas
     {
-        /// <summary>
-        /// Identificador do cliente
-        /// </summary>
-        [Key]
-        public int NIF { get; set; }
 
         /// <summary>
-        /// Nome do cliente
+        /// Morada de carga da empresa cliente
         /// </summary>
-        public string Nome { get; set; }
+        public string MoradaCarga { get; set; }
 
         /// <summary>
-        /// Morada do cliente (sede)
+        /// Lista de encomendas efetuadas pela empresa cliente
         /// </summary>
-        public string Morada { get; set; }
-
-        /// <summary>
-        /// Codigo postal do cliente (sede)
-        /// </summary>
-        public string codPostal { get; set; }
-
-        /// <summary>
-        /// Pais do cliente
-        /// </summary>
-        public string Pais { get; set; }
-
-        /// <summary>
-        /// Número de telemovel do cliente
-        /// </summary>
-        public string Telemovel { get; set; }
-
-        /// <summary>
-        /// Email da empresa ou fábrica
-        /// </summary>
-        public string email { get; set; }
-
-        
-
+        public ICollection<Encomendas> Encomendas { get; set; }
     }
 }
