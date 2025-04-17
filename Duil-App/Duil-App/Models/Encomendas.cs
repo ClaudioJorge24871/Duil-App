@@ -47,10 +47,10 @@ namespace Duil_App.Models
         /// Identificação da empresa cliente 
         /// </summary>
         public int ClienteId { get; set; }
-        public Clientes Cliente { get; set; }
+        public required Clientes Cliente { get; set; }
 
-
-        public ICollection<LinhaEncomenda> LinhasEncomenda { get; set; }
+        
+        public ICollection<LinhaEncomenda>? LinhasEncomenda { get; set; }
     }
 
     /// <summary>

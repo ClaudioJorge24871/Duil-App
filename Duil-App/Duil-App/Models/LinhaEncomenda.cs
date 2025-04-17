@@ -14,16 +14,20 @@ namespace Duil_App.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Identificador da encomenda
+        /// Identificador da encomenda FK
         /// </summary>
         public int EncomendaId { get; set; }
-        public Encomendas Encomenda { get; set; }
+        [Required]
+        /// <summary>
+        /// Relacionamento para encomendas
+        /// </summary>
+        public required Encomendas Encomenda { get; set; }
 
         /// <summary>
         /// Identificador da peça 
         /// </summary>
         public int PecaId { get; set; }
-        public Pecas Peca { get; set; }
+        public required Pecas Peca { get; set; }
 
         /// <summary>
         /// Quantidade de unidades da peça na encomenda

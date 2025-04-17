@@ -16,31 +16,31 @@ namespace Duil_App.Models
         /// <summary>
         /// Nome da empresa
         /// </summary>
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
 
         /// <summary>
         /// Morada sede da empresa
         /// </summary>
-        public string Morada { get; set; }
+        public string? Morada { get; set; }
 
         /// <summary>
         /// Codigo postal da empresa
         /// </summary>
-        public string codPostal { get; set; }
+        public string? CodPostal { get; set; }
 
         /// <summary>
         /// País da empresa
         /// </summary>
-        public string Pais { get; set; }
+        public string? Pais { get; set; }
 
         /// <summary>
         /// Telemovel de contacto da empresa
         /// </summary>
-        public string Telemovel { get; set; }
+        public string? Telemovel { get; set; }
 
         /// <summary>
         /// Email da empresa
         /// </summary>
-        public string email { get; set; }
+        public string? Email { get; set; }
     }
 }

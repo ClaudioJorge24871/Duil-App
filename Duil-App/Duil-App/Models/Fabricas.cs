@@ -11,11 +11,11 @@ namespace Duil_App.Models
         /// <summary>
         /// Morada de descarga da fábrica
         /// </summary>
-        public string MoradaDescarga { get; set; }
+        public string? MoradaDescarga { get; set; }
 
         /// <summary>
         /// Peças que a fabrica produz
         /// </summary>
-        public ICollection<Pecas> Pecas { get; set; }
+        public ICollection<Pecas>? Pecas { get; set; }
     }
 }
