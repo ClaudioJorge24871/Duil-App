@@ -15,8 +15,7 @@ namespace Duil_App.Data.Migrations
                 name: "Empresas",
                 columns: table => new
                 {
-                    Nif = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nif = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Morada = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CodPostal = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -33,7 +32,7 @@ namespace Duil_App.Data.Migrations
                 name: "Clientes",
                 columns: table => new
                 {
-                    Nif = table.Column<int>(type: "int", nullable: false),
+                    Nif = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MoradaCarga = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -51,7 +50,7 @@ namespace Duil_App.Data.Migrations
                 name: "Fabricas",
                 columns: table => new
                 {
-                    Nif = table.Column<int>(type: "int", nullable: false),
+                    Nif = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MoradaDescarga = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -77,14 +76,15 @@ namespace Duil_App.Data.Migrations
                     QuantidadeTotal = table.Column<int>(type: "int", nullable: false),
                     Transportadora = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Estado = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: false)
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    ClienteNif = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Encomendas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Encomendas_Clientes_ClienteId",
-                        column: x => x.ClienteId,
+                        name: "FK_Encomendas_Clientes_ClienteNif",
+                        column: x => x.ClienteNif,
                         principalTable: "Clientes",
                         principalColumn: "Nif",
                         onDelete: ReferentialAction.Cascade);
@@ -98,17 +98,17 @@ namespace Duil_App.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Designacao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PrecoUnit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FabricaId = table.Column<int>(type: "int", nullable: false)
+                    FabricaId = table.Column<int>(type: "int", nullable: false),
+                    FabricaNif = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pecas", x => x.Referencia);
                     table.ForeignKey(
-                        name: "FK_Pecas_Fabricas_FabricaId",
-                        column: x => x.FabricaId,
+                        name: "FK_Pecas_Fabricas_FabricaNif",
+                        column: x => x.FabricaNif,
                         principalTable: "Fabricas",
-                        principalColumn: "Nif",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Nif");
                 });
 
             migrationBuilder.CreateTable(
@@ -135,13 +135,13 @@ namespace Duil_App.Data.Migrations
                         column: x => x.PecaId,
                         principalTable: "Pecas",
                         principalColumn: "Referencia",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Encomendas_ClienteId",
+                name: "IX_Encomendas_ClienteNif",
                 table: "Encomendas",
-                column: "ClienteId");
+                column: "ClienteNif");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LinhaEncomenda_EncomendaId",
@@ -154,9 +154,9 @@ namespace Duil_App.Data.Migrations
                 column: "PecaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pecas_FabricaId",
+                name: "IX_Pecas_FabricaNif",
                 table: "Pecas",
-                column: "FabricaId");
+                column: "FabricaNif");
         }
 
         /// <inheritdoc />

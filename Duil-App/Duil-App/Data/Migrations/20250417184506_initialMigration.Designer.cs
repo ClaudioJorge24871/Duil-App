@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Duil_App.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250417180652_initialMigration")]
+    [Migration("20250417184506_initialMigration")]
     partial class initialMigration
     {
         /// <inheritdoc />
@@ -27,11 +27,8 @@ namespace Duil_App.Data.Migrations
 
             modelBuilder.Entity("Duil_App.Models.Empresas", b =>
                 {
-                    b.Property<int>("Nif")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Nif"));
+                    b.Property<string>("Nif")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CodPostal")
                         .HasColumnType("nvarchar(max)");
@@ -69,6 +66,10 @@ namespace Duil_App.Data.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ClienteNif")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
@@ -89,7 +90,7 @@ namespace Duil_App.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("ClienteNif");
 
                     b.ToTable("Encomendas");
                 });
@@ -134,12 +135,15 @@ namespace Duil_App.Data.Migrations
                     b.Property<int>("FabricaId")
                         .HasColumnType("int");
 
+                    b.Property<string>("FabricaNif")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<decimal>("PrecoUnit")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Referencia");
 
-                    b.HasIndex("FabricaId");
+                    b.HasIndex("FabricaNif");
 
                     b.ToTable("Pecas");
                 });
@@ -370,7 +374,7 @@ namespace Duil_App.Data.Migrations
                 {
                     b.HasOne("Duil_App.Models.Clientes", "Cliente")
                         .WithMany("Encomendas")
-                        .HasForeignKey("ClienteId")
+                        .HasForeignKey("ClienteNif")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -400,9 +404,7 @@ namespace Duil_App.Data.Migrations
                 {
                     b.HasOne("Duil_App.Models.Fabricas", "Fabrica")
                         .WithMany("Pecas")
-                        .HasForeignKey("FabricaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FabricaNif");
 
                     b.Navigation("Fabrica");
                 });

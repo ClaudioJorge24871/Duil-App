@@ -11,7 +11,7 @@ namespace Duil_App.Models
         /// Nif/identificador da empresa
         /// </summary>
         [Key]
-        public int Nif { get; set; }
+        public string Nif { get; set; }
 
         /// <summary>
         /// Nome da empresa
