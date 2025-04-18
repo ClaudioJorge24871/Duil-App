@@ -11,6 +11,8 @@ namespace Duil_App.Models
         /// <summary>
         /// Morada de descarga da fábrica
         /// </summary>
+        [Display(Name = "Morada de Descarga")]
+        [StringLength(100)]
         public string? MoradaDescarga { get; set; }
 
         /// <summary>
