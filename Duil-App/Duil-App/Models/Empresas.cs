@@ -36,13 +36,15 @@ namespace Duil_App.Models
         /// País da empresa
         /// </summary>
         [Display(Name = "País")]
-        public string? Pais { get; set; }
+        [Required(ErrorMessage = "O {0} é obrigatório")]
+        public string Pais { get; set; }
 
         /// <summary>
         /// Telemovel de contacto da empresa
         /// </summary>
         [Display(Name = "Telemóvel")]
-        public string? Telemovel { get; set; }  
+        [Required(ErrorMessage = "O {0} é obrigatório")]
+        public string Telemovel { get; set; }  
 
         /// <summary>
         /// Email da empresa
