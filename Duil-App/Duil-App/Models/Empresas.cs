@@ -18,12 +18,14 @@ namespace Duil_App.Models
         /// Nome da empresa
         /// </summary>
         [Display(Name = "Nome")]
+        [StringLength(50)]
         public string? Nome { get; set; }
 
         /// <summary>
         /// Morada sede da empresa
         /// </summary>
         [Display(Name = "Morada")]
+        [StringLength(100)]
         public string? Morada { get; set; }
 
         /// <summary>
@@ -36,6 +38,7 @@ namespace Duil_App.Models
         /// País da empresa
         /// </summary>
         [Display(Name = "País")]
+        [StringLength(50)]
         [Required(ErrorMessage = "O {0} é obrigatório")]
         public string Pais { get; set; }
 
@@ -44,15 +47,16 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Telemóvel")]
         [Required(ErrorMessage = "O {0} é obrigatório")]
-        public string Telemovel { get; set; }  
+        public string Telemovel { get; set; }
 
         /// <summary>
         /// Email da empresa
         /// </summary>
+        [Display(Name = "Email")]
         public string? Email { get; set; }
 
         /// <summary>
-        /// 
+        /// Validação do NIF e telemóvel por País
         /// </summary>
         /// <param name="validationContext"></param>
         /// <returns></returns>
@@ -64,11 +68,21 @@ namespace Duil_App.Models
                 yield break;
             }
 
-            switch (Pais?.ToLowerInvariant())
+            switch (Pais.ToLowerInvariant())
             {
                 case "portugal":
+                    //Validação do NIF portugûes
                     if (!System.Text.RegularExpressions.Regex.IsMatch(Nif, @"^[1-9][0-9]{8}$"))
-                        yield return new ValidationResult("O NIF deve conter 9 digitos entre 1 e 9", new[] { nameof(Nif) });
+                        yield return new ValidationResult("O {0} deve ser válido", new[] { nameof(Nif) });
+
+                    //Validação do telemóvel português
+                    if(!System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^9[1236][0-9]{7}$"))
+                        yield return new ValidationResult("O {0} deve ser válido", new[] {nameof (Telemovel) });
+
+                    //Validação do Código Postal Português
+                    if (!string.IsNullOrWhiteSpace(CodPostal) &&
+                        !System.Text.RegularExpressions.Regex.IsMatch(CodPostal, @"^[1-9][0-9]{3}-[0-9]{3}$"))
+                        yield return new ValidationResult("O {0} deve ser válido.", new[] { nameof(CodPostal) });
                     break;
 
             }
