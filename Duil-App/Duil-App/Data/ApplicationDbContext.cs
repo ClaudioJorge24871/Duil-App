@@ -15,8 +15,8 @@ namespace Duil_App.Data
         public DbSet<Fabricas> Fabricas { get; set; }
         public DbSet<Encomendas> Encomendas { get; set; }
 
-        public DbSet<Encomendas> Pecas { get; set; }
-        public DbSet<Encomendas> LinhasEncomendas { get; set; }
+        public DbSet<Pecas> Pecas { get; set; }
+        public DbSet<LinhaEncomenda> LinhasEncomendas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

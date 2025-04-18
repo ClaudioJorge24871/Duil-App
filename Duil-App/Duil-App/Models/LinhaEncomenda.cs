@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Duil_App.Models
 {
@@ -16,8 +17,11 @@ namespace Duil_App.Models
         /// <summary>
         /// Identificador da encomenda FK
         /// </summary>
-        public int EncomendaId { get; set; }
         [Required]
+        [ForeignKey("Encomenda")]
+        public int EncomendaId { get; set; }
+        
+        
         /// <summary>
         /// Relacionamento para encomendas
         /// </summary>
@@ -26,6 +30,8 @@ namespace Duil_App.Models
         /// <summary>
         /// Identificador da peça 
         /// </summary>
+        [Required]
+        [ForeignKey("Peca")]
         public int PecaId { get; set; }
         public required Pecas Peca { get; set; }
 
