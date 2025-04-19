@@ -33,14 +33,14 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
-            var clientes = await _context.Clientes
+            var cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.Nif == id);
-            if (clientes == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return View(clientes);
+            return View(cliente);
         }
 
         // GET: Clientes/Create
@@ -54,15 +54,29 @@ namespace Duil_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MoradaCarga,Nif,Nome,Morada,CodPostal,Pais,Telemovel,Email")] Clientes clientes)
+        public async Task<IActionResult> Create([Bind("MoradaCarga,Nif,Nome,Morada,CodPostal,Pais,Telemovel,Email")] Clientes cliente)
         {
+            if (_context.Clientes.Any(c => c.Nif == cliente.Nif))
+            {
+                ModelState.AddModelError("Nif", "Já existe um cliente com este NIF.");
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Add(clientes);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(cliente);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException ex)
+                {
+                    ModelState.AddModelError("", "Ocorreu um erro ao guardar os dados. Nif inserido já existe");
+                }
             }
-            return View(clientes);
+
+            return View(cliente);
+            
         }
 
         // GET: Clientes/Edit/5
@@ -73,12 +87,12 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
-            var clientes = await _context.Clientes.FindAsync(id);
-            if (clientes == null)
+            var cliente = await _context.Clientes.FindAsync(id);
+            if (cliente == null)
             {
                 return NotFound();
             }
-            return View(clientes);
+            return View(cliente);
         }
 
         // POST: Clientes/Edit/5
@@ -86,9 +100,9 @@ namespace Duil_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MoradaCarga,Nif,Nome,Morada,CodPostal,Pais,Telemovel,Email")] Clientes clientes)
+        public async Task<IActionResult> Edit(string id, [Bind("MoradaCarga,Nif,Nome,Morada,CodPostal,Pais,Telemovel,Email")] Clientes cliente)
         {
-            if (id != clientes.Nif)
+            if (id != cliente.Nif)
             {
                 return NotFound();
             }
@@ -97,12 +111,12 @@ namespace Duil_App.Controllers
             {
                 try
                 {
-                    _context.Update(clientes);
+                    _context.Update(cliente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClientesExists(clientes.Nif))
+                    if (!ClientesExists(cliente.Nif))
                     {
                         return NotFound();
                     }
@@ -113,7 +127,7 @@ namespace Duil_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(clientes);
+            return View(cliente);
         }
 
         // GET: Clientes/Delete/5
@@ -124,14 +138,14 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
-            var clientes = await _context.Clientes
+            var cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.Nif == id);
-            if (clientes == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return View(clientes);
+            return View(cliente);
         }
 
         // POST: Clientes/Delete/5
@@ -139,10 +153,10 @@ namespace Duil_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var clientes = await _context.Clientes.FindAsync(id);
-            if (clientes != null)
+            var cliente = await _context.Clientes.FindAsync(id);
+            if (cliente != null)
             {
-                _context.Clientes.Remove(clientes);
+                _context.Clientes.Remove(cliente);
             }
 
             await _context.SaveChangesAsync();
