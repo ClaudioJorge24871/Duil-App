@@ -73,16 +73,16 @@ namespace Duil_App.Models
                 case "portugal":
                     //Validação do NIF portugûes
                     if (!System.Text.RegularExpressions.Regex.IsMatch(Nif, @"^[1-9][0-9]{8}$"))
-                        yield return new ValidationResult("O {0} deve ser válido", new[] { nameof(Nif) });
+                        yield return new ValidationResult("O NIF deve ser válido", new[] { nameof(Nif) });
 
                     //Validação do telemóvel português
                     if(!System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^9[1236][0-9]{7}$"))
-                        yield return new ValidationResult("O {0} deve ser válido", new[] {nameof (Telemovel) });
+                        yield return new ValidationResult("O Telemóvel deve ser válido", new[] {nameof (Telemovel) });
 
                     //Validação do Código Postal Português
                     if (!string.IsNullOrWhiteSpace(CodPostal) &&
                         !System.Text.RegularExpressions.Regex.IsMatch(CodPostal, @"^[1-9][0-9]{3}-[0-9]{3}$"))
-                        yield return new ValidationResult("O {0} deve ser válido.", new[] { nameof(CodPostal) });
+                        yield return new ValidationResult("O Código Postal deve ser válido.", new[] { nameof(CodPostal) });
                     break;
 
             }
