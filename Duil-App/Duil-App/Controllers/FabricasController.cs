@@ -59,7 +59,7 @@ namespace Duil_App.Controllers
 
             if (_context.Clientes.Any(c => c.Nif == fabrica.Nif))
             {
-                ModelState.AddModelError("Nif", "Já existe uma fábrica com este NIF.");
+                ModelState.AddModelError("Nif", "Já existe uma fábrica ou cliente com este NIF.");
             }
 
             if (ModelState.IsValid)
