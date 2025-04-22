@@ -14,9 +14,9 @@ namespace Duil_App.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Identificador da encomenda do lado da empresa cliente
+        /// Identificador da encomenda do lado da empresa cliente [ordem de encomenda]
         /// </summary>
-        [Display(Name = "Identificador da encomenda - lado Cliente")]
+        [Display(Name = "OE")]
         public int? IdLadoCliente { get; set; }
 
         /// <summary>
@@ -30,14 +30,14 @@ namespace Duil_App.Models
         /// <summary>
         /// Total do preço da encomenda 
         /// </summary>
-        [Display(Name = "Preço Total")]
+        [Display(Name = "Valor")]
         [Range(0.01, double.MaxValue, ErrorMessage = "O preço total deve ser maior que zero.")]
         public decimal TotalPrecoUnit { get; set; }
 
         /// <summary>
         /// Quantidade total de peças na encomenda
         /// </summary>
-        [Display(Name = "Quantidade Total")]
+        [Display(Name = "Quantidade")]
         [Range(1, int.MaxValue, ErrorMessage = "A quantidade total deve ser maior que zero.")]
         public int QuantidadeTotal { get; set; }
 
@@ -53,13 +53,11 @@ namespace Duil_App.Models
         /// </summary>
         public Estados Estado { get; set; }
 
-
-
         /// <summary>
-        /// Identificação da empresa cliente 
+        /// Identificação do cliente 
         /// </summary>
         [Required(ErrorMessage = "O cliente é obrigatório.")]
-        [Display(Name = "Identificador do Cliente")]
+        [Display(Name = "Cliente")]
         public int ClienteId { get; set; }
         public required Clientes Cliente { get; set; }
 
