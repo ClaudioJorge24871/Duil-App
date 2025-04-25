@@ -22,19 +22,26 @@ namespace Duil_App.Controllers
         // GET: Encomendas
         public async Task<IActionResult> Index()
         {
+            var encomendas = await _context.Encomendas
+               .Include(e => e.Cliente) 
+               .ToListAsync();
+
             return View(await _context.Encomendas.ToListAsync());
         }
 
         // GET: Encomendas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+     
             if (id == null)
             {
                 return NotFound();
             }
 
             var encomendas = await _context.Encomendas
+                .Include(e => e.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (encomendas == null)
             {
                 return NotFound();
@@ -46,6 +53,7 @@ namespace Duil_App.Controllers
         // GET: Encomendas/Create
         public IActionResult Create()
         {
+            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)));
             return View();
         }
 
@@ -54,15 +62,17 @@ namespace Duil_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")] Encomendas encomendas)
+        public async Task<IActionResult> Create([Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")] Encomendas encomenda)
         {
+     
             if (ModelState.IsValid)
             {
-                _context.Add(encomendas);
+                _context.Add(encomenda);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(encomendas);
+            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)));
+            return View(encomenda);
         }
 
         // GET: Encomendas/Edit/5
@@ -73,12 +83,12 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
-            var encomendas = await _context.Encomendas.FindAsync(id);
-            if (encomendas == null)
+            var encomenda = await _context.Encomendas.FindAsync(id);
+            if (encomenda == null)
             {
                 return NotFound();
             }
-            return View(encomendas);
+            return View(encomenda);
         }
 
         // POST: Encomendas/Edit/5
@@ -86,9 +96,9 @@ namespace Duil_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")] Encomendas encomendas)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")] Encomendas encomenda)
         {
-            if (id != encomendas.Id)
+            if (id != encomenda.Id)
             {
                 return NotFound();
             }
@@ -97,12 +107,12 @@ namespace Duil_App.Controllers
             {
                 try
                 {
-                    _context.Update(encomendas);
+                    _context.Update(encomenda);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EncomendasExists(encomendas.Id))
+                    if (!EncomendasExists(encomenda.Id))
                     {
                         return NotFound();
                     }
@@ -113,7 +123,7 @@ namespace Duil_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(encomendas);
+            return View(encomenda);
         }
 
         // GET: Encomendas/Delete/5
@@ -124,14 +134,14 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
-            var encomendas = await _context.Encomendas
+            var encomenda = await _context.Encomendas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (encomendas == null)
+            if (encomenda == null)
             {
                 return NotFound();
             }
 
-            return View(encomendas);
+            return View(encomenda);
         }
 
         // POST: Encomendas/Delete/5
@@ -139,10 +149,10 @@ namespace Duil_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var encomendas = await _context.Encomendas.FindAsync(id);
-            if (encomendas != null)
+            var encomenda = await _context.Encomendas.FindAsync(id);
+            if (encomenda != null)
             {
-                _context.Encomendas.Remove(encomendas);
+                _context.Encomendas.Remove(encomenda);
             }
 
             await _context.SaveChangesAsync();

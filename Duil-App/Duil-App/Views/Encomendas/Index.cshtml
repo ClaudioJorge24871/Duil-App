@@ -4,19 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Listagem de Encomendas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar nova encomenda</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdLadoCliente)
+                OE
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ClienteId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente.Nome)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Data)
@@ -41,22 +44,22 @@
                 @Html.DisplayFor(modelItem => item.IdLadoCliente)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Data)
+                @Html.DisplayFor(modelItem => item.ClienteId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TotalPrecoUnit)
+                @Html.DisplayFor(modelItem => item.Cliente.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.QuantidadeTotal)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Transportadora)
+                @Html.DisplayFor(modelItem => item.TotalPrecoUnit)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClienteId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

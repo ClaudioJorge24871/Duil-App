@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Duil_App.Models
 {
@@ -16,7 +17,7 @@ namespace Duil_App.Models
         /// <summary>
         /// Identificador da encomenda do lado da empresa cliente [ordem de encomenda]
         /// </summary>
-        [Display(Name = "OE")]
+        [Display(Name = "Ordem de Encomenda")]
         public int? IdLadoCliente { get; set; }
 
         /// <summary>
@@ -24,7 +25,6 @@ namespace Duil_App.Models
         /// </summary>
         [Display (Name = "Data")]
         [DataType(DataType.Date)]
-        [Range(typeof(DateTime), "01/01/2000", "01/01/2099", ErrorMessage = "A data deve estar entre 01/01/2000 e 01/01/2099.")]
         public DateTime Data { get; set; }
 
         /// <summary>
@@ -32,6 +32,7 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Valor")]
         [Range(0.01, double.MaxValue, ErrorMessage = "O preço total deve ser maior que zero.")]
+        [Required(ErrorMessage ="O {0} total é um campo obrigatório")]
         public decimal TotalPrecoUnit { get; set; }
 
         /// <summary>
@@ -39,6 +40,7 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Quantidade")]
         [Range(1, int.MaxValue, ErrorMessage = "A quantidade total deve ser maior que zero.")]
+        [Required(ErrorMessage = "A {0} total é um campo obrigatório.")]
         public int QuantidadeTotal { get; set; }
 
         /// <summary>
@@ -46,19 +48,22 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Empresa transportadora")]
         [StringLength(100)]
-        public string? Transportadora { get; set; }
+        public string? Transportadora { get; set; } = string.Empty;  
 
         /// <summary>
         /// Estado da encomenda
         /// </summary>
+        [Required(ErrorMessage = "O estado da encomenda é obrigatório")]
         public Estados Estado { get; set; }
 
         /// <summary>
         /// Identificação do cliente 
         /// </summary>
-        [Required(ErrorMessage = "O cliente é obrigatório.")]
         [Display(Name = "Cliente")]
-        public int ClienteId { get; set; }
+        [Required(ErrorMessage = "O {0} é um campo obrigatório.")]
+        public required string ClienteId { get; set; } 
+
+        [ValidateNever]
         public required Clientes Cliente { get; set; }
 
 
