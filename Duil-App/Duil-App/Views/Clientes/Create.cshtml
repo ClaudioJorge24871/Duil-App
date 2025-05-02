@@ -33,7 +33,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="Pais" class="control-label"></label>
-                <input asp-for="Pais" class="form-control" />
+                <select asp-for="Pais" class="form-control" asp-items="ViewBag.Pais">
+                    <option value="">Selecione um país</option>
+                </select>
                 <span asp-validation-for="Pais" class="text-danger"></span>
             </div>
             <div class="form-group">
