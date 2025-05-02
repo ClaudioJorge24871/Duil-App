@@ -18,7 +18,7 @@ namespace Duil_App.Models
         /// Identificador da encomenda do lado da empresa cliente [ordem de encomenda]
         /// </summary>
         [Display(Name = "Ordem de Encomenda")]
-        public int? IdLadoCliente { get; set; }
+        public required int IdLadoCliente { get; set; }
 
         /// <summary>
         /// Data de realização da encomenda
