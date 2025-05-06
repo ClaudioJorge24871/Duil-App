@@ -1,0 +1,109 @@
+﻿@model Duil_App.Models.Encomendas
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>Nova encomenda</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdLadoCliente" class="control-label"></label>
+                <input asp-for="IdLadoCliente" class="form-control" />
+                <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalPrecoUnit" class="control-label"></label>
+                <input asp-for="TotalPrecoUnit" class="form-control" />
+                <span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantidadeTotal" class="control-label"></label>
+                <input asp-for="QuantidadeTotal" class="form-control" />
+                <span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Transportadora" class="control-label"></label>
+                <input asp-for="Transportadora" class="form-control" />
+                <span asp-validation-for="Transportadora" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estado"></select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Nome do Cliente</label>
+                <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
+                <input type="hidden" id="ClienteId" name="ClienteId" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+    <script>
+        $(function () {
+            $("#cliente-nome").autocomplete({
+                source: '/Clientes/Search',
+                minLength: 1,
+                select: function (event, ui) {
+                    $("#cliente-nome").val(ui.item.label);
+                    $("#ClienteId").val(ui.item.value);
+                    return false;
+                }
+            });
+        });
+
+        // pesquisa se existe o nome do cliente escrito no formulario
+        $("form").on("submit", function(event) {
+            var nomeCliente = $("#cliente-nome").val();
+            console.log(nomeCliente);
+            var clienteId = $("#ClienteId").val();
+              
+            if (clienteId === "" && nomeCliente !== "") {
+                $.ajax({
+                    url: '/Clientes/Search', 
+                    data: { term: nomeCliente },
+                    type: 'GET',
+                    success: function(data) {
+                        if (data.length > 0) {
+                            $("#ClienteId").val(data[0].value);
+                        } else {
+                            alert("Cliente não encontrado.");
+                            event.preventDefault();  
+                        }
+                    },
+                    error: function() {
+                        alert("Erro ao buscar o cliente.");
+                        event.preventDefault();  
+                    }
+                });
+                event.preventDefault();
+            }
+        });
+    </script>
+}

@@ -12,6 +12,7 @@ namespace Duil_App.Models
         /// </summary>
         [Key]
         [Display(Name = "NIF")]
+        [Required(ErrorMessage = "O {0} é um campo obrigatório")]
         public required string Nif { get; set; }
 
         /// <summary>
@@ -19,7 +20,8 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Nome")]
         [StringLength(50)]
-        public string Nome { get; set; } = string.Empty;
+        [Required(ErrorMessage = "O {0} do cliente é um campo obrigatório")]
+        public required string Nome { get; set; } 
 
         /// <summary>
         /// Morada sede da empresa

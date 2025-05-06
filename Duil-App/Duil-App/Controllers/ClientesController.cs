@@ -38,6 +38,23 @@ namespace Duil_App.Controllers
             return View(await _context.Clientes.ToListAsync());
         }
 
+        // GET: Clientes
+        [HttpGet]
+        public IActionResult Search(string term)
+        {
+            var resultados = _context.Clientes
+                .Where(c => c.Nome.Contains(term))
+                .Select(c => new {
+                    label = c.Nome,
+                    value = c.Nif
+                })
+                .Take(10)
+                .ToList();
+
+            return Json(resultados);
+        }
+
+
         // GET: Clientes/Details/5
         public async Task<IActionResult> Details(string id)
         {
