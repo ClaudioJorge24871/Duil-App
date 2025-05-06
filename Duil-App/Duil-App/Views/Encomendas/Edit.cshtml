@@ -12,7 +12,8 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <label asp-for="Id" class="control-label"></label>
+            <input asp-for="Id" class="form-control" readonly />
             <div class="form-group">
                 <label asp-for="IdLadoCliente" class="control-label"></label>
                 <input asp-for="IdLadoCliente" class="form-control" />
@@ -40,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Estado" class="control-label"></label>
-                <select asp-for="Estado" class="form-control"></select>
+                <select asp-for="Estado" class="form-control" asp-items="@(ViewData["Estado"] as SelectList)"></select>
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
             <div class="form-group">

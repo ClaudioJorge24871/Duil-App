@@ -88,6 +88,7 @@ namespace Duil_App.Controllers
             {
                 return NotFound();
             }
+            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)), encomenda.Estado);
             return View(encomenda);
         }
 
@@ -133,14 +134,13 @@ namespace Duil_App.Controllers
             {
                 return NotFound();
             }
-
+            
             var encomenda = await _context.Encomendas
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (encomenda == null)
             {
                 return NotFound();
             }
-
             return View(encomenda);
         }
 
