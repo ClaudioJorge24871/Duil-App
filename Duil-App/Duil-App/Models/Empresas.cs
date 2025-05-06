@@ -28,7 +28,7 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Morada")]
         [StringLength(100)]
-        public string? Morada { get; set; }
+        public string? Morada { get; set; } 
 
         /// <summary>
         /// Codigo postal da empresa
@@ -42,14 +42,13 @@ namespace Duil_App.Models
         [Display(Name = "País")]
         [StringLength(50)]
         [Required(ErrorMessage = "O {0} é obrigatório")]
-        public string Pais { get; set; }
+        public required string Pais { get; set; } 
 
         /// <summary>
         /// Telemovel de contacto da empresa
         /// </summary>
         [Display(Name = "Telemóvel")]
-        [Required(ErrorMessage = "O {0} é obrigatório")]
-        public string Telemovel { get; set; }
+        public string? Telemovel { get; set; }
 
         /// <summary>
         /// Email da empresa
@@ -78,7 +77,7 @@ namespace Duil_App.Models
                         yield return new ValidationResult("O NIF deve ser válido", new[] { nameof(Nif) });
 
                     //Validação do telemóvel português
-                    if(!System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^9[1236][0-9]{7}$"))
+                    if(!string.IsNullOrWhiteSpace(CodPostal) && !System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^9[1236][0-9]{7}$"))
                         yield return new ValidationResult("O Telemóvel deve ser válido", new[] {nameof (Telemovel) });
 
                     //Validação do Código Postal Português

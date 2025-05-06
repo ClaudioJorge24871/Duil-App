@@ -14,6 +14,19 @@ namespace Duil_App.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+        private List<SelectListItem> ObterPaises()
+        {
+            return new List<SelectListItem>
+            {
+            new SelectListItem { Value = "Dinamarca", Text = "Dinamarca" },
+            new SelectListItem { Value = "EUA", Text = "Estados Unidos da América" },
+            new SelectListItem { Value = "França", Text = "França" },
+            new SelectListItem { Value = "Holanda", Text = "Holanda" },
+            new SelectListItem { Value = "Inglaterra", Text = "Inglaterra" },
+            new SelectListItem { Value = "Suecia", Text = "Suécia"}
+            };
+        }
+
         public ClientesController(ApplicationDbContext context)
         {
             _context = context;
@@ -57,12 +70,14 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
+            ViewBag.Pais = ObterPaises();
             return View(cliente);
         }
 
         // GET: Clientes/Create
         public IActionResult Create()
         {
+            ViewBag.Pais = ObterPaises();
             return View();
         }
 
@@ -92,6 +107,7 @@ namespace Duil_App.Controllers
                 }
             }
 
+            ViewBag.Pais = ObterPaises();
             return View(cliente);
             
         }
@@ -109,6 +125,7 @@ namespace Duil_App.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Pais = ObterPaises();
             return View(cliente);
         }
 
@@ -119,6 +136,7 @@ namespace Duil_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("MoradaCarga,Nif,Nome,Morada,CodPostal,Pais,Telemovel,Email")] Clientes cliente)
         {
+            ViewBag.Pais = ObterPaises();
             if (id != cliente.Nif)
             {
                 return NotFound();
@@ -144,6 +162,8 @@ namespace Duil_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Pais = ObterPaises();
             return View(cliente);
         }
 
@@ -184,5 +204,9 @@ namespace Duil_App.Controllers
         {
             return _context.Clientes.Any(e => e.Nif == id);
         }
+
+
     }
+
+
 }

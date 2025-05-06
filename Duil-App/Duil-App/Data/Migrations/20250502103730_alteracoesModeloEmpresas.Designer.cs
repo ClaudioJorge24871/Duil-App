@@ -4,6 +4,7 @@ using Duil_App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Duil_App.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250502103730_alteracoesModeloEmpresas")]
+    partial class alteracoesModeloEmpresas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,6 +31,7 @@ namespace Duil_App.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CodPostal")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -65,7 +69,10 @@ namespace Duil_App.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ClienteId")
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClienteNif")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -90,7 +97,7 @@ namespace Duil_App.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("ClienteNif");
 
                     b.ToTable("Encomendas");
                 });
@@ -367,6 +374,7 @@ namespace Duil_App.Data.Migrations
                     b.HasBaseType("Duil_App.Models.Empresas");
 
                     b.Property<string>("MoradaDescarga")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -377,7 +385,7 @@ namespace Duil_App.Data.Migrations
                 {
                     b.HasOne("Duil_App.Models.Clientes", "Cliente")
                         .WithMany("Encomendas")
-                        .HasForeignKey("ClienteId")
+                        .HasForeignKey("ClienteNif")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
