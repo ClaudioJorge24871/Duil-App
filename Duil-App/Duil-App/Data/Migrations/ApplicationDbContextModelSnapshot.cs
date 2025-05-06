@@ -78,7 +78,7 @@ namespace Duil_App.Data.Migrations
                     b.Property<int>("Estado")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdLadoCliente")
+                    b.Property<int>("IdLadoCliente")
                         .HasColumnType("int");
 
                     b.Property<int>("QuantidadeTotal")
@@ -126,11 +126,11 @@ namespace Duil_App.Data.Migrations
 
             modelBuilder.Entity("Duil_App.Models.Pecas", b =>
                 {
-                    b.Property<int>("Referencia")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Referencia"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Designacao")
                         .HasMaxLength(100)
@@ -145,7 +145,10 @@ namespace Duil_App.Data.Migrations
                     b.Property<decimal>("PrecoUnit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Referencia");
+                    b.Property<int>("Referencia")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("FabricaNif");
 

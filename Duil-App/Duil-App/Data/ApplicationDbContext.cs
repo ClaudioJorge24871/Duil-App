@@ -31,7 +31,8 @@ namespace Duil_App.Data
             modelBuilder.Entity<LinhaEncomenda>()
                 .HasOne(le => le.Encomenda)        
                 .WithMany(e => e.LinhasEncomenda)  
-                .HasForeignKey(le => le.EncomendaId);  
+                .HasForeignKey(le => le.EncomendaId);
+
         }
 
     }

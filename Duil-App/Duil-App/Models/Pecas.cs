@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Duil_App.Models
 {
@@ -9,10 +12,17 @@ namespace Duil_App.Models
     public class Pecas
     {
         /// <summary>
-        /// Referência da peça
+        /// Identificação da peça
         /// </summary>
         [Key]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Referência da peça
+        /// </summary>
+        /// 
         [Display(Name = "Referência")]
+        [Required(ErrorMessage = "A referência é obrigatória.")]
         public int Referencia { get; set; }
 
         /// <summary>
@@ -33,8 +43,10 @@ namespace Duil_App.Models
         /// Fabricante
         /// </summary>
         [Required(ErrorMessage = "A identificação da fábrica é obrigatório")]
+        [Display(Name = "Fábrica")]
         public int FabricaId { get; set; }
 
+        [ValidateNever]
         public required Fabricas Fabrica { get; set; }
 
         public ICollection<LinhaEncomenda>? LinhasEncomenda { get; set; }

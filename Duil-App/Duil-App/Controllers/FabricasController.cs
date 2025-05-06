@@ -25,6 +25,22 @@ namespace Duil_App.Controllers
             return View(await _context.Fabricas.ToListAsync());
         }
 
+        // GET: Fabricas
+        [HttpGet]
+        public IActionResult Search(string term)
+        {
+            var resultados = _context.Fabricas
+                .Where(f => f.Nome.Contains(term))
+                .Select(f => new {
+                    label = f.Nome,
+                    value = f.Nif
+                })
+                .Take(10)
+                .ToList();
+
+            return Json(resultados);
+        }
+
         // GET: Fabricas/Details/5
         public async Task<IActionResult> Details(string id)
         {
