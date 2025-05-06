@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Duil_App.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250502103730_alteracoesModeloEmpresas")]
-    partial class alteracoesModeloEmpresas
+    [Migration("20250506121246_InitialCreat")]
+    partial class InitialCreat
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,6 @@ namespace Duil_App.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CodPostal")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -52,6 +51,7 @@ namespace Duil_App.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Telemovel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Nif");
@@ -69,10 +69,7 @@ namespace Duil_App.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ClienteNif")
+                    b.Property<string>("ClienteId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -82,7 +79,7 @@ namespace Duil_App.Data.Migrations
                     b.Property<int>("Estado")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdLadoCliente")
+                    b.Property<int>("IdLadoCliente")
                         .HasColumnType("int");
 
                     b.Property<int>("QuantidadeTotal")
@@ -97,7 +94,7 @@ namespace Duil_App.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteNif");
+                    b.HasIndex("ClienteId");
 
                     b.ToTable("Encomendas");
                 });
@@ -130,11 +127,11 @@ namespace Duil_App.Data.Migrations
 
             modelBuilder.Entity("Duil_App.Models.Pecas", b =>
                 {
-                    b.Property<int>("Referencia")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Referencia"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Designacao")
                         .HasMaxLength(100)
@@ -149,7 +146,10 @@ namespace Duil_App.Data.Migrations
                     b.Property<decimal>("PrecoUnit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Referencia");
+                    b.Property<int>("Referencia")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("FabricaNif");
 
@@ -374,7 +374,6 @@ namespace Duil_App.Data.Migrations
                     b.HasBaseType("Duil_App.Models.Empresas");
 
                     b.Property<string>("MoradaDescarga")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -385,7 +384,7 @@ namespace Duil_App.Data.Migrations
                 {
                     b.HasOne("Duil_App.Models.Clientes", "Cliente")
                         .WithMany("Encomendas")
-                        .HasForeignKey("ClienteNif")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
