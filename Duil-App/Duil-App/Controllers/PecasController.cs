@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Duil_App.Data;
 using Duil_App.Models;
+using System.Configuration;
 
 namespace Duil_App.Controllers
 {
@@ -59,6 +60,7 @@ namespace Duil_App.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 if (_context.Pecas.Any(p => p.Referencia == pecas.Referencia))
                 {
                     ModelState.AddModelError("Referencia", "Esta referência já existe.");

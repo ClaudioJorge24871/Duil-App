@@ -44,48 +44,51 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
     <script>
         $(function () {
+            var fabricaSelected = false;
+
             $("#fabrica-nome").autocomplete({
                 source: '/Fabricas/Search',
                 minLength: 1,
                 select: function (event, ui) {
                     $("#fabrica-nome").val(ui.item.label);
                     $("#FabricaId").val(ui.item.value);
+                    fabricaSelected = true;
+                    return false;
+                },
+                focus: function (event, ui) {
+                    event.preventDefault();
+                }
+            });
+
+            $("#fabrica-nome").on("input", function () {
+                $("#FabricaId").val("");
+                fabricaSelected = false;
+            });
+
+            $("form").on("submit", function (event) {
+                var nomeFabrica = $("#fabrica-nome").val();
+                var fabricaId = $("#FabricaId").val();
+
+                if (!fabricaSelected && nomeFabrica !== "") {
+                    event.preventDefault();
+                    $("[data-valmsg-for='FabricaId']").text("Por favor, selecione uma fábrica da lista");
+                    return false;
+                }
+
+                if (fabricaId === "") {
+                    event.preventDefault();
+                    $("[data-valmsg-for='FabricaId']").text("A fábrica é obrigatória");
                     return false;
                 }
             });
         });
-
-        $("form").on("submit", function (event) {
-            var nomeFabrica = $("#fabrica-nome").val();
-            var fabricaId = $("#FabricaId").val();
-
-            if (fabricaId === "" && nomeFabrica !== "") {
-                event.preventDefault(); 
-                $.ajax({
-                    url: '/Fabricas/Search',
-                    data: { term: nomeFabrica },
-                    type: 'GET',
-                    success: function (data) {
-                        if (data.length > 0) {
-                            $("#FabricaId").val(data[0].value);
-                            $("form")[0].submit(); 
-                        } else {
-                            alert("Fábrica não encontrada.");
-                        }
-                    },
-                    error: function () {
-                        alert("Erro ao buscar a fábrica.");
-                    }
-                });
-            }
-
-        });
     </script>
-
 }
