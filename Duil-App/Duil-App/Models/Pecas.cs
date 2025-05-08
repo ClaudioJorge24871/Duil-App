@@ -44,7 +44,7 @@ namespace Duil_App.Models
         /// </summary>
         [Required(ErrorMessage = "A identificação da fábrica é obrigatório")]
         [Display(Name = "Fábrica")]
-        public int FabricaId { get; set; }
+        public string FabricaId { get; set; }
 
         [ValidateNever]
         public required Fabricas Fabrica { get; set; }

@@ -82,11 +82,22 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
-            var pecas = await _context.Pecas.FindAsync(id);
+            var pecas = await _context.Pecas
+                .Include(p => p.Fabrica) 
+                .FirstOrDefaultAsync(p => p.Id == id);
+
             if (pecas == null)
             {
                 return NotFound();
             }
+            var NomeFabrica = _context.Fabricas
+                .Where(f => f.Nif == pecas.FabricaId)
+                .Select(f => f.Nome)
+                .FirstOrDefault();
+
+            ViewData["FabricaNome"] = pecas.Fabrica?.Nome;
+            ViewData["FabricaId"] = pecas.FabricaId;
+
             return View(pecas);
         }
 
