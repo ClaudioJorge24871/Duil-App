@@ -23,7 +23,11 @@ namespace Duil_App.Controllers
         // GET: Pecas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pecas.ToListAsync());
+            var pecas = await _context.Pecas
+                .Include(p => p.Fabrica)
+                .ToListAsync();
+
+            return View(pecas);
         }
 
         // GET: Pecas/Details/5
