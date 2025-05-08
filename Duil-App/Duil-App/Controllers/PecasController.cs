@@ -35,12 +35,15 @@ namespace Duil_App.Controllers
             }
 
             var pecas = await _context.Pecas
+                .Include(p => p.Fabrica)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (pecas == null)
             {
                 return NotFound();
             }
+
+            ViewData["FabricaNome"] = pecas.Fabrica?.Nome; 
 
             return View(pecas);
         }
