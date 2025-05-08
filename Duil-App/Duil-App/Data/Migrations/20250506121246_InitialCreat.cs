@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Duil_App.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class InitialCreat : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,11 +16,11 @@ namespace Duil_App.Data.Migrations
                 columns: table => new
                 {
                     Nif = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Morada = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Morada = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     CodPostal = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Pais = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Telemovel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Pais = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Telemovel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -33,7 +33,7 @@ namespace Duil_App.Data.Migrations
                 columns: table => new
                 {
                     Nif = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    MoradaCarga = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    MoradaCarga = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,7 +51,7 @@ namespace Duil_App.Data.Migrations
                 columns: table => new
                 {
                     Nif = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    MoradaDescarga = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    MoradaDescarga = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,21 +70,20 @@ namespace Duil_App.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdLadoCliente = table.Column<int>(type: "int", nullable: true),
+                    IdLadoCliente = table.Column<int>(type: "int", nullable: false),
                     Data = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalPrecoUnit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     QuantidadeTotal = table.Column<int>(type: "int", nullable: false),
-                    Transportadora = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Transportadora = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Estado = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
-                    ClienteNif = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ClienteId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Encomendas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Encomendas_Clientes_ClienteNif",
-                        column: x => x.ClienteNif,
+                        name: "FK_Encomendas_Clientes_ClienteId",
+                        column: x => x.ClienteId,
                         principalTable: "Clientes",
                         principalColumn: "Nif",
                         onDelete: ReferentialAction.Cascade);
@@ -94,16 +93,17 @@ namespace Duil_App.Data.Migrations
                 name: "Pecas",
                 columns: table => new
                 {
-                    Referencia = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Designacao = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Referencia = table.Column<int>(type: "int", nullable: false),
+                    Designacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     PrecoUnit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     FabricaId = table.Column<int>(type: "int", nullable: false),
                     FabricaNif = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pecas", x => x.Referencia);
+                    table.PrimaryKey("PK_Pecas", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Pecas_Fabricas_FabricaNif",
                         column: x => x.FabricaNif,
@@ -112,7 +112,7 @@ namespace Duil_App.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LinhaEncomenda",
+                name: "LinhasEncomendas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -123,34 +123,34 @@ namespace Duil_App.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LinhaEncomenda", x => x.Id);
+                    table.PrimaryKey("PK_LinhasEncomendas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LinhaEncomenda_Encomendas_EncomendaId",
+                        name: "FK_LinhasEncomendas_Encomendas_EncomendaId",
                         column: x => x.EncomendaId,
                         principalTable: "Encomendas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LinhaEncomenda_Pecas_PecaId",
+                        name: "FK_LinhasEncomendas_Pecas_PecaId",
                         column: x => x.PecaId,
                         principalTable: "Pecas",
-                        principalColumn: "Referencia",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Encomendas_ClienteNif",
+                name: "IX_Encomendas_ClienteId",
                 table: "Encomendas",
-                column: "ClienteNif");
+                column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LinhaEncomenda_EncomendaId",
-                table: "LinhaEncomenda",
+                name: "IX_LinhasEncomendas_EncomendaId",
+                table: "LinhasEncomendas",
                 column: "EncomendaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LinhaEncomenda_PecaId",
-                table: "LinhaEncomenda",
+                name: "IX_LinhasEncomendas_PecaId",
+                table: "LinhasEncomendas",
                 column: "PecaId");
 
             migrationBuilder.CreateIndex(
@@ -163,7 +163,7 @@ namespace Duil_App.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LinhaEncomenda");
+                name: "LinhasEncomendas");
 
             migrationBuilder.DropTable(
                 name: "Encomendas");

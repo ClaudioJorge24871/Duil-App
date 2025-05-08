@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Duil_App.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250502103730_alteracoesModeloEmpresas")]
-    partial class alteracoesModeloEmpresas
+    [Migration("20250508134931_updatedPecasFabricaTypeValue")]
+    partial class updatedPecasFabricaTypeValue
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,6 @@ namespace Duil_App.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CodPostal")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -130,28 +129,29 @@ namespace Duil_App.Data.Migrations
 
             modelBuilder.Entity("Duil_App.Models.Pecas", b =>
                 {
-                    b.Property<int>("Referencia")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Referencia"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Designacao")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("FabricaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FabricaNif")
+                    b.Property<string>("FabricaId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("PrecoUnit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Referencia");
+                    b.Property<int>("Referencia")
+                        .HasColumnType("int");
 
-                    b.HasIndex("FabricaNif");
+                    b.HasKey("Id");
+
+                    b.HasIndex("FabricaId");
 
                     b.ToTable("Pecas");
                 });
@@ -374,7 +374,6 @@ namespace Duil_App.Data.Migrations
                     b.HasBaseType("Duil_App.Models.Empresas");
 
                     b.Property<string>("MoradaDescarga")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -415,7 +414,9 @@ namespace Duil_App.Data.Migrations
                 {
                     b.HasOne("Duil_App.Models.Fabricas", "Fabrica")
                         .WithMany("Pecas")
-                        .HasForeignKey("FabricaNif");
+                        .HasForeignKey("FabricaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Fabrica");
                 });
