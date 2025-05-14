@@ -53,7 +53,6 @@ namespace Duil_App.Controllers
         // GET: Encomendas/Create
         public IActionResult Create()
         {
-            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)));
             return View();
         }
 
@@ -64,14 +63,13 @@ namespace Duil_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")] Encomendas encomenda)
         {
-     
+            encomenda.Estado = Estados.Pendente; // define o pendente como estado quando criada
             if (ModelState.IsValid)
             {
                 _context.Add(encomenda);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)));
             return View(encomenda);
         }
 
@@ -83,12 +81,17 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
-            var encomenda = await _context.Encomendas.FindAsync(id);
+            var encomenda = await _context.Encomendas
+                .Include(e => e.Cliente)
+                .FirstOrDefaultAsync(e => e.Id == id);
+
             if (encomenda == null)
             {
                 return NotFound();
             }
+
             ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)), encomenda.Estado);
+
             return View(encomenda);
         }
 
