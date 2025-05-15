@@ -12,7 +12,11 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddMvcOptions(options =>
+{
+    options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(
+        fieldName => $"O campo {fieldName} tem de ser um número válido");
+});
 
 var app = builder.Build();
 

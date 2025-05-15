@@ -4,19 +4,16 @@ using Duil_App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Duil_App.Data.Migrations
+namespace Duil_App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250425213442_updateEncomendas")]
-    partial class updateEncomendas
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +48,6 @@ namespace Duil_App.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Telemovel")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Nif");
@@ -79,7 +75,7 @@ namespace Duil_App.Data.Migrations
                     b.Property<int>("Estado")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdLadoCliente")
+                    b.Property<int>("IdLadoCliente")
                         .HasColumnType("int");
 
                     b.Property<int>("QuantidadeTotal")
@@ -127,28 +123,39 @@ namespace Duil_App.Data.Migrations
 
             modelBuilder.Entity("Duil_App.Models.Pecas", b =>
                 {
-                    b.Property<int>("Referencia")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Referencia"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClienteId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Designacao")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("FabricaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FabricaNif")
+                    b.Property<string>("FabricaId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Imagem")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PrecoUnit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Referencia");
+                    b.Property<int>("Referencia")
+                        .HasColumnType("int");
 
-                    b.HasIndex("FabricaNif");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("FabricaId");
 
                     b.ToTable("Pecas");
                 });
@@ -409,9 +416,19 @@ namespace Duil_App.Data.Migrations
 
             modelBuilder.Entity("Duil_App.Models.Pecas", b =>
                 {
+                    b.HasOne("Duil_App.Models.Clientes", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Duil_App.Models.Fabricas", "Fabrica")
                         .WithMany("Pecas")
-                        .HasForeignKey("FabricaNif");
+                        .HasForeignKey("FabricaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
 
                     b.Navigation("Fabrica");
                 });

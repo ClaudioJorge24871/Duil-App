@@ -22,7 +22,7 @@ namespace Duil_App.Models
         /// </summary>
         /// 
         [Display(Name = "Referência")]
-        [Required(ErrorMessage = "A referência é obrigatória.")]
+        [Required(ErrorMessage = "A {0} é obrigatória.")]
         public int Referencia { get; set; }
 
         /// <summary>
@@ -30,24 +30,45 @@ namespace Duil_App.Models
         /// </summary>
         [StringLength(100)]
         [Display(Name = "Designação")]
-        public string? Designacao { get; set; }
+        [Required(ErrorMessage = "A {0} é obrigatória.")]
+        public required string Designacao { get; set; }
 
         /// <summary>
         /// Preco unitário
         /// </summary>
         [Display(Name = "Preço unitário")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "O preço unitário deve ser maior que zero.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "O campo {0} tem de ser um número válido")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public decimal PrecoUnit { get; set; }
 
         /// <summary>
         /// Fabricante
         /// </summary>
-        [Required(ErrorMessage = "A identificação da fábrica é obrigatório")]
+        [Required(ErrorMessage = "A identificação da {0} é obrigatório")]
         [Display(Name = "Fábrica")]
-        public string FabricaId { get; set; }
+        public required string FabricaId { get; set; }
 
         [ValidateNever]
         public required Fabricas Fabrica { get; set; }
+
+
+        /// <summary>
+        /// Cliente
+        /// </summary>
+        [Display(Name = "Cliente")]
+        [Required(ErrorMessage = "A identificação do {0} é obrigatório")]
+        public required string ClienteId { get; set; }
+
+        [ValidateNever]
+        public required Clientes Cliente { get; set; }
+
+
+
+        /// <summary>
+        /// URL da imagem da peça
+        /// </summary>
+        [Display(Name = "Imagem")]
+        public string? Imagem { get; set; }
 
         public ICollection<LinhaEncomenda>? LinhasEncomenda { get; set; }
     }

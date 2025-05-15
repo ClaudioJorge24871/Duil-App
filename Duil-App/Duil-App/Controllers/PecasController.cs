@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace Duil_App.Controllers
         {
             var pecas = await _context.Pecas
                 .Include(p => p.Fabrica)
+                .Include(p => p.Cliente)
                 .ToListAsync();
 
             return View(pecas);
@@ -40,6 +42,7 @@ namespace Duil_App.Controllers
 
             var pecas = await _context.Pecas
                 .Include(p => p.Fabrica)
+                .Include(p => p.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (pecas == null)
@@ -47,7 +50,8 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
-            ViewData["FabricaNome"] = pecas.Fabrica?.Nome; 
+            ViewData["FabricaNome"] = pecas.Fabrica?.Nome;
+            ViewData["ClienteNome"] = pecas.Cliente?.Nome;
 
             return View(pecas);
         }
@@ -63,11 +67,11 @@ namespace Duil_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Referencia,Designacao,PrecoUnit,FabricaId")] Pecas pecas)
+        public async Task<IActionResult> Create([Bind("Referencia,Designacao,PrecoUnit,FabricaId,ClienteId,Imagem")] Pecas pecas)
         {
             if (ModelState.IsValid)
             {
-               
+
                 if (_context.Pecas.Any(p => p.Referencia == pecas.Referencia))
                 {
                     ModelState.AddModelError("Referencia", "Esta referência já existe.");
@@ -89,23 +93,32 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
-            var pecas = await _context.Pecas
-                .Include(p => p.Fabrica) 
+            var peca = await _context.Pecas
+                .Include(p => p.Fabrica)
+                .Include(p => p.Cliente)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            if (pecas == null)
+            if (peca == null)
             {
                 return NotFound();
             }
             var NomeFabrica = _context.Fabricas
-                .Where(f => f.Nif == pecas.FabricaId)
+                .Where(f => f.Nif == peca.FabricaId)
                 .Select(f => f.Nome)
                 .FirstOrDefault();
 
-            ViewData["FabricaNome"] = pecas.Fabrica?.Nome;
-            ViewData["FabricaId"] = pecas.FabricaId;
+            var NomeCliente= _context.Clientes
+                .Where(f => f.Nif == peca.ClienteId)
+                .Select(f => f.Nome)
+                .FirstOrDefault();
 
-            return View(pecas);
+            ViewData["FabricaNome"] = peca.Fabrica?.Nome;
+            ViewData["FabricaId"] = peca.FabricaId;
+
+            ViewData["ClienteNome"] = peca.Cliente?.Nome;
+            ViewData["ClienteId"] = peca.ClienteId;
+
+            return View(peca);
         }
 
         // POST: Pecas/Edit/5
@@ -113,9 +126,9 @@ namespace Duil_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Referencia,Designacao,PrecoUnit,FabricaId")] Pecas pecas)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Referencia,Designacao,PrecoUnit,FabricaId,ClienteId,Imagem")] Pecas peca)
         {
-            if (id != pecas.Id)
+            if (id != peca.Id)
             {
                 return NotFound();
             }
@@ -124,12 +137,12 @@ namespace Duil_App.Controllers
             {
                 try
                 {
-                    _context.Update(pecas);
+                    _context.Update(peca);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PecasExists(pecas.Id))
+                    if (!PecasExists(peca.Id))
                     {
                         return NotFound();
                     }
@@ -140,7 +153,7 @@ namespace Duil_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(pecas);
+            return View(peca);
         }
 
 
@@ -152,22 +165,29 @@ namespace Duil_App.Controllers
                 return NotFound();
             }
 
-            var pecas = await _context.Pecas
+            var peca = await _context.Pecas
                 .Include(p => p.Fabrica)
+                .Include(p => p.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (pecas == null)
+            if (peca == null)
             {
                 return NotFound();
             }
             var NomeFabrica = _context.Fabricas
-                .Where(f => f.Nif == pecas.FabricaId)
+                .Where(f => f.Nif == peca.FabricaId)
                 .Select(f => f.Nome)
                 .FirstOrDefault();
 
-            ViewData["FabricaNome"] = pecas.Fabrica?.Nome;
+            var NomeCliente = _context.Clientes
+                .Where(f => f.Nif == peca.ClienteId)
+                .Select(f => f.Nome)
+                .FirstOrDefault();
 
-            return View(pecas);
+            ViewData["FabricaNome"] = peca.Fabrica?.Nome;
+            ViewData["ClienteNome"] = peca.Cliente?.Nome;
+
+            return View(peca);
         }
 
         // POST: Pecas/Delete/5
@@ -175,10 +195,10 @@ namespace Duil_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pecas = await _context.Pecas.FindAsync(id);
-            if (pecas != null)
+            var peca = await _context.Pecas.FindAsync(id);
+            if (peca != null)
             {
-                _context.Pecas.Remove(pecas);
+                _context.Pecas.Remove(peca);
             }
 
             await _context.SaveChangesAsync();
@@ -194,3 +214,5 @@ namespace Duil_App.Controllers
 
     }
 }
+
+

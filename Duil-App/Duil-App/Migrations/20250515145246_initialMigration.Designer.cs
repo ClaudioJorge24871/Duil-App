@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Duil_App.Data.Migrations
+namespace Duil_App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250506121246_InitialCreat")]
-    partial class InitialCreat
+    [Migration("20250515145246_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,7 +51,6 @@ namespace Duil_App.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Telemovel")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Nif");
@@ -133,15 +132,21 @@ namespace Duil_App.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ClienteId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Designacao")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("FabricaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FabricaNif")
+                    b.Property<string>("FabricaId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Imagem")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PrecoUnit")
                         .HasColumnType("decimal(18,2)");
@@ -151,7 +156,9 @@ namespace Duil_App.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FabricaNif");
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("FabricaId");
 
                     b.ToTable("Pecas");
                 });
@@ -412,9 +419,19 @@ namespace Duil_App.Data.Migrations
 
             modelBuilder.Entity("Duil_App.Models.Pecas", b =>
                 {
+                    b.HasOne("Duil_App.Models.Clientes", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Duil_App.Models.Fabricas", "Fabrica")
                         .WithMany("Pecas")
-                        .HasForeignKey("FabricaNif");
+                        .HasForeignKey("FabricaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
 
                     b.Navigation("Fabrica");
                 });
