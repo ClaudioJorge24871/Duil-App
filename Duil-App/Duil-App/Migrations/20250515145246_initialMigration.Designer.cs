@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Duil_App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250514173230_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250515145246_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -132,13 +132,21 @@ namespace Duil_App.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ClienteId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Designacao")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FabricaId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Imagem")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PrecoUnit")
                         .HasColumnType("decimal(18,2)");
@@ -147,6 +155,8 @@ namespace Duil_App.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
 
                     b.HasIndex("FabricaId");
 
@@ -409,11 +419,19 @@ namespace Duil_App.Migrations
 
             modelBuilder.Entity("Duil_App.Models.Pecas", b =>
                 {
+                    b.HasOne("Duil_App.Models.Clientes", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Duil_App.Models.Fabricas", "Fabrica")
                         .WithMany("Pecas")
                         .HasForeignKey("FabricaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cliente");
 
                     b.Navigation("Fabrica");
                 });

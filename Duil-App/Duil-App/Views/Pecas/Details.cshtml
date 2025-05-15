@@ -1,18 +1,19 @@
 ﻿@model Duil_App.Models.Pecas
 
 @{
-    ViewData["Title"] = "Details";
-    var fabricaNome = ViewData["FabricaNome"] as string;
+    ViewData["Title"] = "Detalhes";
 }
 
+<h1>Details</h1>
 
 <div>
+    <h4>Pecas</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Referencia)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Referencia)
         </dd>
         <dt class = "col-sm-2">
@@ -28,14 +29,26 @@
             @Html.DisplayFor(model => model.PrecoUnit)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FabricaId)
+            @Html.DisplayNameFor(model => model.Fabrica)
         </dt>
         <dd class = "col-sm-10">
-            @fabricaNome
+            @Html.DisplayFor(model => model.Fabrica.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cliente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cliente.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Imagem)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Imagem)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Voltar</a>
 </div>

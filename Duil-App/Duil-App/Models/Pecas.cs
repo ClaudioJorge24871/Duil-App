@@ -51,6 +51,25 @@ namespace Duil_App.Models
         [ValidateNever]
         public required Fabricas Fabrica { get; set; }
 
+
+        /// <summary>
+        /// Cliente
+        /// </summary>
+        [Display(Name = "Cliente")]
+        [Required(ErrorMessage = "A identificação do {0} é obrigatório")]
+        public required string ClienteId { get; set; }
+
+        [ValidateNever]
+        public required Clientes Cliente { get; set; }
+
+
+
+        /// <summary>
+        /// URL da imagem da peça
+        /// </summary>
+        [Display(Name = "Imagem")]
+        public string? Imagem { get; set; }
+
         public ICollection<LinhaEncomenda>? LinhasEncomenda { get; set; }
     }
 }

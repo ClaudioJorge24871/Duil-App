@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Duil_App.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -241,19 +241,27 @@ namespace Duil_App.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Referencia = table.Column<int>(type: "int", nullable: false),
-                    Designacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Designacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PrecoUnit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FabricaId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    FabricaId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClienteId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Imagem = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pecas", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Pecas_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "Nif",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Pecas_Fabricas_FabricaId",
                         column: x => x.FabricaId,
                         principalTable: "Fabricas",
                         principalColumn: "Nif",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -336,6 +344,11 @@ namespace Duil_App.Migrations
                 name: "IX_LinhasEncomendas_PecaId",
                 table: "LinhasEncomendas",
                 column: "PecaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pecas_ClienteId",
+                table: "Pecas",
+                column: "ClienteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pecas_FabricaId",
