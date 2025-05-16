@@ -61,13 +61,22 @@ namespace Duil_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")] Encomendas encomenda)
+        public async Task<IActionResult> Create([Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")] Encomendas encomenda, List<int> pecasSelecionadas, List<int> quantidades, LinhaEncomenda linhaEncomenda)
         {
-            encomenda.Estado = Estados.Pendente; // define o pendente como estado quando criada
+            encomenda.Estado = Estados.Pendente; // define estado como pendente quando criada
+            
             if (ModelState.IsValid)
             {
                 _context.Add(encomenda);
                 await _context.SaveChangesAsync();
+
+                // guarda a informação das linhasEncomendas
+                for (int i = 0; i < pecasSelecionadas.Count; i++)
+                {
+                    linhaEncomenda.Id = encomenda.Id;
+                    linhaEncomenda.PecaId = pecasSelecionadas[i];
+                    linhaEncomenda.Quantidade = quantidades[i];
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(encomenda);
@@ -166,5 +175,22 @@ namespace Duil_App.Controllers
         {
             return _context.Encomendas.Any(e => e.Id == id);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetPecasPorCliente(string clienteId)
+        {
+            var pecas = await _context.Pecas
+                .Where(p => p.ClienteId == clienteId)
+                .Select(p => new
+                {
+                    id = p.Id,
+                    nome = p.Designacao
+                })
+                .ToListAsync();
+
+            return Json(pecas);
+        }
+
     }
 }

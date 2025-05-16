@@ -37,17 +37,29 @@
                 <input asp-for="Transportadora" class="form-control" />
                 <span asp-validation-for="Transportadora" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label>Nome do Cliente</label>
                 <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
                 <input asp-for="ClienteId" type="hidden" id="ClienteId" />
                 <span asp-validation-for="ClienteId" class="text-danger"></span>
             </div>
+
+            <div id="pecasContainer">
+                <div class="form-group">
+                    <label>Peça</label>
+                    <select name="pecasSelecionadas" class="form-control">
+                        <option value="">-- Selecione uma peça --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Quantidade</label>
+                    <input type="number" name="quantidades" class="form-control" value="1" />
+                </div>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />
             </div>
-
         </form>
     </div>
 </div>
@@ -74,6 +86,31 @@
                 select: function (event, ui) {
                     $("#cliente-nome").val(ui.item.label);
                     $("#ClienteId").val(ui.item.value);
+
+                //buscar as peças desse cliente
+                fetch(`/Encomendas/GetPecasPorCliente?clienteId=${ui.item.value}`)
+                .then(response => response.json())
+                .then(data => {
+                    const pecasSelect = document.querySelector("select[name='pecasSelecionadas']");
+                    pecasSelect.innerHTML = "";
+
+                    if (data.length === 0) {
+                        pecasSelect.innerHTML = "<option value=''>Nenhuma peça encontrada</option>";
+                        return;
+                    }
+
+                    data.forEach(p => {
+                        const option = document.createElement("option");
+                        option.value = p.id;
+                        option.text = p.nome;
+                        pecasSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Erro ao carregar peças:", error));
+
+        return false;
+
+
                     clienteSelected = true;
                     return false;
                 },
@@ -104,6 +141,7 @@
                 }
             });
         });
+
     </script>
 }
 
