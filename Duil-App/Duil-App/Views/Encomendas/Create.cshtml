@@ -4,7 +4,6 @@
     ViewData["Title"] = "Create";
 }
 
-
 <h1>Nova encomenda</h1>
 
 <hr />
@@ -86,33 +85,29 @@
                 select: function (event, ui) {
                     $("#cliente-nome").val(ui.item.label);
                     $("#ClienteId").val(ui.item.value);
-
-                //buscar as peças desse cliente
-                fetch(`/Encomendas/GetPecasPorCliente?clienteId=${ui.item.value}`)
-                .then(response => response.json())
-                .then(data => {
-                    const pecasSelect = document.querySelector("select[name='pecasSelecionadas']");
-                    pecasSelect.innerHTML = "";
-
-                    if (data.length === 0) {
-                        pecasSelect.innerHTML = "<option value=''>Nenhuma peça encontrada</option>";
-                        return;
-                    }
-
-                    data.forEach(p => {
-                        const option = document.createElement("option");
-                        option.value = p.id;
-                        option.text = p.nome;
-                        pecasSelect.appendChild(option);
-                    });
-                })
-                .catch(error => console.error("Erro ao carregar peças:", error));
-
-        return false;
-
-
                     clienteSelected = true;
-                    return false;
+
+                    fetch(`/Encomendas/GetPecasPorCliente?clienteId=${ui.item.value}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const pecasSelect = document.querySelector("select[name='pecasSelecionadas']");
+                            pecasSelect.innerHTML = '<option value="">-- Selecione uma peça --</option>';
+
+                            if (data.length === 0) {
+                                pecasSelect.innerHTML += "<option value=''>Nenhuma peça encontrada</option>";
+                                return;
+                            }
+
+                            data.forEach(p => {
+                                const option = document.createElement("option");
+                                option.value = p.id;
+                                option.text = p.nome;
+                                pecasSelect.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.error("Erro ao carregar peças:", error));
+
+                    return false; 
                 },
                 focus: function (event, ui) {
                     event.preventDefault();
@@ -141,7 +136,5 @@
                 }
             });
         });
-
     </script>
 }
-

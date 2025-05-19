@@ -61,24 +61,29 @@ namespace Duil_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")] Encomendas encomenda, List<int> pecasSelecionadas, List<int> quantidades, LinhaEncomenda linhaEncomenda)
+        public async Task<IActionResult> Create(
+    [Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")]
+    Encomendas encomenda,
+    List<int> pecasSelecionadas,
+    List<int> quantidades)
         {
-            encomenda.Estado = Estados.Pendente; // define estado como pendente quando criada
-            
+            encomenda.Estado = Estados.Pendente;
+
             if (ModelState.IsValid)
             {
                 _context.Add(encomenda);
                 await _context.SaveChangesAsync();
 
-                // guarda a informação das linhasEncomendas
-                for (int i = 0; i < pecasSelecionadas.Count; i++)
+                if (pecasSelecionadas == null || quantidades == null || pecasSelecionadas.Count != quantidades.Count)
                 {
-                    linhaEncomenda.Id = encomenda.Id;
-                    linhaEncomenda.PecaId = pecasSelecionadas[i];
-                    linhaEncomenda.Quantidade = quantidades[i];
+                    ModelState.AddModelError("", "Selecione pelo menos uma peça com quantidade");
+                    return View(encomenda);
                 }
+
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(encomenda);
         }
 
