@@ -19,149 +19,143 @@ namespace Duil_App.Controllers
             _context = context;
         }
 
-        // GET: Encomendas
         public async Task<IActionResult> Index()
         {
-            var encomendas = await _context.Encomendas
-               .Include(e => e.Cliente) 
-               .ToListAsync();
-
-            return View(await _context.Encomendas.ToListAsync());
+            return View(await _context.Encomendas
+                .Include(e => e.Cliente)
+                .ToListAsync());
         }
 
-        // GET: Encomendas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-     
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var encomendas = await _context.Encomendas
                 .Include(e => e.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (encomendas == null)
-            {
-                return NotFound();
-            }
-
-            return View(encomendas);
+            return encomendas == null ? NotFound() : View(encomendas);
         }
 
-        // GET: Encomendas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Encomendas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
+        [Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")]
+        Encomendas encomenda,
+        List<int> pecasSelecionadas,
+        List<int> quantidades)
+            {
+            encomenda.Estado = Estados.Pendente;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Add(encomenda);
+                    await _context.SaveChangesAsync();
+
+                    if (pecasSelecionadas != null && quantidades != null)
+                    {
+                        for (int i = 0; i < pecasSelecionadas.Count; i++)
+                        {
+                            var linha = new LinhaEncomenda
+                            {
+                                EncomendaId = encomenda.Id,
+                                PecaId = pecasSelecionadas[i],
+                                Quantidade = quantidades[i]
+                            };
+                            _context.LinhasEncomendas.Add(linha);
+                        }
+                        await _context.SaveChangesAsync();
+                    }
+
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", $"Error: {ex.Message}");
+                }
+            }
+            return View(encomenda);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var encomenda = await _context.Encomendas
+                .Include(e => e.Cliente)
+                .Include(e => e.LinhasEncomenda)
+                .FirstOrDefaultAsync(e => e.Id == id);
+
+            if (encomenda == null) return NotFound();
+
+            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)), encomenda.Estado);
+            return View(encomenda);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id,
     [Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")]
     Encomendas encomenda,
     List<int> pecasSelecionadas,
     List<int> quantidades)
         {
-            encomenda.Estado = Estados.Pendente;
-
-            if (ModelState.IsValid)
-            {
-                _context.Add(encomenda);
-                await _context.SaveChangesAsync();
-
-                if (pecasSelecionadas == null || quantidades == null || pecasSelecionadas.Count != quantidades.Count)
-                {
-                    ModelState.AddModelError("", "Selecione pelo menos uma peça com quantidade");
-                    return View(encomenda);
-                }
-
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(encomenda);
-        }
-
-        // GET: Encomendas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var encomenda = await _context.Encomendas
-                .Include(e => e.Cliente)
-                .FirstOrDefaultAsync(e => e.Id == id);
-
-            if (encomenda == null)
-            {
-                return NotFound();
-            }
-
-            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)), encomenda.Estado);
-
-            return View(encomenda);
-        }
-
-        // POST: Encomendas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")] Encomendas encomenda)
-        {
-            if (id != encomenda.Id)
-            {
-                return NotFound();
-            }
+            if (id != encomenda.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     _context.Update(encomenda);
+
+                    var existingLines = await _context.LinhasEncomendas
+                        .Where(le => le.EncomendaId == id)
+                        .ToListAsync();
+                    _context.LinhasEncomendas.RemoveRange(existingLines);
+
+                    if (pecasSelecionadas != null && quantidades != null)
+                    {
+                        for (int i = 0; i < pecasSelecionadas.Count; i++)
+                        {
+                            var linha = new LinhaEncomenda
+                            {
+                                EncomendaId = encomenda.Id,
+                                PecaId = pecasSelecionadas[i],
+                                Quantidade = quantidades[i]
+                            };
+                            _context.LinhasEncomendas.Add(linha);
+                        }
+                    }
+
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
-                    if (!EncomendasExists(encomenda.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!EncomendasExists(encomenda.Id)) throw;
+                    ModelState.AddModelError("", $"Error: {ex.Message}");
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(encomenda);
         }
 
-        // GET: Encomendas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            
+            if (id == null) return NotFound();
+
             var encomenda = await _context.Encomendas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (encomenda == null)
-            {
-                return NotFound();
-            }
-            return View(encomenda);
+
+            return encomenda == null ? NotFound() : View(encomenda);
         }
 
-        // POST: Encomendas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -170,9 +164,8 @@ namespace Duil_App.Controllers
             if (encomenda != null)
             {
                 _context.Encomendas.Remove(encomenda);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -181,21 +174,15 @@ namespace Duil_App.Controllers
             return _context.Encomendas.Any(e => e.Id == id);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> GetPecasPorCliente(string clienteId)
         {
             var pecas = await _context.Pecas
                 .Where(p => p.ClienteId == clienteId)
-                .Select(p => new
-                {
-                    id = p.Id,
-                    nome = p.Designacao
-                })
+                .Select(p => new { id = p.Id, nome = p.Designacao })
                 .ToListAsync();
 
             return Json(pecas);
         }
-
     }
 }

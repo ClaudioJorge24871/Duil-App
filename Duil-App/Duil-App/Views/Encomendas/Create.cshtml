@@ -44,17 +44,21 @@
             </div>
 
             <div id="pecasContainer">
-                <div class="form-group">
-                    <label>Peça</label>
-                    <select name="pecasSelecionadas" class="form-control">
-                        <option value="">-- Selecione uma peça --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Quantidade</label>
-                    <input type="number" name="quantidades" class="form-control" value="1" />
+                <div class="peca-row">
+                    <div class="form-group">
+                        <label>Peça</label>
+                        <select name="pecasSelecionadas" class="form-control">
+                            <option value="">-- Selecione uma peça --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="number" name="quantidades" class="form-control" value="1" />
+                        <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                    </div>
                 </div>
             </div>
+            <button type="button" id="addPeca" class="btn btn-secondary mb-3">Adicionar Peça</button>
 
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />
@@ -135,6 +139,30 @@
                     return false;
                 }
             });
+
+            $('#addPeca').click(function () {
+                const newRow = `
+                        <div class="peca-row">
+                            <div class="form-group">
+                                <label>Peça</label>
+                                <select name="pecasSelecionadas" class="form-control">
+                                    <option value="">-- Selecione uma peça --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantidade</label>
+                                <input type="number" name="quantidades" class="form-control" value="1" />
+                                <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                            </div>
+                        </div>`;
+                $('#pecasContainer').append(newRow);
+            });
+
+            $(document).on('click', '.remove-peca', function () {
+                $(this).closest('.peca-row').remove();
+            });
+        });
+    </script>
         });
     </script>
 }

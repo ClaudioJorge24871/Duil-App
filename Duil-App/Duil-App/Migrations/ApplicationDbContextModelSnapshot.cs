@@ -92,7 +92,7 @@ namespace Duil_App.Migrations
 
                     b.HasIndex("ClienteId");
 
-                    b.ToTable("Encomendas");
+                    b.ToTable("Encomendas", (string)null);
                 });
 
             modelBuilder.Entity("Duil_App.Models.LinhaEncomenda", b =>
@@ -118,7 +118,7 @@ namespace Duil_App.Migrations
 
                     b.HasIndex("PecaId");
 
-                    b.ToTable("LinhasEncomendas");
+                    b.ToTable("LinhasEncomendas", (string)null);
                 });
 
             modelBuilder.Entity("Duil_App.Models.Pecas", b =>
@@ -157,7 +157,7 @@ namespace Duil_App.Migrations
 
                     b.HasIndex("FabricaId");
 
-                    b.ToTable("Pecas");
+                    b.ToTable("Pecas", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
