@@ -81,6 +81,7 @@ namespace Duil_App.Controllers
                 ModelState.AddModelError("TotalPrecoUnit", "O valor total deve ser maior que zero");
             }
 
+           
 
             if (ModelState.IsValid)
             {

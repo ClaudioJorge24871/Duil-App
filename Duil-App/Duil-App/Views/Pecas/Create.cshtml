@@ -23,7 +23,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="PrecoUnit" class="control-label"></label>
-                <input asp-for="PrecoUnit" class="form-control" />
+                <input asp-for="PrecoUnit"
+                       class="form-control"
+                       type="text"
+                       inputmode="decimal"
+                       oninput="this.value = this.value.replace(/[^0-9,.]/g, '').replace(/(\..*)\./g, '$1')" />
                 <span asp-validation-for="PrecoUnit" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -65,14 +69,18 @@
     <script>
 
         $(document).ready(function () {
-            $('#PrecoUnit').on('input', function (e) {
-                var value = $(this).val();
-                var newValue = value.replace('.', ',');
-                if (newValue !== value) {
-                    $(this).val(newValue);
+            $('form').submit(function (e) {
+                var priceInput = $('#PrecoUnit');
+                var value = priceInput.val().replace('.', ',');
+
+                if (value.match(/^\d+\.\d+,\d+$/)) {
+                    value = value.replace('.', '');
                 }
+
+                priceInput.val(value);
             });
         });
+
 
         $(function () {
             var fabricaSelected = false;
