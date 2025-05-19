@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Duil_App.Models
@@ -31,8 +32,8 @@ namespace Duil_App.Models
         /// Total do preço da encomenda 
         /// </summary>
         [Display(Name = "Valor")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "O preço total deve ser maior que zero.")]
-        [Required(ErrorMessage ="O {0} total é um campo obrigatório")]
+        [Required(ErrorMessage = "O {0} total é um campo obrigatório")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal TotalPrecoUnit { get; set; }
 
         /// <summary>

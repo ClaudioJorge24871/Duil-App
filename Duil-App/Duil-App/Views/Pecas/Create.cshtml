@@ -63,6 +63,17 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
     <script>
+
+        $(document).ready(function () {
+            $('#PrecoUnit').on('input', function (e) {
+                var value = $(this).val();
+                var newValue = value.replace('.', ',');
+                if (newValue !== value) {
+                    $(this).val(newValue);
+                }
+            });
+        });
+
         $(function () {
             var fabricaSelected = false;
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Duil_App.Models
@@ -37,8 +38,8 @@ namespace Duil_App.Models
         /// Preco unitário
         /// </summary>
         [Display(Name = "Preço unitário")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "O campo {0} tem de ser um número válido")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal PrecoUnit { get; set; }
 
         /// <summary>

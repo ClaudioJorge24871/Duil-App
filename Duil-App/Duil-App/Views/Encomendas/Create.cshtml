@@ -23,14 +23,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="TotalPrecoUnit" class="control-label"></label>
-                <input asp-for="TotalPrecoUnit" class="form-control" />
+                <input asp-for="TotalPrecoUnit" class="form-control" readonly />
                 <span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="QuantidadeTotal" class="control-label"></label>
-                <input asp-for="QuantidadeTotal" class="form-control" />
+                <input asp-for="QuantidadeTotal" class="form-control" readonly />
                 <span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="TotalPrecoUnit" />
+            <input type="hidden" asp-for="QuantidadeTotal" />
+
             <div class="form-group">
                 <label asp-for="Transportadora" class="control-label"></label>
                 <input asp-for="Transportadora" class="form-control" />
@@ -53,7 +56,7 @@
                     </div>
                     <div class="form-group">
                         <label>Quantidade</label>
-                        <input type="number" name="quantidades" class="form-control" value="1" />
+                        <input type="number" name="quantidades" class="form-control" value="1" min="1" />
                         <button type="button" class="btn btn-danger remove-peca">Remover</button>
                     </div>
                 </div>
@@ -82,6 +85,63 @@
     <script>
         $(function () {
             var clienteSelected = false;
+            const pecasData = {}; // Store peça prices
+
+            function updateTotals() {
+                let totalQuantity = 0;
+                let totalPrice = 0;
+
+                $('.peca-row').each(function () {
+                    const select = $(this).find('select');
+                    const quantityInput = $(this).find('input[type="number"]');
+                    const pecaId = select.val();
+                    const quantity = parseInt(quantityInput.val()) || 0;
+
+                    if (pecaId && pecasData[pecaId]) {
+                        totalQuantity += quantity;
+                        totalPrice += pecasData[pecaId].preco * quantity;
+                    }
+                });
+
+                // Format for invariant culture
+                const formattedPrice = totalPrice.toFixed(2);
+
+                $('#QuantidadeTotal').val(totalQuantity);
+                $('#TotalPrecoUnit').val(formattedPrice.replace('.', ','));
+                $('input[type="hidden"][asp-for="QuantidadeTotal"]').val(totalQuantity);
+                $('input[type="hidden"][asp-for="TotalPrecoUnit"]').val(formattedPrice);
+            }
+            
+
+            function loadPecas(clienteId) {
+                fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Clear previous data
+                        Object.keys(pecasData).forEach(key => delete pecasData[key]);
+
+                        // Store prices and populate selects
+                        data.forEach(p => {
+                            pecasData[p.id] = { preco: p.preco };
+
+                            $('select[name="pecasSelecionadas"]').each(function () {
+                                const select = $(this);
+                                const currentVal = select.val();
+                                select.empty().append('<option value="">-- Selecione uma peça --</option>');
+
+                                data.forEach(peca => {
+                                    const option = new Option(peca.nome, peca.id);
+                                    option.setAttribute('data-preco', peca.preco);
+                                    select.append(option);
+                                });
+
+                                select.val(currentVal);
+                            });
+                        });
+
+                        updateTotals();
+                    });
+            }
 
             $("#cliente-nome").autocomplete({
                 source: '/Clientes/Search',
@@ -90,28 +150,8 @@
                     $("#cliente-nome").val(ui.item.label);
                     $("#ClienteId").val(ui.item.value);
                     clienteSelected = true;
-
-                    fetch(`/Encomendas/GetPecasPorCliente?clienteId=${ui.item.value}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            const pecasSelect = document.querySelector("select[name='pecasSelecionadas']");
-                            pecasSelect.innerHTML = '<option value="">-- Selecione uma peça --</option>';
-
-                            if (data.length === 0) {
-                                pecasSelect.innerHTML += "<option value=''>Nenhuma peça encontrada</option>";
-                                return;
-                            }
-
-                            data.forEach(p => {
-                                const option = document.createElement("option");
-                                option.value = p.id;
-                                option.text = p.nome;
-                                pecasSelect.appendChild(option);
-                            });
-                        })
-                        .catch(error => console.error("Erro ao carregar peças:", error));
-
-                    return false; 
+                    loadPecas(ui.item.value);
+                    return false;
                 },
                 focus: function (event, ui) {
                     event.preventDefault();
@@ -121,48 +161,81 @@
             $("#cliente-nome").on("input", function () {
                 $("#ClienteId").val("");
                 clienteSelected = false;
-            });
-
-            $("form").on("submit", function (event) {
-                var nomeCliente = $("#cliente-nome").val();
-                var clienteId = $("#ClienteId").val();
-
-                if (!clienteSelected && nomeCliente !== "") {
-                    event.preventDefault();
-                    $("[data-valmsg-for='ClienteId']").text("Por favor, selecione um cliente da lista");
-                    return false;
-                }
-
-                if (clienteId === "") {
-                    event.preventDefault();
-                    $("[data-valmsg-for='ClienteId']").text("O cliente é obrigatório");
-                    return false;
-                }
+                $('select[name="pecasSelecionadas"]').empty().append('<option value="">-- Selecione uma peça --</option>');
+                $('#QuantidadeTotal').val('');
+                $('#TotalPrecoUnit').val('');
             });
 
             $('#addPeca').click(function () {
                 const newRow = `
-                        <div class="peca-row">
-                            <div class="form-group">
-                                <label>Peça</label>
-                                <select name="pecasSelecionadas" class="form-control">
-                                    <option value="">-- Selecione uma peça --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Quantidade</label>
-                                <input type="number" name="quantidades" class="form-control" value="1" />
-                                <button type="button" class="btn btn-danger remove-peca">Remover</button>
-                            </div>
-                        </div>`;
+                            <div class="peca-row">
+                                <div class="form-group">
+                                    <label>Peça</label>
+                                    <select name="pecasSelecionadas" class="form-control">
+                                        <option value="">-- Selecione uma peça --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Quantidade</label>
+                                    <input type="number" name="quantidades" class="form-control" value="1" min="1" />
+                                    <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                                </div>
+                            </div>`;
                 $('#pecasContainer').append(newRow);
+
+                // Reload peças if client is selected
+                if ($('#ClienteId').val()) {
+                    loadPecas($('#ClienteId').val());
+                }
             });
 
             $(document).on('click', '.remove-peca', function () {
                 $(this).closest('.peca-row').remove();
+                updateTotals();
             });
-        });
-    </script>
+
+            $(document).on('input change', 'select[name="pecasSelecionadas"], input[name="quantidades"]', function () {
+                updateTotals();
+            });
+
+            $("form").on("submit", function (event) {
+                const clienteId = $("#ClienteId").val();
+                const hasValidPecas = $('select[name="pecasSelecionadas"]').filter(function () {
+                    return $(this).val() !== "";
+                }).length > 0;
+
+                let isValid = true;
+
+                // Client-side validation
+                if (!clienteSelected || clienteId === "") {
+                    $("[data-valmsg-for='ClienteId']").text("O cliente é obrigatório");
+                    isValid = false;
+                }
+
+                if (!hasValidPecas) {
+                    alert("Selecione pelo menos uma peça!");
+                    isValid = false;
+                }
+
+                // Check calculated values
+                const totalQuantity = parseInt($('#QuantidadeTotal').val()) || 0;
+                const totalPrice = parseFloat($('#TotalPrecoUnit').val()) || 0;
+
+                if (totalQuantity < 1) {
+                    $("[data-valmsg-for='QuantidadeTotal']").text("A quantidade total deve ser maior que zero");
+                    isValid = false;
+                }
+
+                if (totalPrice < 0.01) {
+                    $("[data-valmsg-for='TotalPrecoUnit']").text("O valor total deve ser maior que zero");
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
         });
     </script>
 }
