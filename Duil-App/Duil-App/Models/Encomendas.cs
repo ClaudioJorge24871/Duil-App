@@ -34,6 +34,7 @@ namespace Duil_App.Models
         [Display(Name = "Valor")]
         [Required(ErrorMessage = "O {0} total é um campo obrigatório")]
         [Column(TypeName = "decimal(18, 2)")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)] 
         public decimal TotalPrecoUnit { get; set; }
 
         /// <summary>

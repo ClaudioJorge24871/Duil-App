@@ -81,7 +81,12 @@
 
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
-
+    <script>
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) ||
+                /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
+        };
+    </script>
     <script>
         $(function () {
             var clienteSelected = false;
@@ -99,46 +104,42 @@
 
                     if (pecaId && pecasData[pecaId]) {
                         totalQuantity += quantity;
-                        totalPrice += pecasData[pecaId].preco * quantity;
+                        // Parse price as float using invariant culture
+                        totalPrice += parseFloat(pecasData[pecaId].preco) * quantity;
                     }
                 });
 
-                // Format for invariant culture
-                const formattedPrice = totalPrice.toFixed(2);
-
+                // Update display with comma, hidden field with dot
                 $('#QuantidadeTotal').val(totalQuantity);
-                $('#TotalPrecoUnit').val(formattedPrice.replace('.', ','));
+                $('#TotalPrecoUnit').val(totalPrice.toFixed(2).replace('.', ',')); // Display with comma
                 $('input[type="hidden"][asp-for="QuantidadeTotal"]').val(totalQuantity);
-                $('input[type="hidden"][asp-for="TotalPrecoUnit"]').val(formattedPrice);
+                $('input[type="hidden"][asp-for="TotalPrecoUnit"]').val(totalPrice.toFixed(2)); // Store with dot
             }
-            
 
             function loadPecas(clienteId) {
                 fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
                     .then(response => response.json())
                     .then(data => {
-                        // Clear previous data
                         Object.keys(pecasData).forEach(key => delete pecasData[key]);
 
-                        // Store prices and populate selects
                         data.forEach(p => {
-                            pecasData[p.id] = { preco: p.preco };
+                            pecasData[p.id] = {
+                                preco: parseFloat(p.preco) // Convert string to number
+                            };
 
                             $('select[name="pecasSelecionadas"]').each(function () {
                                 const select = $(this);
-                                const currentVal = select.val();
                                 select.empty().append('<option value="">-- Selecione uma peça --</option>');
-
                                 data.forEach(peca => {
-                                    const option = new Option(peca.nome, peca.id);
-                                    option.setAttribute('data-preco', peca.preco);
+                                    const displayPrice = parseFloat(peca.preco).toFixed(2).replace('.', ',');
+                                    const option = new Option(
+                                        `${peca.nome} (${displayPrice} €)`,
+                                        peca.id
+                                    );
                                     select.append(option);
                                 });
-
-                                select.val(currentVal);
                             });
                         });
-
                         updateTotals();
                     });
             }
@@ -199,42 +200,10 @@
             });
 
             $("form").on("submit", function (event) {
-                const clienteId = $("#ClienteId").val();
-                const hasValidPecas = $('select[name="pecasSelecionadas"]').filter(function () {
-                    return $(this).val() !== "";
-                }).length > 0;
+                const visibleTotal = $('#TotalPrecoUnit').val().replace(',', '.');
+                $('input[type="hidden"][asp-for="TotalPrecoUnit"]').val(visibleTotal);
 
-                let isValid = true;
-
-                // Client-side validation
-                if (!clienteSelected || clienteId === "") {
-                    $("[data-valmsg-for='ClienteId']").text("O cliente é obrigatório");
-                    isValid = false;
-                }
-
-                if (!hasValidPecas) {
-                    alert("Selecione pelo menos uma peça!");
-                    isValid = false;
-                }
-
-                // Check calculated values
-                const totalQuantity = parseInt($('#QuantidadeTotal').val()) || 0;
-                const totalPrice = parseFloat($('#TotalPrecoUnit').val()) || 0;
-
-                if (totalQuantity < 1) {
-                    $("[data-valmsg-for='QuantidadeTotal']").text("A quantidade total deve ser maior que zero");
-                    isValid = false;
-                }
-
-                if (totalPrice < 0.01) {
-                    $("[data-valmsg-for='TotalPrecoUnit']").text("O valor total deve ser maior que zero");
-                    isValid = false;
-                }
-
-                if (!isValid) {
-                    event.preventDefault();
-                    return false;
-                }
+                $('#TotalPrecoUnit').rules('remove', 'number');
             });
         });
     </script>

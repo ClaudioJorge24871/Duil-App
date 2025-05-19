@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Duil_App.Data;
 using Duil_App.Models;
+using System.Globalization;
 
 namespace Duil_App.Controllers
 {
@@ -81,7 +82,7 @@ namespace Duil_App.Controllers
                 ModelState.AddModelError("TotalPrecoUnit", "O valor total deve ser maior que zero");
             }
 
-           
+
 
             if (ModelState.IsValid)
             {
@@ -235,7 +236,7 @@ namespace Duil_App.Controllers
                 .Select(p => new {
                     id = p.Id,
                     nome = p.Designacao,
-                    preco = p.PrecoUnit
+                    preco = p.PrecoUnit.ToString(CultureInfo.InvariantCulture) 
                 })
                 .ToListAsync();
 
