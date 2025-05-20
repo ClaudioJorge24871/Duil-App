@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Duil_App.Data;
 using Duil_App.Models;
 using System.Configuration;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace Duil_App.Controllers
 {
@@ -67,10 +68,34 @@ namespace Duil_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Referencia,Designacao,PrecoUnit,FabricaId,ClienteId,Imagem")] Pecas pecas)
+        public async Task<IActionResult> Create([Bind("Referencia,Designacao,PrecoUnit,FabricaId,ClienteId")] Pecas pecas,
+            IFormFile imagemFile, 
+            [FromServices] IWebHostEnvironment hostingEnvironment)
         {
             if (ModelState.IsValid)
             {
+                if (imagemFile != null && imagemFile.Length > 0)
+                {
+                    try
+                    {
+                        // Gera um nome único para o ficheiro
+                        string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + imagemFile.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        Directory.CreateDirectory(uploadsFolder); 
+
+                        using(var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await imagemFile.CopyToAsync(fileStream);
+                        }
+                        pecas.Imagem = uniqueFileName;
+                    }catch (Exception ex) {
+                        ModelState.AddModelError("Imagem", "Erro ao fazer upload da imagem: " + ex.Message);
+                        return View(pecas);
+                    }
+                }
+
 
                 if (_context.Pecas.Any(p => p.Referencia == pecas.Referencia))
                 {

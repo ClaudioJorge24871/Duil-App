@@ -51,9 +51,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Cliente.Nome)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Imagem)
-            </td>
+                <td>
+                    <img src="~/images/@item.Imagem"
+                         alt="Image"
+                         class="img-thumbnail"
+                         style="width: 80px; height: 100px;" /> 
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Mais</a> |
