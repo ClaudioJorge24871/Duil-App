@@ -76,9 +76,18 @@ namespace Duil_App.Controllers
             {
                 if (imagemFile != null && imagemFile.Length > 0)
                 {
+                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+                    var fileExtension = Path.GetExtension(imagemFile.FileName).ToLowerInvariant();
+
+                    if (!allowedExtensions.Contains(fileExtension))
+                    {
+                        ModelState.AddModelError("Imagem", "Apenas imagens nos formatos JPEG, PNG, GIF ou WEBP são permitidas.");
+                        return View(pecas);
+                    }
+
+
                     try
                     {
-                        // Gera um nome único para o ficheiro
                         string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
                         string uniqueFileName = Guid.NewGuid().ToString() + "_" + imagemFile.FileName;
                         string filePath = Path.Combine(uploadsFolder, uniqueFileName);

@@ -45,7 +45,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="Imagem" class="control-label"></label>
-                <input type="file" name="imagemFile" class="form-control" />
+                <input type="file"
+                       name="imagemFile"
+                       class="form-control"
+                       accept=".jpg,.jpeg,.png,.webp"
+                       aria-describedby="fileHelp" />
+                <small id="fileHelp" class="form-text text-muted">
+                    Formatos permitidos: .jpg, .jpeg, .png, .gif, .webp
+                </small>
                 <span asp-validation-for="Imagem" class="text-danger"></span>
             </div>
             <div class="form-group">
