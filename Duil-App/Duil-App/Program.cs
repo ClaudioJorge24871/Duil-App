@@ -7,8 +7,8 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<RequestLocalizationOptions>(options => {
-    var supportedCultures = new[] { new CultureInfo("pt-PT") };
-    options.DefaultRequestCulture = new RequestCulture("pt-PT");
+    var supportedCultures = new[] { new CultureInfo("en-US") };
+    options.DefaultRequestCulture = new RequestCulture("en-US");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });
@@ -25,6 +25,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 
 var app = builder.Build();
+
+var supportedCultures = new[] { new CultureInfo("en-US") };
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en-US"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 
 // Configure the HTTP request pipeline.

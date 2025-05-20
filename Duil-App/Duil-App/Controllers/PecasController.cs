@@ -160,7 +160,11 @@ namespace Duil_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Referencia,Designacao,PrecoUnit,FabricaId,ClienteId,Imagem")] Pecas peca)
+        public async Task<IActionResult> Edit(
+    int id,
+    [Bind("Id,Referencia,Designacao,PrecoUnit,FabricaId,ClienteId")] Pecas peca,
+    IFormFile imagemFile,
+    [FromServices] IWebHostEnvironment hostingEnvironment)
         {
             if (id != peca.Id)
             {
@@ -171,8 +175,59 @@ namespace Duil_App.Controllers
             {
                 try
                 {
-                    _context.Update(peca);
+                    var existingPeca = await _context.Pecas.FindAsync(peca.Id);
+                    if (existingPeca == null)
+                    {
+                        return NotFound();
+                    }
+
+                    if (_context.Pecas.Any(p => p.Referencia == peca.Referencia && p.Id != peca.Id))
+                    {
+                        ModelState.AddModelError("Referencia", "Esta referência já existe.");
+                        return View(peca);
+                    }
+
+                    if (imagemFile != null && imagemFile.Length > 0)
+                    {
+                        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+                        var fileExtension = Path.GetExtension(imagemFile.FileName).ToLowerInvariant();
+                        if (!allowedExtensions.Contains(fileExtension))
+                        {
+                            ModelState.AddModelError("Imagem", "Apenas imagens nos formatos JPEG, PNG, GIF ou WEBP são permitidas.");
+                            return View(peca);
+                        }
+
+                        if (!string.IsNullOrEmpty(existingPeca.Imagem))
+                        {
+                            string oldFilePath = Path.Combine(hostingEnvironment.WebRootPath, "images", existingPeca.Imagem);
+                            if (System.IO.File.Exists(oldFilePath))
+                            {
+                                System.IO.File.Delete(oldFilePath);
+                            }
+                        }
+
+                        string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + imagemFile.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        Directory.CreateDirectory(uploadsFolder);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await imagemFile.CopyToAsync(fileStream);
+                        }
+
+                        existingPeca.Imagem = uniqueFileName;
+                    }
+
+                    existingPeca.Referencia = peca.Referencia;
+                    existingPeca.Designacao = peca.Designacao;
+                    existingPeca.PrecoUnit = peca.PrecoUnit;
+                    existingPeca.FabricaId = peca.FabricaId;
+                    existingPeca.ClienteId = peca.ClienteId;
+
+                    _context.Update(existingPeca);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -185,7 +240,6 @@ namespace Duil_App.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(peca);
         }

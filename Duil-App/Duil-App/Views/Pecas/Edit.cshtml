@@ -12,14 +12,17 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Imagem" /> 
+
             <div class="form-group">
                 <label asp-for="Referencia" class="control-label"></label>
                 <input asp-for="Referencia" class="form-control" />
                 <span asp-validation-for="Referencia" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Designacao" class="control-label"></label>
                 <input asp-for="Designacao" class="form-control" />
@@ -27,27 +30,51 @@
             </div>
             <div class="form-group">
                 <label asp-for="PrecoUnit" class="control-label"></label>
-                <input asp-for="PrecoUnit" class="form-control" />
+                <input asp-for="PrecoUnit"
+                       class="form-control"
+                       type="text"
+                       inputmode="decimal"
+                       placeholder="Por favor utilize o formato 0.00"
+                       oninput="this.value = this.value.replace(/\,/g, '.').replace(/(\..*)\./g, '$1')" />
                 <span asp-validation-for="PrecoUnit" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FabricaId" class="control-label"></label>
+                <label>Nome da Fábrica</label>
                 <input type="text" id="fabrica-nome" class="form-control" autocomplete="off" value="@fabricaNome" />
                 <input asp-for="FabricaId" type="hidden" id="FabricaId" value="@fabricaId" />
                 <span asp-validation-for="FabricaId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="ClienteId" class="control-label"></label>
+                <label>Nome do Cliente</label>
                 <input type="text" id="cliente-nome" class="form-control" autocomplete="off" value="@clienteNome" />
                 <input asp-for="ClienteId" type="hidden" id="ClienteId" value="@clienteId" />
                 <span asp-validation-for="ClienteId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Imagem" class="control-label"></label>
-                <input asp-for="Imagem" class="form-control" />
+                <input type="file"
+                       name="imagemFile"
+                       class="form-control"
+                       accept=".jpg,.jpeg,.png,.gif,.webp"
+                       aria-describedby="fileHelp" />
+                <small id="fileHelp" class="form-text text-muted">
+                    Formatos permitidos: .jpg, .jpeg, .png, .gif, .webp
+                </small>
                 <span asp-validation-for="Imagem" class="text-danger"></span>
+
+                @if (!string.IsNullOrEmpty(Model.Imagem))
+                {
+                    <div class="mt-2">
+                        <img src="~/images/@Model.Imagem"
+                             alt="Current Image"
+                             class="img-thumbnail"
+                             style="max-width: 200px;" />
+                    </div>
+                }
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Guardar Alterações" class="btn btn-primary" />
             </div>
@@ -66,6 +93,20 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
     <script>
+
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                var priceInput = $('#PrecoUnit');
+                var value = priceInput.val().replace(',', '.');
+
+                if (value.match(/^\d+\.\d+,\d+$/)) {
+                    value = value.replace(',', '.');
+                }
+
+                priceInput.val(value);
+            });
+        });
+
         $(function () {
             var fabricaSelected = @((!string.IsNullOrEmpty(fabricaNome)).ToString().ToLower());
 
