@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Duil_App.Data;
 using Duil_App.Models;
+using System.Globalization;
 
 namespace Duil_App.Controllers
 {
@@ -45,12 +46,43 @@ namespace Duil_App.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-        [Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")]
-        Encomendas encomenda,
-        List<int> pecasSelecionadas,
-        List<int> quantidades)
-            {
+    [Bind("Id,IdLadoCliente,Data,Transportadora,Estado,ClienteId,TotalPrecoUnit,QuantidadeTotal")] Encomendas encomenda,
+    List<int> pecasSelecionadas,
+    List<int> quantidades)
+        {
             encomenda.Estado = Estados.Pendente;
+
+            if (pecasSelecionadas == null || quantidades == null || !pecasSelecionadas.Any())
+            {
+                ModelState.AddModelError("", "Selecione pelo menos uma peça");
+            }
+            else
+            {
+                try
+                {
+                    var pecas = await _context.Pecas
+                        .Where(p => pecasSelecionadas.Contains(p.Id))
+                        .ToListAsync();
+
+                    // Manual decimal parsing to handle culture differences
+                    encomenda.QuantidadeTotal = quantidades.Sum();
+                    encomenda.TotalPrecoUnit = pecas
+                        .Zip(quantidades, (p, q) => p.PrecoUnit * q)
+                        .Sum();
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Erro no cálculo dos valores");
+                }
+            }
+
+            // Server-side validation
+            if (encomenda.TotalPrecoUnit < 0.01m)
+            {
+                ModelState.AddModelError("TotalPrecoUnit", "O valor total deve ser maior que zero");
+            }
+
+
 
             if (ModelState.IsValid)
             {
@@ -81,6 +113,16 @@ namespace Duil_App.Controllers
                     ModelState.AddModelError("", $"Error: {ex.Message}");
                 }
             }
+            else
+            {
+                // Add error logging for debugging
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine($"Validation Error: {error.ErrorMessage}");
+                }
+            }
+
             return View(encomenda);
         }
 
@@ -102,12 +144,24 @@ namespace Duil_App.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
-    [Bind("Id,IdLadoCliente,Data,TotalPrecoUnit,QuantidadeTotal,Transportadora,Estado,ClienteId")]
-    Encomendas encomenda,
+    [Bind("Id,IdLadoCliente,Data,Transportadora,Estado,ClienteId,TotalPrecoUnit,QuantidadeTotal")] Encomendas encomenda,
     List<int> pecasSelecionadas,
     List<int> quantidades)
         {
             if (id != encomenda.Id) return NotFound();
+
+            if (pecasSelecionadas != null && quantidades != null)
+            {
+                // Recalculate totals
+                var pecas = await _context.Pecas
+                    .Where(p => pecasSelecionadas.Contains(p.Id))
+                    .ToListAsync();
+
+                encomenda.QuantidadeTotal = quantidades.Sum();
+                encomenda.TotalPrecoUnit = pecas
+                    .Zip(quantidades, (p, q) => p.PrecoUnit * q)
+                    .Sum();
+            }
 
             if (ModelState.IsValid)
             {
@@ -179,7 +233,11 @@ namespace Duil_App.Controllers
         {
             var pecas = await _context.Pecas
                 .Where(p => p.ClienteId == clienteId)
-                .Select(p => new { id = p.Id, nome = p.Designacao })
+                .Select(p => new {
+                    id = p.Id,
+                    nome = p.Designacao,
+                    preco = p.PrecoUnit.ToString(CultureInfo.InvariantCulture) 
+                })
                 .ToListAsync();
 
             return Json(pecas);
