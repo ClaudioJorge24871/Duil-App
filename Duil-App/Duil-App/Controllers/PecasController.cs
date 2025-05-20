@@ -162,7 +162,7 @@ namespace Duil_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
     int id,
-    [Bind("Id,Referencia,Designacao,PrecoUnit,FabricaId,ClienteId")] Pecas peca,
+    [Bind("Id,Referencia,Designacao,PrecoUnit,FabricaId,ClienteId,Imagem")] Pecas peca,
     IFormFile imagemFile,
     [FromServices] IWebHostEnvironment hostingEnvironment)
         {
@@ -170,6 +170,21 @@ namespace Duil_App.Controllers
             {
                 return NotFound();
             }
+
+            if (imagemFile != null && imagemFile.Length > 0)
+            {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+                var fileExtension = Path.GetExtension(imagemFile.FileName).ToLowerInvariant();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("Imagem", "Apenas imagens nos formatos JPEG, PNG, GIF ou WEBP são permitidas.");
+                }
+            }
+            else
+            {
+                ModelState.Remove(nameof(imagemFile));
+            }
+            
 
             if (ModelState.IsValid)
             {
@@ -181,6 +196,8 @@ namespace Duil_App.Controllers
                         return NotFound();
                     }
 
+                    string currentImage = existingPeca.Imagem;
+
                     if (_context.Pecas.Any(p => p.Referencia == peca.Referencia && p.Id != peca.Id))
                     {
                         ModelState.AddModelError("Referencia", "Esta referência já existe.");
@@ -189,17 +206,9 @@ namespace Duil_App.Controllers
 
                     if (imagemFile != null && imagemFile.Length > 0)
                     {
-                        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
-                        var fileExtension = Path.GetExtension(imagemFile.FileName).ToLowerInvariant();
-                        if (!allowedExtensions.Contains(fileExtension))
+                        if (!string.IsNullOrEmpty(currentImage))
                         {
-                            ModelState.AddModelError("Imagem", "Apenas imagens nos formatos JPEG, PNG, GIF ou WEBP são permitidas.");
-                            return View(peca);
-                        }
-
-                        if (!string.IsNullOrEmpty(existingPeca.Imagem))
-                        {
-                            string oldFilePath = Path.Combine(hostingEnvironment.WebRootPath, "images", existingPeca.Imagem);
+                            string oldFilePath = Path.Combine(hostingEnvironment.WebRootPath, "images", currentImage);
                             if (System.IO.File.Exists(oldFilePath))
                             {
                                 System.IO.File.Delete(oldFilePath);
@@ -218,6 +227,10 @@ namespace Duil_App.Controllers
 
                         existingPeca.Imagem = uniqueFileName;
                     }
+                    else
+                    {
+                        existingPeca.Imagem = currentImage;
+                    }
 
                     existingPeca.Referencia = peca.Referencia;
                     existingPeca.Designacao = peca.Designacao;
@@ -231,6 +244,7 @@ namespace Duil_App.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
+
                     if (!PecasExists(peca.Id))
                     {
                         return NotFound();
