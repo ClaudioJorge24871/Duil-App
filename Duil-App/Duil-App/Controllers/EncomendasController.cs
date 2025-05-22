@@ -46,9 +46,9 @@ namespace Duil_App.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-    [Bind("Id,IdLadoCliente,Data,Transportadora,Estado,ClienteId,TotalPrecoUnit,QuantidadeTotal")] Encomendas encomenda,
-    List<int> pecasSelecionadas,
-    List<int> quantidades)
+            [Bind("Id,IdLadoCliente,Data,Transportadora,Estado,ClienteId,TotalPrecoUnit,QuantidadeTotal")] Encomendas encomenda,
+            List<int> pecasSelecionadas,
+            List<int> quantidades)
         {
             encomenda.Estado = Estados.Pendente;
 
@@ -82,8 +82,6 @@ namespace Duil_App.Controllers
                 ModelState.AddModelError("TotalPrecoUnit", "O valor total deve ser maior que zero");
             }
 
-
-
             if (ModelState.IsValid)
             {
                 try
@@ -98,6 +96,7 @@ namespace Duil_App.Controllers
                             var linha = new LinhaEncomenda
                             {
                                 EncomendaId = encomenda.Id,
+                                
                                 PecaId = pecasSelecionadas[i],
                                 Quantidade = quantidades[i]
                             };
@@ -133,6 +132,7 @@ namespace Duil_App.Controllers
             var encomenda = await _context.Encomendas
                 .Include(e => e.Cliente)
                 .Include(e => e.LinhasEncomenda)
+                .ThenInclude(le => le.Peca)
                 .FirstOrDefaultAsync(e => e.Id == id);
 
             if (encomenda == null) return NotFound();
@@ -144,9 +144,10 @@ namespace Duil_App.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
-    [Bind("Id,IdLadoCliente,Data,Transportadora,Estado,ClienteId,TotalPrecoUnit,QuantidadeTotal")] Encomendas encomenda,
-    List<int> pecasSelecionadas,
-    List<int> quantidades)
+        [Bind("Id,IdLadoCliente,Data,Transportadora,Estado,ClienteId,TotalPrecoUnit,QuantidadeTotal")] Encomendas encomenda,
+        //Lista de ids das peças
+        List<int> pecasSelecionadas,
+        List<int> quantidades)
         {
             if (id != encomenda.Id) return NotFound();
 

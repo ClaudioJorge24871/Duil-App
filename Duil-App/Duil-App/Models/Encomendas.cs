@@ -69,7 +69,7 @@ namespace Duil_App.Models
         public required Clientes Cliente { get; set; }
 
 
-        public ICollection<LinhaEncomenda>? LinhasEncomenda { get; set; }
+        public ICollection<LinhaEncomenda> LinhasEncomenda { get; set; } = new List<LinhaEncomenda>();
     }
 
     /// <summary>

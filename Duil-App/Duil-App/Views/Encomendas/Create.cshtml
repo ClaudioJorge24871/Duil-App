@@ -134,7 +134,7 @@
                                     const displayPrice = parseFloat(peca.preco).toFixed(2).replace('.', ',');
                                     const option = new Option(
                                         `${peca.nome} (${displayPrice} €)`,
-                                        peca.id
+                                        peca.id, peca
                                     );
                                     select.append(option);
                                 });
