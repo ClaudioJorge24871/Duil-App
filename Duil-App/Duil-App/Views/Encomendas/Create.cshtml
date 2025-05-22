@@ -116,34 +116,38 @@
                 $('input[type="hidden"][asp-for="TotalPrecoUnit"]').val(totalPrice.toFixed(2)); // Store with dot
             }
 
+            function populateSelect(select) {
+                select.empty().append('<option value="">-- Selecione uma peça --</option>');
+                for (const id in pecasData) {
+                    const peca = pecasData[id];
+                    const displayPrice = peca.preco.toFixed(2).replace('.', ',');
+                    const option = new Option(`${peca.nome} (${displayPrice} €)`, id);
+                    select.append(option);
+                }
+        }
+
+
             function loadPecas(clienteId) {
-                fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        Object.keys(pecasData).forEach(key => delete pecasData[key]);
+            fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
+                .then(response => response.json())
+                .then(data => {
+                    Object.keys(pecasData).forEach(key => delete pecasData[key]);
 
-                        data.forEach(p => {
-                            pecasData[p.id] = {
-                                preco: parseFloat(p.preco) // Convert string to number
-                            };
-
-                            $('select[name="pecasSelecionadas"]').each(function () {
-                                const select = $(this);
-                                select.empty().append('<option value="">-- Selecione uma peça --</option>');
-                                data.forEach(peca => {
-                                    const displayPrice = parseFloat(peca.preco).toFixed(2).replace('.', ',');
-                                    const option = new Option(
-                                        `${peca.nome} (${displayPrice} €)`,
-                                        peca.id, peca
-                                    );
-                                    select.append(option);
-                                });
-                            });
-                        });
-                        updateTotals();
+                    data.forEach(p => {
+                        pecasData[p.id] = {
+                            nome: p.nome,
+                            preco: parseFloat(p.preco)
+                        };
                     });
-            }
 
+                    // Atualiza todos os selects existentes
+                    $('select[name="pecasSelecionadas"]').each(function () {
+                        populateSelect($(this));
+                    });
+
+                    updateTotals();
+                });
+        }
             $("#cliente-nome").autocomplete({
                 source: '/Clientes/Search',
                 minLength: 1,
@@ -169,25 +173,30 @@
 
             $('#addPeca').click(function () {
                 const newRow = `
-                            <div class="peca-row">
-                                <div class="form-group">
-                                    <label>Peça</label>
-                                    <select name="pecasSelecionadas" class="form-control">
-                                        <option value="">-- Selecione uma peça --</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Quantidade</label>
-                                    <input type="number" name="quantidades" class="form-control" value="1" min="1" />
-                                    <button type="button" class="btn btn-danger remove-peca">Remover</button>
-                                </div>
-                            </div>`;
-                $('#pecasContainer').append(newRow);
+                <div class="peca-row">
+                    <div class="form-group">
+                        <label>Peça</label>
+                        <select name="pecasSelecionadas" class="form-control">
+                            <option value="">-- Selecione uma peça --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="number" name="quantidades" class="form-control" value="1" min="1" />
+                        <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                    </div>
+                </div>`;
 
-                // Reload peças if client is selected
-                if ($('#ClienteId').val()) {
-                    loadPecas($('#ClienteId').val());
+                const $row = $(newRow);
+                $('#pecasContainer').append($row);
+
+                if (Object.keys(pecasData).length > 0) {
+                    populateSelect($row.find('select'));
                 }
+                // Reload peças if client is selected
+                //if ($('#ClienteId').val()) {
+                    //loadPecas($('#ClienteId').val());
+                //}
             });
 
             $(document).on('click', '.remove-peca', function () {

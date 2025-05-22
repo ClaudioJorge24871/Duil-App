@@ -52,7 +52,7 @@ namespace Duil_App.Controllers
         {
             encomenda.Estado = Estados.Pendente;
 
-            if (pecasSelecionadas == null || quantidades == null || !pecasSelecionadas.Any())
+            if (quantidades == null || pecasSelecionadas.Count == 0)
             {
                 ModelState.AddModelError("", "Selecione pelo menos uma peça");
             }
@@ -96,7 +96,6 @@ namespace Duil_App.Controllers
                             var linha = new LinhaEncomenda
                             {
                                 EncomendaId = encomenda.Id,
-                                
                                 PecaId = pecasSelecionadas[i],
                                 Quantidade = quantidades[i]
                             };

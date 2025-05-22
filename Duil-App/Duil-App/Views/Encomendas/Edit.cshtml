@@ -92,8 +92,10 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
     <script>
+
         $(function () {
             var clienteSelected = @((parsedClienteId > 0).ToString().ToLower());
+            const pecasData = {};
 
             if (@parsedClienteId > 0) {
                 loadPecas('@Model.ClienteId');
@@ -114,38 +116,63 @@
                 }
             });
 
+
+            function populateSelect(select) {
+                select.empty().append('<option value="">-- Selecione uma peça --</option>');
+                for (const id in pecasData) {
+                    const peca = pecasData[id];
+                    const displayPrice = peca.preco.toFixed(2).replace('.', ',');
+                    const option = new Option(`${peca.nome} (${displayPrice} €)`, id);
+                    select.append(option);
+                }
+            }
+
+
             function loadPecas(clienteId) {
-                fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        $('.peca-select').each(function () {
-                            const currentValue = $(this).val();
-                            $(this).empty().append('<option value="">-- Selecione uma peça --</option>');
-                            data.forEach(p => {
-                                const option = new Option(p.nome, p.id, currentValue == p.id);
-                                $(this).append(option);
-                            });
-                        });
+            fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
+                .then(response => response.json())
+                .then(data => {
+                    Object.keys(pecasData).forEach(key => delete pecasData[key]);
+
+                    data.forEach(p => {
+                        pecasData[p.id] = {
+                            nome: p.nome,
+                            preco: parseFloat(p.preco)
+                        };
                     });
+
+                    // Atualiza todos os selects existentes
+                    $('select[name="pecasSelecionadas"]').each(function () {
+                        populateSelect($(this));
+                    });
+
+                    updateTotals();
+                });
             }
 
             $('#addPeca').click(function () {
-                const newRow = `
-                            <div class="peca-row">
-                                <div class="form-group">
-                                    <label>Peça</label>
-                                    <select name="pecasSelecionadas" class="form-control peca-select">
-                                        <option value="">-- Selecione uma peça --</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Quantidade</label>
-                                    <input type="number" name="quantidades" class="form-control" value="1" />
-                                    <button type="button" class="btn btn-danger remove-peca">Remover</button>
-                                </div>
-                            </div>`;
-                $('#pecasContainer').append(newRow);
+            const newRow = $(`
+                <div class="peca-row">
+                    <div class="form-group">
+                        <label>Peça</label>
+                        <select name="pecasSelecionadas" class="form-control peca-select">
+                            <option value="">-- Selecione uma peça --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="number" name="quantidades" class="form-control" value="1" />
+                        <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                    </div>
+                </div>`);
+
+            $('#pecasContainer').append(newRow);
+
+            // Popula o novo select com os dados existentes
+            const select = newRow.find('select[name="pecasSelecionadas"]');
+            populateSelect(select);
             });
+
 
             $(document).on('click', '.remove-peca', function () {
                 $(this).closest('.peca-row').remove();
