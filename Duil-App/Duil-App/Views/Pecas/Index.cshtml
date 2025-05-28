@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Duil_App.Models.Pecas>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Adicionar uma Peça</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Referencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Designacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecoUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fabrica)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagem)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Referencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Designacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecoUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fabrica.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Nome)
+            </td>
+                <td>
+                    <img src="~/images/@item.Imagem"
+                         alt="Image"
+                         class="img-thumbnail"
+                         style="width: 80px; height: 100px;" /> 
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Mais</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Remover</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

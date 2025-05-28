@@ -1,0 +1,174 @@
+﻿@model Duil_App.Models.Pecas
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h4>Adicionar Peças</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Referencia" class="control-label"></label>
+                <input asp-for="Referencia" class="form-control" />
+                <span asp-validation-for="Referencia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Designacao" class="control-label"></label>
+                <input asp-for="Designacao" class="form-control" />
+                <span asp-validation-for="Designacao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrecoUnit" class="control-label"></label>
+                <input asp-for="PrecoUnit"
+                       class="form-control"
+                       type="text"
+                       inputmode="decimal"
+                       placeholder="Por favor utilize o formato 0.00"
+                       oninput="this.value = this.value.replace(/\,/g, '.').replace(/(\..*)\./g, '$1')" />
+                <span asp-validation-for="PrecoUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Nome da Fábrica</label>
+                <input type="text" id="fabrica-nome" class="form-control" autocomplete="off" />
+                <input asp-for="FabricaId" type="hidden" id="FabricaId" />
+                <span asp-validation-for="FabricaId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Nome do Cliente</label>
+                <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
+                <input asp-for="ClienteId" type="hidden" id="ClienteId" />
+                <span asp-validation-for="ClienteId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Imagem" class="control-label"></label>
+                <input type="file"
+                       name="imagemFile"
+                       class="form-control"
+                       accept=".jpg,.jpeg,.png,.webp"
+                       aria-describedby="fileHelp" />
+                <small id="fileHelp" class="form-text text-muted">
+                    Formatos permitidos: .jpg, .jpeg, .png, .gif, .webp
+                </small>
+                <span asp-validation-for="Imagem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+           
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+    <script>
+
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                var priceInput = $('#PrecoUnit');
+                var value = priceInput.val().replace(',', '.');
+
+                if (value.match(/^\d+\.\d+,\d+$/)) {
+                    value = value.replace(',', '.');
+                }
+
+                priceInput.val(value);
+            });
+        });
+
+
+        $(function () {
+            var fabricaSelected = false;
+
+            $("#fabrica-nome").autocomplete({
+                source: '/Fabricas/Search',
+                minLength: 1,
+                select: function (event, ui) {
+                    $("#fabrica-nome").val(ui.item.label);
+                    $("#FabricaId").val(ui.item.value);
+                    fabricaSelected = true;
+                    return false;
+                },
+                focus: function (event, ui) {
+                    event.preventDefault();
+                }
+            });
+
+            $("#fabrica-nome").on("input", function () {
+                $("#FabricaId").val("");
+                fabricaSelected = false;
+            });
+
+            $("form").on("submit", function (event) {
+                var nomeFabrica = $("#fabrica-nome").val();
+                var fabricaId = $("#FabricaId").val();
+
+                if (!fabricaSelected && nomeFabrica !== "") {
+                    event.preventDefault();
+                    $("[data-valmsg-for='FabricaId']").text("Por favor, selecione uma fábrica da lista");
+                    return false;
+                }
+
+                if (fabricaId === "") {
+                    event.preventDefault();
+                    $("[data-valmsg-for='FabricaId']").text("A fábrica é obrigatória");
+                    return false;
+                }
+            });
+        });
+
+        $(function () {
+            var clienteSelected = false;
+
+            $("#cliente-nome").autocomplete({
+                source: '/Clientes/Search',
+                minLength: 1,
+                select: function (event, ui) {
+                    $("#cliente-nome").val(ui.item.label);
+                    $("#ClienteId").val(ui.item.value);
+                    clienteSelected = true;
+                    return false;
+                },
+                focus: function (event, ui) {
+                    event.preventDefault();
+                }
+            });
+
+            $("#cliente-nome").on("input", function () {
+                $("#ClienteId").val("");
+                clienteSelected = false;
+            });
+
+            $("form").on("submit", function (event) {
+                var nomeCliente = $("#cliente-nome").val();
+                var clienteId = $("#ClienteId").val();
+
+                if (!clienteSelected && nomeCliente !== "") {
+                    event.preventDefault();
+                    $("[data-valmsg-for='ClienteId']").text("Por favor, selecione um cliente da lista");
+                    return false;
+                }
+
+                if (clienteId === "") {
+                    event.preventDefault();
+                    $("[data-valmsg-for='ClienteId']").text("O cliente é obrigatório");
+                    return false;
+                }
+            });
+        });
+    </script>
+}
+

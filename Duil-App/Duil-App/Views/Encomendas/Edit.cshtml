@@ -1,0 +1,214 @@
+﻿@model Duil_App.Models.Encomendas
+
+@{
+    ViewData["Title"] = "Edit";
+    int parsedClienteId = 0;
+    int.TryParse(Model.ClienteId, out parsedClienteId);
+}
+
+<h4>Encomenda: @Html.DisplayFor(Model => Model.Id)</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="IdLadoCliente" class="control-label"></label>
+                <input asp-for="IdLadoCliente" class="form-control" />
+                <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalPrecoUnit" class="control-label"></label>
+                <input asp-for="TotalPrecoUnit" class="form-control" />
+                <span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantidadeTotal" class="control-label"></label>
+                <input asp-for="QuantidadeTotal" class="form-control" />
+                <span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Transportadora" class="control-label"></label>
+                <input asp-for="Transportadora" class="form-control" />
+                <span asp-validation-for="Transportadora" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <select asp-for="Estado" class="form-control" asp-items="@(ViewData["Estado"] as SelectList)"></select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label>Cliente</label>
+                <input type="text" id="cliente-nome" class="form-control"
+                       autocomplete="off" value="@Model.Cliente?.Nome" />
+                <input asp-for="ClienteId" type="hidden" id="ClienteId" />
+                <span asp-validation-for="ClienteId" class="text-danger"></span>
+            </div>
+
+            <div id="pecasContainer">
+                @foreach (var linha in Model.LinhasEncomenda)
+                {
+                    <div class="peca-row">
+                        <div class="form-group">
+                            <label>Peça</label>
+                            <select name="pecasSelecionadas" class="form-control peca-select"
+                                    data-selected="@linha.PecaId">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantidade</label>
+                            <input type="number" name="quantidades" class="form-control"
+                                   value="@linha.Quantidade" />
+                            <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <button type="button" id="addPeca" class="btn btn-secondary mb-3">Adicionar Peça</button>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Guardar Alterações" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+    <script>
+
+        $(function () {
+            var clienteSelected = @((parsedClienteId > 0).ToString().ToLower());
+            const pecasData = {};
+
+            if (@parsedClienteId > 0) {
+                loadPecas('@Model.ClienteId');
+            }
+
+            $("#cliente-nome").autocomplete({
+                source: '/Clientes/Search',
+                minLength: 1,
+                select: function (event, ui) {
+                    $("#cliente-nome").val(ui.item.label);
+                    $("#ClienteId").val(ui.item.value);
+                    clienteSelected = true;
+                    loadPecas(ui.item.value);
+                    return false;
+                },
+                focus: function (event, ui) {
+                    event.preventDefault();
+                }
+            });
+
+
+            function populateSelect(select) {
+                const selectedValue = select.data('selected'); // lê o valor salvo no atributo
+
+                select.empty().append('<option value="">-- Selecione uma peça --</option>');
+
+                for (const id in pecasData) {
+                    const peca = pecasData[id];
+                    const displayPrice = peca.preco.toFixed(2).replace('.', ',');
+                    const option = new Option(`${peca.nome} (${displayPrice} €)`, id);
+
+                    if (selectedValue && id == selectedValue) {
+                        option.selected = true;
+                    }
+
+                    select.append(option);
+            }
+
+            // Limpa o atributo data-selected para não interferir mais
+            select.removeAttr('data-selected');
+            }
+
+
+            function loadPecas(clienteId) {
+            fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
+                .then(response => response.json())
+                .then(data => {
+                    Object.keys(pecasData).forEach(key => delete pecasData[key]);
+
+                    data.forEach(p => {
+                        pecasData[p.id] = {
+                            nome: p.nome,
+                            preco: parseFloat(p.preco)
+                        };
+                    });
+
+                    // Atualiza todos os selects existentes
+                    $('select[name="pecasSelecionadas"]').each(function () {
+                        populateSelect($(this));
+                    });
+
+                    updateTotals();
+                });
+            }
+
+            $('#addPeca').click(function () {
+            const newRow = $(`
+                <div class="peca-row">
+                    <div class="form-group">
+                        <label>Peça</label>
+                        <select name="pecasSelecionadas" class="form-control peca-select">
+                            <option value="">-- Selecione uma peça --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="number" name="quantidades" class="form-control" value="1" />
+                        <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                    </div>
+                </div>`);
+
+            $('#pecasContainer').append(newRow);
+
+            // Popula o novo select com os dados existentes
+            const select = newRow.find('select[name="pecasSelecionadas"]');
+            populateSelect(select);
+            });
+
+
+            $(document).on('click', '.remove-peca', function () {
+                $(this).closest('.peca-row').remove();
+            });
+
+            $("form").on("submit", function (event) {
+                let isValid = true;
+                const clienteId = $("#ClienteId").val();
+
+                if (!clienteSelected || clienteId === "") {
+                    $("[data-valmsg-for='ClienteId']").text("O cliente é obrigatório");
+                    isValid = false;
+                }
+
+                $('.peca-select').each(function () {
+                    if ($(this).val() === "") {
+                        $(this).addClass('is-invalid');
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+}

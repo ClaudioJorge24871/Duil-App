@@ -13,7 +13,7 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Morada de Descarga")]
         [StringLength(100)]
-        public string? MoradaDescarga { get; set; }
+        public string? MoradaDescarga { get; set; } 
 
         /// <summary>
         /// Peças que a fabrica produz

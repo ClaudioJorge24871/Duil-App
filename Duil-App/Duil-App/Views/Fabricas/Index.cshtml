@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Duil_App.Models.Fabricas>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Fábricas</h1>
+
+<p>
+    <a asp-action="Create">Adicionar uma fábrica</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nif)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pais)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telemovel)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nif)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pais)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telemovel)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Nif">Modificar</a> |
+                <a asp-action="Details" asp-route-id="@item.Nif">Mais Info</a> |
+                <a asp-action="Delete" asp-route-id="@item.Nif">Apagar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

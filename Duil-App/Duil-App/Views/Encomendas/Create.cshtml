@@ -1,0 +1,219 @@
+﻿@model Duil_App.Models.Encomendas
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Nova encomenda</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdLadoCliente" class="control-label"></label>
+                <input asp-for="IdLadoCliente" class="form-control" />
+                <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalPrecoUnit" class="control-label"></label>
+                <input asp-for="TotalPrecoUnit" class="form-control" readonly />
+                <span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantidadeTotal" class="control-label"></label>
+                <input asp-for="QuantidadeTotal" class="form-control" readonly />
+                <span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="TotalPrecoUnit" />
+            <input type="hidden" asp-for="QuantidadeTotal" />
+
+            <div class="form-group">
+                <label asp-for="Transportadora" class="control-label"></label>
+                <input asp-for="Transportadora" class="form-control" />
+                <span asp-validation-for="Transportadora" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Nome do Cliente</label>
+                <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
+                <input asp-for="ClienteId" type="hidden" id="ClienteId" />
+                <span asp-validation-for="ClienteId" class="text-danger"></span>
+            </div>
+
+            <div id="pecasContainer">
+                <div class="peca-row">
+                    <div class="form-group">
+                        <label>Peça</label>
+                        <select name="pecasSelecionadas" class="form-control">
+                            <option value="">-- Selecione uma peça --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="number" name="quantidades" class="form-control" value="1" min="1" />
+                        <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="addPeca" class="btn btn-secondary mb-3">Adicionar Peça</button>
+
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <script>
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) ||
+                /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
+        };
+    </script>
+    <script>
+        $(function () {
+            var clienteSelected = false;
+            const pecasData = {}; // Store peça prices
+
+            function updateTotals() {
+                let totalQuantity = 0;
+                let totalPrice = 0;
+
+                $('.peca-row').each(function () {
+                    const select = $(this).find('select');
+                    const quantityInput = $(this).find('input[type="number"]');
+                    const pecaId = select.val();
+                    const quantity = parseInt(quantityInput.val()) || 0;
+
+                    if (pecaId && pecasData[pecaId]) {
+                        totalQuantity += quantity;
+                        // Parse price as float using invariant culture
+                        totalPrice += parseFloat(pecasData[pecaId].preco) * quantity;
+                    }
+                });
+
+                // Update display with comma, hidden field with dot
+                $('#QuantidadeTotal').val(totalQuantity);
+                $('#TotalPrecoUnit').val(totalPrice.toFixed(2).replace('.', ',')); // Display with comma
+                $('input[type="hidden"][asp-for="QuantidadeTotal"]').val(totalQuantity);
+                $('input[type="hidden"][asp-for="TotalPrecoUnit"]').val(totalPrice.toFixed(2)); // Store with dot
+            }
+
+            function populateSelect(select) {
+                select.empty().append('<option value="">-- Selecione uma peça --</option>');
+                for (const id in pecasData) {
+                    const peca = pecasData[id];
+                    const displayPrice = peca.preco.toFixed(2).replace('.', ',');
+                    const option = new Option(`${peca.nome} (${displayPrice} €)`, id);
+                    select.append(option);
+                }
+        }
+
+
+            function loadPecas(clienteId) {
+            fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
+                .then(response => response.json())
+                .then(data => {
+                    Object.keys(pecasData).forEach(key => delete pecasData[key]);
+
+                    data.forEach(p => {
+                        pecasData[p.id] = {
+                            nome: p.nome,
+                            preco: parseFloat(p.preco)
+                        };
+                    });
+
+                    // Atualiza todos os selects existentes
+                    $('select[name="pecasSelecionadas"]').each(function () {
+                        populateSelect($(this));
+                    });
+
+                    updateTotals();
+                });
+        }
+            $("#cliente-nome").autocomplete({
+                source: '/Clientes/Search',
+                minLength: 1,
+                select: function (event, ui) {
+                    $("#cliente-nome").val(ui.item.label);
+                    $("#ClienteId").val(ui.item.value);
+                    clienteSelected = true;
+                    loadPecas(ui.item.value);
+                    return false;
+                },
+                focus: function (event, ui) {
+                    event.preventDefault();
+                }
+            });
+
+            $("#cliente-nome").on("input", function () {
+                $("#ClienteId").val("");
+                clienteSelected = false;
+                $('select[name="pecasSelecionadas"]').empty().append('<option value="">-- Selecione uma peça --</option>');
+                $('#QuantidadeTotal').val('');
+                $('#TotalPrecoUnit').val('');
+            });
+
+            $('#addPeca').click(function () {
+                const newRow = `
+                <div class="peca-row">
+                    <div class="form-group">
+                        <label>Peça</label>
+                        <select name="pecasSelecionadas" class="form-control">
+                            <option value="">-- Selecione uma peça --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="number" name="quantidades" class="form-control" value="1" min="1" />
+                        <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                    </div>
+                </div>`;
+
+                const $row = $(newRow);
+                $('#pecasContainer').append($row);
+
+                if (Object.keys(pecasData).length > 0) {
+                    populateSelect($row.find('select'));
+                }
+                // Reload peças if client is selected
+                //if ($('#ClienteId').val()) {
+                    //loadPecas($('#ClienteId').val());
+                //}
+            });
+
+            $(document).on('click', '.remove-peca', function () {
+                $(this).closest('.peca-row').remove();
+                updateTotals();
+            });
+
+            $(document).on('input change', 'select[name="pecasSelecionadas"], input[name="quantidades"]', function () {
+                updateTotals();
+            });
+
+            $("form").on("submit", function (event) {
+                const visibleTotal = $('#TotalPrecoUnit').val().replace(',', '.');
+                $('input[type="hidden"][asp-for="TotalPrecoUnit"]').val(visibleTotal);
+
+                $('#TotalPrecoUnit').rules('remove', 'number');
+            });
+        });
+    </script>
+}
