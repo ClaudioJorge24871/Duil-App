@@ -24,6 +24,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
+// configurar o de uso de 'cookies'
+builder.Services.AddSession(options => {
+    options.IdleTimeout = TimeSpan.FromSeconds(60);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+builder.Services.AddDistributedMemoryCache();
+
+
 var app = builder.Build();
 
 var supportedCultures = new[] { new CultureInfo("en-US") };
@@ -53,6 +62,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// usar cookies
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
