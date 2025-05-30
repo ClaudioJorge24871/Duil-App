@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace Duil_App.Areas.Identity.Pages.Account
+namespace AppFotos.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
