@@ -32,7 +32,6 @@ builder.Services.AddSession(options => {
 });
 builder.Services.AddDistributedMemoryCache();
 
-
 var app = builder.Build();
 
 var supportedCultures = new[] { new CultureInfo("en-US") };
@@ -42,6 +41,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     SupportedCultures = supportedCultures,
     SupportedUICultures = supportedCultures
 });
+
 
 
 // Configure the HTTP request pipeline.
