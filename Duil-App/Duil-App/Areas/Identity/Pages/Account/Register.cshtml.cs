@@ -152,7 +152,7 @@ namespace Duil_App.Areas.Identity.Pages.Account
                     };
 
                     _context.Utilizadores.Add(novoUtilizador);
-                    await _userManager.AddToRoleAsync(user, "Cliente");
+                    //await _userManager.AddToRoleAsync(user, "Cliente");
                     await _context.SaveChangesAsync();
 
 
