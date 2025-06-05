@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Duil_App.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Utilizadores>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

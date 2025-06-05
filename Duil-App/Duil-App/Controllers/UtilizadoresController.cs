@@ -25,14 +25,11 @@ namespace Duil_App.Controllers {
       }
 
       // GET: Utilizadores/Details/5
-      public async Task<IActionResult> Details(int? id) {
+      public async Task<IActionResult> Details(string? id) {
          if (id == null) {
             return NotFound();
          }
 
-         // Não esquecer!
-         // ADEQUAR O NOME DAS VARIÁVEIS ÀS SUAS FUNÇÕES
-         // TODAS!
          var utilizador = await _context.Utilizadores
              .FirstOrDefaultAsync(m => m.Id == id);
          if (utilizador == null) {
@@ -84,7 +81,7 @@ namespace Duil_App.Controllers {
       // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Morada,CodPostal,Pais,NIF,Telemovel")] Utilizadores utilizador) {
+      public async Task<IActionResult> Edit(string id, [Bind("Id,Nome,Morada,CodPostal,Pais,NIF,Telemovel")] Utilizadores utilizador) {
          if (id != utilizador.Id) {
             return NotFound();
          }
@@ -111,7 +108,7 @@ namespace Duil_App.Controllers {
       }
 
       // GET: Utilizadores/Delete/5
-      public async Task<IActionResult> Delete(int? id) {
+      public async Task<IActionResult> Delete(string? id) {
          if (id == null) {
             return NotFound();
          }
@@ -138,7 +135,7 @@ namespace Duil_App.Controllers {
          return RedirectToAction(nameof(Index));
       }
 
-      private bool UtilizadoresExists(int id) {
+      private bool UtilizadoresExists(string id) {
          return _context.Utilizadores.Any(e => e.Id == id);
       }
    }

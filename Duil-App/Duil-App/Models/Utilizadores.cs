@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace Duil_App.Models
 {
@@ -6,15 +7,8 @@ namespace Duil_App.Models
     /// <summary>
     /// utilizadores não anónimos da aplicação
     /// </summary>
-    public class Utilizadores
+    public class Utilizadores: IdentityUser
     {
-
-        /// <summary>
-        /// Identificador do utilizador
-        /// </summary>
-        [Key]
-        public int Id { get; set; }
-
         /// <summary>
         /// Nome do utilizador
         /// </summary>
@@ -69,14 +63,6 @@ namespace Duil_App.Models
         /*  9[1236][0-9]{7}  --> nºs telemóvel nacional
          *  (([+]|00)[0-9]{1,5})?[1-9][0-9]{5,10}  -->  nºs telefone internacionais
          */
-
-        /// <summary>
-        /// Este atributo servirá para dazer a 'ponte' 
-        /// entre a tabela AspNetUsers (da microsoft)
-        /// e a tabela dos Utilizadores
-        /// </summary>
-        [StringLength(50)]
-        public String UserName { get; set; } = "";
 
 
         /* *************************
