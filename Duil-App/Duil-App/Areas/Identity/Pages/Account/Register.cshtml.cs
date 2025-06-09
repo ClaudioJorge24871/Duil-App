@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Duil_App.Code;
 using Duil_App.Data;
 using Duil_App.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -21,6 +22,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace Duil_App.Areas.Identity.Pages.Account
 {
@@ -32,8 +34,8 @@ namespace Duil_App.Areas.Identity.Pages.Account
         private readonly IUserStore<Utilizadores> _userStore;
         private readonly IUserEmailStore<Utilizadores> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
-        
+        private readonly Ferramentas _ferramenta;
+
 
 
         public RegisterModel(
@@ -41,14 +43,14 @@ namespace Duil_App.Areas.Identity.Pages.Account
             IUserStore<Utilizadores> userStore,
             SignInManager<Utilizadores> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
+            Ferramentas ferramenta,
             ApplicationDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+            this._ferramenta = ferramenta;
             _context = context;
             _emailStore = GetEmailStore();
         }
@@ -159,8 +161,31 @@ namespace Duil_App.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    Models.Email email = new Models.Email
+                    {
+                        Destinatario = Input.Email,
+                        Subject = "Confirmação de email",
+                        Body = $"Por favor confirme o seu email clicando aqui: <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>link</a>"
+                    };
+
+                    var resposta = await _ferramenta.EnviaEmailAsync(email);
+
+                    string texto = "Email enviado em: " + DateTime.Now.ToString() +
+                     "\r\n" + "Destinatário: " + email.Destinatario +
+                     "\r\n" + "Assunto: " + email.Subject +
+                     "\r\n" + "Corpo Email: " + email.Body;
+
+                    await _ferramenta.EscreveLogAsync("Home", "Index", texto, "");
+
+                    if (resposta == 0)
+                    {
+                        TempData["Mensagem"] = "S#:Email Enviado com sucesso.";
+                    }
+                    else
+                    {
+                        TempData["Mensagem"] = "E#:Ocorreu um erro com o envio do Email.";
+                    }
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

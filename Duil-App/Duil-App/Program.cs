@@ -1,3 +1,4 @@
+using Duil_App.Code;
 using Duil_App.Data;
 using Duil_App.Models;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options => {
     options.SupportedUICultures = supportedCultures;
 });
 
+builder.Services.AddSingleton(typeof(Ferramentas));
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
