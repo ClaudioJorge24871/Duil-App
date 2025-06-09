@@ -44,7 +44,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var service = scope.ServiceProvider;
-    await ApplicationDBInit.SeedAsync(service);
+    await ApplicationDBInit.SeedAsync(service, builder.Configuration);
 }
 
 var supportedCultures = new[] { new CultureInfo("en-US") };

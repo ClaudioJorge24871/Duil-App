@@ -7,7 +7,7 @@
 
     public class ApplicationDBInit
     {
-        public static async Task SeedAsync(IServiceProvider serviceProvider)
+        public static async Task SeedAsync(IServiceProvider serviceProvider, IConfiguration config)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<Utilizadores>>();
@@ -23,8 +23,8 @@
             }
 
             // Criar admin se nao existe
-            string adminEmail = "admin@duil.com";
-            string adminPassword = "Admin@1234"; // Possivel mudar para tornar mais seguro
+            string adminEmail = config["AdminUser:Email"];
+            string adminPassword = config["AdminUser:Password"]; // Possivel mudar para tornar mais seguro
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
             if (adminUser == null)
@@ -34,7 +34,7 @@
                     UserName = adminEmail,
                     Email = adminEmail,
                     EmailConfirmed = true,
-                    Nome = "Administrador",
+                    Nome = config["AdminUser:Nome"],
                 };
 
                 var result = await userManager.CreateAsync(user, adminPassword);
