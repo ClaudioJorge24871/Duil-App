@@ -40,6 +40,13 @@ builder.Services.AddDistributedMemoryCache();
 
 var app = builder.Build();
 
+// Seed DB
+using (var scope = app.Services.CreateScope())
+{
+    var service = scope.ServiceProvider;
+    await ApplicationDBInit.SeedAsync(service);
+}
+
 var supportedCultures = new[] { new CultureInfo("en-US") };
 app.UseRequestLocalization(new RequestLocalizationOptions
 {
