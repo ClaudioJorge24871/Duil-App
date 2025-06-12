@@ -25,7 +25,7 @@ namespace Duil_App.Models
         /// <summary>
         /// Relacionamento para encomendas
         /// </summary>
-        public Encomendas Encomenda { get; set; }
+        public Encomendas? Encomenda { get; set; }
 
         /// <summary>
         /// Identificador da peça 
@@ -33,7 +33,7 @@ namespace Duil_App.Models
         [Required]
         [ForeignKey("Peca")]
         public int PecaId { get; set; }
-        public Pecas Peca { get; set; }
+        public Pecas? Peca { get; set; }
 
         /// <summary>
         /// Quantidade de unidades da peça na encomenda

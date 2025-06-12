@@ -4,18 +4,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Duil_App.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Utilizadores>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+
         public DbSet<Empresas> Empresas { get; set; }
         public DbSet<Clientes> Clientes { get; set; }
         public DbSet<Fabricas> Fabricas { get; set; }
         public DbSet<Encomendas> Encomendas { get; set; }
-
         public DbSet<Pecas> Pecas { get; set; }
+        public DbSet<Utilizadores> Utilizadores { get; set; }
         public DbSet<LinhaEncomenda> LinhasEncomendas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Duil_App.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class redoDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,12 @@ namespace Duil_App.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Morada = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    CodPostal = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Pais = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    NIF = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
+                    Telemovel = table.Column<string>(type: "nvarchar(18)", maxLength: 18, nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -221,11 +227,17 @@ namespace Duil_App.Migrations
                     QuantidadeTotal = table.Column<int>(type: "int", nullable: false),
                     Transportadora = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Estado = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ClienteId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UtilizadoresId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Encomendas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Encomendas_AspNetUsers_UtilizadoresId",
+                        column: x => x.UtilizadoresId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Encomendas_Clientes_ClienteId",
                         column: x => x.ClienteId,
@@ -336,6 +348,11 @@ namespace Duil_App.Migrations
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Encomendas_UtilizadoresId",
+                table: "Encomendas",
+                column: "UtilizadoresId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LinhasEncomendas_EncomendaId",
                 table: "LinhasEncomendas",
                 column: "EncomendaId");
@@ -381,13 +398,13 @@ namespace Duil_App.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Encomendas");
 
             migrationBuilder.DropTable(
                 name: "Pecas");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Clientes");

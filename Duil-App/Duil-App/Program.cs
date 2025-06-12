@@ -1,4 +1,6 @@
+using Duil_App.Code;
 using Duil_App.Data;
+using Duil_App.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options => {
     options.SupportedUICultures = supportedCultures;
 });
 
+builder.Services.AddSingleton(typeof(Ferramentas));
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -20,11 +23,29 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddDefaultIdentity<Utilizadores>(options => {
+    options.SignIn.RequireConfirmedAccount = true;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+// configurar o de uso de 'cookies'
+builder.Services.AddSession(options => {
+    options.IdleTimeout = TimeSpan.FromSeconds(60);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+builder.Services.AddDistributedMemoryCache();
 
 var app = builder.Build();
+
+// Seed DB
+using (var scope = app.Services.CreateScope())
+{
+    var service = scope.ServiceProvider;
+    await ApplicationDBInit.SeedAsync(service, builder.Configuration);
+}
 
 var supportedCultures = new[] { new CultureInfo("en-US") };
 app.UseRequestLocalization(new RequestLocalizationOptions
@@ -33,6 +54,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     SupportedCultures = supportedCultures,
     SupportedUICultures = supportedCultures
 });
+
 
 
 // Configure the HTTP request pipeline.
@@ -52,7 +74,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+// usar cookies
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
