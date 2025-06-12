@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Duil_App.Data;
 using Duil_App.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Duil_App.Controllers
 {
+    [Authorize(Roles = "Admin,Funcionario")]
     public class FabricasController : Controller
     {
         private readonly ApplicationDbContext _context;

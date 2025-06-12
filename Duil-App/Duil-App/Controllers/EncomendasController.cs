@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Duil_App.Data;
 using Duil_App.Models;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Duil_App.Controllers
 {
+    [Authorize(Roles = "Admin,Funcionario")]
     public class EncomendasController : Controller
     {
         private readonly ApplicationDbContext _context;
