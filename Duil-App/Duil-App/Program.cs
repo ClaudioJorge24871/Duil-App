@@ -1,8 +1,10 @@
 using Duil_App.Code;
 using Duil_App.Data;
 using Duil_App.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
@@ -28,6 +30,15 @@ builder.Services.AddDefaultIdentity<Utilizadores>(options => {
 })
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Obrigar todos os utilizadores a estarem autenticados
+builder.Services.AddControllers(config =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+    config.Filters.Add(new AuthorizeFilter(policy));
+});
 
 
 // configurar o de uso de 'cookies'
