@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Duil_App.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Duil_App.Controllers {
+
+   [Authorize(Roles = "Admin")]
    public class UtilizadoresController: Controller {
 
       /// <summary>
@@ -63,52 +67,79 @@ namespace Duil_App.Controllers {
          return View(utilizador);
       }
 
-      // GET: Utilizadores/Edit/5
-      public async Task<IActionResult> Edit(int? id) {
-         if (id == null) {
-            return NotFound();
-         }
+        // GET: Utilizadores/Edit/5
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+                return NotFound();
 
-         var utilizador = await _context.Utilizadores.FindAsync(id);
-         if (utilizador == null) {
-            return NotFound();
-         }
-         return View(utilizador);
-      }
+            var utilizador = await _context.Utilizadores.FindAsync(id);
+            if (utilizador == null)
+                return NotFound();
 
-      // POST: Utilizadores/Edit/5
-      // To protect from overposting attacks, enable the specific properties you want to bind to.
-      // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-      [HttpPost]
-      [ValidateAntiForgeryToken]
-      public async Task<IActionResult> Edit(string id, [Bind("Id,Nome,Morada,CodPostal,Pais,NIF,Telemovel")] Utilizadores utilizador) {
-         if (id != utilizador.Id) {
-            return NotFound();
-         }
+            var userManager = HttpContext.RequestServices.GetRequiredService<UserManager<Utilizadores>>();
+            var roles = await userManager.GetRolesAsync(utilizador);
 
-         if (ModelState.IsValid) {
-            try {
-               // Corrigir os dados do Código Postal
-               utilizador.CodPostal = utilizador.CodPostal?.ToUpper();
+            ViewBag.AllRoles = new List<string> { "Admin", "Cliente", "Funcionario", "Utilizador" };
+            ViewBag.UserCurrentRole = roles.FirstOrDefault();
 
-               _context.Update(utilizador);
-               await _context.SaveChangesAsync();
+            return View(utilizador);
+        }
+
+        // POST: Utilizadores/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Nome,Morada,CodPostal,Pais,NIF,Telemovel")] Utilizadores utilizador, string SelectedRole)
+        {
+            if (id != utilizador.Id)
+                return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var utilizadorBD = await _context.Utilizadores.FirstOrDefaultAsync(u => u.Id == id);
+                    if (utilizadorBD == null)
+                        return NotFound();
+
+                    utilizadorBD.Nome = utilizador.Nome;
+                    utilizadorBD.Morada = utilizador.Morada;
+                    utilizadorBD.CodPostal = utilizador.CodPostal?.ToUpper();
+                    utilizadorBD.Pais = utilizador.Pais;
+                    utilizadorBD.NIF = utilizador.NIF;
+                    utilizadorBD.Telemovel = utilizador.Telemovel;
+
+                    await _context.SaveChangesAsync();
+
+                    var userManager = HttpContext.RequestServices.GetRequiredService<UserManager<Utilizadores>>();
+                    var user = await userManager.FindByIdAsync(id);
+                    var userRoles = await userManager.GetRolesAsync(user);
+
+                    await userManager.RemoveFromRolesAsync(user, userRoles);
+                    await userManager.AddToRoleAsync(user, SelectedRole);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UtilizadoresExists(utilizador.Id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+
+                return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateConcurrencyException) {
-               if (!UtilizadoresExists(utilizador.Id)) {
-                  return NotFound();
-               }
-               else {
-                  throw;
-               }
-            }
-            return RedirectToAction(nameof(Index));
-         }
-         return View(utilizador);
-      }
 
-      // GET: Utilizadores/Delete/5
-      public async Task<IActionResult> Delete(string? id) {
+            ViewBag.AllRoles = new List<string> { "Admin", "Cliente", "Funcionario", "Utilizador" };
+            ViewBag.UserCurrentRole = SelectedRole;
+
+            return View(utilizador);
+        }
+
+
+        // GET: Utilizadores/Delete/5
+        public async Task<IActionResult> Delete(string? id) {
          if (id == null) {
             return NotFound();
          }
