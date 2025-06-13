@@ -39,13 +39,20 @@
                 <input asp-for="Transportadora" class="form-control" />
                 <span asp-validation-for="Transportadora" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label>Nome do Cliente</label>
-                <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
-                <input asp-for="ClienteId" type="hidden" id="ClienteId" />
-                <span asp-validation-for="ClienteId" class="text-danger"></span>
-            </div>
-
+            @if (User.IsInRole("Admin") || User.IsInRole("Funcionario")) // Apenas Funcionarios e Admins podem Identificar o cliente
+            {
+                <div class="form-group">
+                    <label>Nome do Cliente</label>
+                    <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
+                    <input asp-for="ClienteId" type="hidden" id="ClienteId" />
+                    <span asp-validation-for="ClienteId" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                // Passa o id do cliente autenticadoo
+                <input asp-for="ClienteId" type="hidden" value="@ViewBag.ClienteId" />
+            }
             <div id="pecasContainer">
                 <div class="peca-row">
                     <div class="form-group">

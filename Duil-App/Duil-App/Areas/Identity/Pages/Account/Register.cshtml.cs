@@ -153,7 +153,7 @@ namespace Duil_App.Areas.Identity.Pages.Account
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
               
-                    await _userManager.AddToRoleAsync(user, "Cliente");
+                    await _userManager.AddToRoleAsync(user, "Utilizador");
                     await _context.SaveChangesAsync();
 
                     var callbackUrl = Url.Page(

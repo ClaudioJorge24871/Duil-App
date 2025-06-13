@@ -46,6 +46,17 @@ namespace Duil_App.Controllers
 
         public IActionResult Create()
         {
+            if (User.IsInRole("Cliente"))
+            {
+                var userId = _userManager.GetUserId(User);
+
+                if (userId == null)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                ViewBag.ClienteId = _userManager.GetUserId(User);
+            }
+
             return View();
         }
 
