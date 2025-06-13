@@ -25,9 +25,12 @@ namespace Duil_App.Controllers
             _userManager = userManager;
         }
 
-        [Authorize(Roles = "Admin,Funcionario")]
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("Cliente")){ // Se o utilizador autenticado for CLiente, mostra as encomendas dele
+                await GetClientesEncomendas();
+            }
+
             return View(await _context.Encomendas
                 .Include(e => e.Cliente)
                 .ToListAsync());
