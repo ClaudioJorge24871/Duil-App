@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Duil_App.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow.ValueContentAnalysis;
 
 namespace Duil_App.Controllers {
 
@@ -13,20 +14,26 @@ namespace Duil_App.Controllers {
       /// Referência à Base de Dados do projeto
       /// </summary>
       private readonly Data.ApplicationDbContext _context;
+      private readonly UserManager<Utilizadores> _userManager;
 
-      public UtilizadoresController(Data.ApplicationDbContext context) {
+
+        public UtilizadoresController(UserManager<Utilizadores> userManager, Data.ApplicationDbContext context) {
          _context = context;
+         _userManager = userManager;
       }
 
       // GET: Utilizadores
       public async Task<IActionResult> Index() {
 
-         // procurar na BD todos os utilizadores e listá-los
-         // entregando, de seguida, esses dados à View
-         // SELECT *
-         // FROM Utilizadores
-         return View(await _context.Utilizadores.ToListAsync());
-      }
+            var adminUsers = await _userManager.GetUsersInRoleAsync("Admin");
+            var adminIds = adminUsers.Select(u => u.Id).ToHashSet();
+
+            var allUsers = await _context.Utilizadores.ToListAsync();
+
+            var noAdmins = allUsers.Where(u => !adminIds.Contains(u.Id)).ToList();
+
+            return View(noAdmins);
+        }
 
       // GET: Utilizadores/Details/5
       public async Task<IActionResult> Details(string? id) {
@@ -56,7 +63,6 @@ namespace Duil_App.Controllers {
       public async Task<IActionResult> Create([Bind("Nome,Morada,CodPostal,Pais,NIF,Telemovel")] Utilizadores utilizador) {
 
          if (ModelState.IsValid) {
-            // Corrigir os dados do Código Postal
             utilizador.CodPostal = utilizador.CodPostal?.ToUpper();
 
             _context.Add(utilizador);
@@ -160,34 +166,6 @@ namespace Duil_App.Controllers {
             return View(utilizador);
         }
 
-
-        // GET: Utilizadores/Delete/5
-        public async Task<IActionResult> Delete(string? id) {
-         if (id == null) {
-            return NotFound();
-         }
-
-         var utilizador = await _context.Utilizadores
-             .FirstOrDefaultAsync(m => m.Id == id);
-         if (utilizador == null) {
-            return NotFound();
-         }
-
-         return View(utilizador);
-      }
-
-      // POST: Utilizadores/Delete/5
-      [HttpPost, ActionName("Delete")]
-      [ValidateAntiForgeryToken]
-      public async Task<IActionResult> DeleteConfirmed(int id) {
-         var utilizador = await _context.Utilizadores.FindAsync(id);
-         if (utilizador != null) {
-            _context.Utilizadores.Remove(utilizador);
-         }
-
-         await _context.SaveChangesAsync();
-         return RedirectToAction(nameof(Index));
-      }
 
       private bool UtilizadoresExists(string id) {
          return _context.Utilizadores.Any(e => e.Id == id);
