@@ -119,6 +119,29 @@ namespace Duil_App.Controllers {
 
                     await userManager.RemoveFromRolesAsync(user, userRoles);
                     await userManager.AddToRoleAsync(user, SelectedRole);
+
+                    // Se o novo papel for "Cliente", regista-o na tabela Clientes se ainda não existir
+                    if (SelectedRole == "Cliente")
+                    {
+                        var clienteExistente = await _context.Clientes.FirstOrDefaultAsync(c => c.Nif == utilizador.NIF);
+                        if (clienteExistente == null)
+                        {
+                            var novoCliente = new Clientes
+                            {
+                                Nome = utilizador.Nome,
+                                Morada = utilizador.Morada,
+                                CodPostal = utilizador.CodPostal,
+                                Pais = utilizador.Pais,
+                                Nif = utilizador.NIF,
+                                Telemovel = utilizador.Telemovel,
+                                Email = utilizador.Email,
+                                MoradaCarga = utilizador.Morada == null ? string.Empty : utilizador.Morada,
+                            };
+
+                            _context.Clientes.Add(novoCliente);
+                            await _context.SaveChangesAsync();
+                        }
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
