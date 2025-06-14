@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Duil_App.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -35,6 +34,7 @@ namespace Duil_App.Controllers
         }
 
         // GET: Clientes
+        [Authorize(Roles = "Admin, Funcionario")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Clientes.ToListAsync());
@@ -56,7 +56,6 @@ namespace Duil_App.Controllers
             return Json(resultados);
         }
 
-
         // GET: Clientes/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -76,6 +75,7 @@ namespace Duil_App.Controllers
             return View(cliente);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Clientes/Create
         public IActionResult Create()
         {
@@ -83,6 +83,7 @@ namespace Duil_App.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: Clientes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -114,6 +115,7 @@ namespace Duil_App.Controllers
             
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
@@ -131,6 +133,7 @@ namespace Duil_App.Controllers
             return View(cliente);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: Clientes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -169,6 +172,7 @@ namespace Duil_App.Controllers
             return View(cliente);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Clientes/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
@@ -187,6 +191,7 @@ namespace Duil_App.Controllers
             return View(cliente);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
