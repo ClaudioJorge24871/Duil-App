@@ -10,9 +10,11 @@ using Duil_App.Data;
 using Duil_App.Models;
 using System.Configuration;
 using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Duil_App.Controllers
 {
+    [Authorize(Roles = "Admin,Funcionario")]
     public class PecasController : Controller
     {
         private readonly ApplicationDbContext _context;
