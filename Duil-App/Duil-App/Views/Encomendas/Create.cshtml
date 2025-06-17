@@ -39,20 +39,13 @@
                 <input asp-for="Transportadora" class="form-control" />
                 <span asp-validation-for="Transportadora" class="text-danger"></span>
             </div>
-            @if (User.IsInRole("Admin") || User.IsInRole("Funcionario")) // Apenas Funcionarios e Admins podem Identificar o cliente
-            {
-                <div class="form-group">
-                    <label>Nome do Cliente</label>
-                    <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
-                    <input asp-for="ClienteId" type="hidden" id="ClienteId" />
-                    <span asp-validation-for="ClienteId" class="text-danger"></span>
-                </div>
-            }
-            else
-            {
-                // Passa o id do cliente autenticadoo
-                <input asp-for="ClienteId" type="hidden" value="@ViewBag.ClienteId" />
-            }
+            <div class="form-group">
+                <label>Nome do Cliente</label>
+                <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
+                <input asp-for="ClienteId" type="hidden" id="ClienteId" />
+                <span asp-validation-for="ClienteId" class="text-danger"></span>
+            </div>
+
             <div id="pecasContainer">
                 <div class="peca-row">
                     <div class="form-group">
@@ -77,9 +70,13 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Voltar</a>
-</div>
+@if (!User.IsInRole("Cliente"))
+{
+    <div>
+        <a asp-action="Index">Voltar</a>
+    </div>
+}
+
 
 @section Scripts {
     @{
@@ -131,30 +128,30 @@
                     const option = new Option(`${peca.nome} (${displayPrice} €)`, id);
                     select.append(option);
                 }
-        }
+            }
 
 
             function loadPecas(clienteId) {
-            fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
-                .then(response => response.json())
-                .then(data => {
-                    Object.keys(pecasData).forEach(key => delete pecasData[key]);
+                fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        Object.keys(pecasData).forEach(key => delete pecasData[key]);
 
-                    data.forEach(p => {
-                        pecasData[p.id] = {
-                            nome: p.nome,
-                            preco: parseFloat(p.preco)
-                        };
+                        data.forEach(p => {
+                            pecasData[p.id] = {
+                                nome: p.nome,
+                                preco: parseFloat(p.preco)
+                            };
+                        });
+
+                        // Atualiza todos os selects existentes
+                        $('select[name="pecasSelecionadas"]').each(function () {
+                            populateSelect($(this));
+                        });
+
+                        updateTotals();
                     });
-
-                    // Atualiza todos os selects existentes
-                    $('select[name="pecasSelecionadas"]').each(function () {
-                        populateSelect($(this));
-                    });
-
-                    updateTotals();
-                });
-        }
+            }
             $("#cliente-nome").autocomplete({
                 source: '/Clientes/Search',
                 minLength: 1,
@@ -180,19 +177,19 @@
 
             $('#addPeca').click(function () {
                 const newRow = `
-                <div class="peca-row">
-                    <div class="form-group">
-                        <label>Peça</label>
-                        <select name="pecasSelecionadas" class="form-control">
-                            <option value="">-- Selecione uma peça --</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Quantidade</label>
-                        <input type="number" name="quantidades" class="form-control" value="1" min="1" />
-                        <button type="button" class="btn btn-danger remove-peca">Remover</button>
-                    </div>
-                </div>`;
+                        <div class="peca-row">
+                            <div class="form-group">
+                                <label>Peça</label>
+                                <select name="pecasSelecionadas" class="form-control">
+                                    <option value="">-- Selecione uma peça --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantidade</label>
+                                <input type="number" name="quantidades" class="form-control" value="1" min="1" />
+                                <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                            </div>
+                        </div>`;
 
                 const $row = $(newRow);
                 $('#pecasContainer').append($row);
@@ -202,7 +199,7 @@
                 }
                 // Reload peças if client is selected
                 //if ($('#ClienteId').val()) {
-                    //loadPecas($('#ClienteId').val());
+                //loadPecas($('#ClienteId').val());
                 //}
             });
 
