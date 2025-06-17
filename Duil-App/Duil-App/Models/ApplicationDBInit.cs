@@ -23,8 +23,8 @@
             }
 
             // Criar admin se nao existe
-            string adminEmail = config["AdminUser:Email"];
-            string adminPassword = config["AdminUser:Password"]; // Possivel mudar para tornar mais seguro
+            string adminEmail = config["AdminUser:Email"] ?? " ";
+            string adminPassword = config["AdminUser:Password"] ?? " "; // Possivel mudar para tornar mais seguro
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
             if (adminUser == null)
@@ -34,7 +34,8 @@
                     UserName = adminEmail,
                     Email = adminEmail,
                     EmailConfirmed = true,
-                    Nome = config["AdminUser:Nome"],
+                    Nome = config["AdminUser:Nome"] ?? "N/A",
+                    Pais = config["AdminUser:Pais"] ?? "Portugal",
                 };
 
                 var result = await userManager.CreateAsync(user, adminPassword);
