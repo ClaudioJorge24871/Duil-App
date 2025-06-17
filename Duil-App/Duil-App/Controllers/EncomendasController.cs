@@ -47,6 +47,10 @@ namespace Duil_App.Controllers
             return encomendas == null ? NotFound() : View(encomendas);
         }
 
+        /// <summary>
+        /// GET CREATE: Encomendas
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             if (User.IsInRole("Cliente"))
@@ -63,6 +67,13 @@ namespace Duil_App.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Post CREATE:  Encomendas
+        /// </summary>
+        /// <param name="encomenda"></param>
+        /// <param name="pecasSelecionadas"></param>
+        /// <param name="quantidades"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(

@@ -39,13 +39,16 @@
                 <input asp-for="Transportadora" class="form-control" />
                 <span asp-validation-for="Transportadora" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label>Nome do Cliente</label>
-                <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
-                <input asp-for="ClienteId" type="hidden" id="ClienteId" />
-                <span asp-validation-for="ClienteId" class="text-danger"></span>
-            </div>
-
+            @if (!User.IsInRole("Cliente"))
+            {
+                <div class="form-group">
+                    <label>Nome do Cliente</label>
+                    <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
+                    <input asp-for="ClienteId" type="hidden" id="ClienteId" />
+                    <span asp-validation-for="ClienteId" class="text-danger"></span>
+                </div>
+            }
+            
             <div id="pecasContainer">
                 <div class="peca-row">
                     <div class="form-group">
@@ -57,10 +60,12 @@
                     <div class="form-group">
                         <label>Quantidade</label>
                         <input type="number" name="quantidades" class="form-control" value="1" min="1" />
-                        <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                        <br />
+                        <button type="button" class="btn btn-danger remove-peca">Remover Peça</button>
                     </div>
                 </div>
             </div>
+            <br />
             <button type="button" id="addPeca" class="btn btn-secondary mb-3">Adicionar Peça</button>
 
             <div class="form-group">
