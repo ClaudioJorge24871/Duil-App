@@ -8,20 +8,29 @@ using Microsoft.EntityFrameworkCore;
 using Duil_App.Data;
 using Duil_App.Models;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Duil_App.Controllers
 {
+    
     public class EncomendasController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<Utilizadores> _userManager;
 
-        public EncomendasController(ApplicationDbContext context)
+        public EncomendasController(ApplicationDbContext context, UserManager<Utilizadores> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("Cliente")){ // Se o utilizador autenticado for CLiente, mostra as encomendas dele
+                await GetClientesEncomendas();
+            }
+
             return View(await _context.Encomendas
                 .Include(e => e.Cliente)
                 .ToListAsync());
@@ -40,6 +49,17 @@ namespace Duil_App.Controllers
 
         public IActionResult Create()
         {
+            if (User.IsInRole("Cliente"))
+            {
+                var userId = _userManager.GetUserId(User);
+
+                if (userId == null)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                ViewBag.ClienteId = _userManager.GetUserId(User);
+            }
+
             return View();
         }
 
@@ -60,9 +80,28 @@ namespace Duil_App.Controllers
             {
                 try
                 {
-                    var pecas = await _context.Pecas
-                        .Where(p => pecasSelecionadas.Contains(p.Id))
-                        .ToListAsync();
+                    List<Pecas> pecas = new();
+
+                    if (User.IsInRole("Cliente")) // Se for CLiente apenas pode criar encomendas com as suas Pecas
+                    {
+                        var userId = _userManager.GetUserId(User);
+                        pecas = await _context.Pecas
+                            .Where(p => p.ClienteId == userId && pecasSelecionadas.Contains(p.Id))
+                            .ToListAsync();
+                    }
+                    else if (User.IsInRole("Funcionario") || User.IsInRole("Admin")) // Se for Funcionario ou Admin pode criar encomendas com Pecas associadas ao cliente colocado
+                    {
+                        pecas = await _context.Pecas
+                            .Where(p => pecasSelecionadas.Contains(p.Id))
+                            .ToListAsync();
+                    }
+
+                    if (pecas.Count == 0)
+                    {
+                        ModelState.AddModelError("", "Não foram encontradas peças válidas para a encomenda.");
+                        return View(encomenda);
+                    }
+
 
                     // Manual decimal parsing to handle culture differences
                     encomenda.QuantidadeTotal = quantidades.Sum();
@@ -241,6 +280,22 @@ namespace Duil_App.Controllers
                 .ToListAsync();
 
             return Json(pecas);
+        }
+
+        /// <summary>
+        /// Buscar as encomendas associadas ao utilizador autenticado.
+        /// </summary>
+        /// <returns>Lista de Encomendas</returns>
+        public async Task<IActionResult> GetClientesEncomendas()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            var encomendas = await _context.Encomendas
+                .Where(e => e.ClienteId == userId)
+                .Include(e => e.LinhasEncomenda)
+                .ToListAsync();
+
+            return View(encomendas);
         }
     }
 }

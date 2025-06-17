@@ -4,6 +4,7 @@
 
 using System.Text;
 using Duil_App.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace Duil_App.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<Utilizadores> _userManager;

@@ -44,6 +44,15 @@
                 <span asp-validation-for="Telemovel" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Role</label>
+                <select name="SelectedRole" class="form-control">
+                    @foreach (var role in ViewBag.AllRoles as List<string>)
+                    {
+                        <option value="@role" selected="@(ViewBag.UserCurrentRole == role ? "selected" : null)">@role</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

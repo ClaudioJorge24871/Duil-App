@@ -12,7 +12,7 @@
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<Utilizadores>>();
 
-            string[] roles = { "Admin", "Cliente", "Funcionario" };
+            string[] roles = { "Admin", "Cliente", "Funcionario", "Utilizador"};
 
             foreach (var role in roles)
             {
