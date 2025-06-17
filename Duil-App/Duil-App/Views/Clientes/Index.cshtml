@@ -6,9 +6,13 @@
 
 <h1>Clientes</h1>
 
-<p>
-    <a asp-action="Create">Adicionar um Cliente</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+   <p>
+        <a asp-action="Create">Adicionar um Cliente</a>
+   </p> 
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -43,9 +47,13 @@
                 @Html.DisplayFor(modelItem => item.Telemovel)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Nif">Modificar</a> |
-                <a asp-action="Details" asp-route-id="@item.Nif">Mais info</a> |
-                <a asp-action="Delete" asp-route-id="@item.Nif">Apagar</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Nif">Modificar | </a> 
+                    <a asp-action="Delete" asp-route-id="@item.Nif">Apagar</a> 
+                }
+                <a asp-action="Details" asp-route-id="@item.Nif">Mais info</a> 
+             
             </td>
         </tr>
 }

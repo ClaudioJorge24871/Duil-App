@@ -33,40 +33,45 @@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-   
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdLadoCliente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClienteId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cliente.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuantidadeTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrecoUnit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Mais info</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdLadoCliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClienteId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantidadeTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrecoUnit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @if (!User.IsInRole("Cliente"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Editar |   </a>
+                        ;
+                        <a asp-action="Delete" asp-route-id="@item.Id">Apagar |   </a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id">Mais info</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
