@@ -7,6 +7,7 @@ namespace Duil_App.Models
     /// <summary>
     /// utilizadores não anónimos da aplicação
     /// </summary>
+    
     public class Utilizadores: IdentityUser
     {
         /// <summary>
