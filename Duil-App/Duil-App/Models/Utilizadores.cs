@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Duil_App.Models
 {
@@ -7,7 +8,7 @@ namespace Duil_App.Models
     /// <summary>
     /// utilizadores não anónimos da aplicação
     /// </summary>
-    
+    [Index(nameof(Nome), IsUnique = true)]
     public class Utilizadores: IdentityUser
     {
         /// <summary>

@@ -113,12 +113,6 @@ namespace Duil_App.Controllers
                         return View(encomenda);
                     }
 
-
-                    // Manual decimal parsing to handle culture differences
-                    encomenda.QuantidadeTotal = quantidades.Sum();
-                    encomenda.TotalPrecoUnit = pecas
-                        .Zip(quantidades, (p, q) => p.PrecoUnit * q)
-                        .Sum();
                 }
                 catch
                 {
@@ -206,11 +200,6 @@ namespace Duil_App.Controllers
                 var pecas = await _context.Pecas
                     .Where(p => pecasSelecionadas.Contains(p.Id))
                     .ToListAsync();
-
-                encomenda.QuantidadeTotal = quantidades.Sum();
-                encomenda.TotalPrecoUnit = pecas
-                    .Zip(quantidades, (p, q) => p.PrecoUnit * q)
-                    .Sum();
             }
 
             if (ModelState.IsValid)

@@ -4,6 +4,7 @@ using Duil_App.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow.ValueContentAnalysis;
+using System.Runtime.Intrinsics.X86;
 
 namespace Duil_App.Controllers {
 
@@ -62,7 +63,15 @@ namespace Duil_App.Controllers {
       [ValidateAntiForgeryToken]
       public async Task<IActionResult> Create([Bind("Nome,Morada,CodPostal,Pais,NIF,Telemovel")] Utilizadores utilizador) {
 
-         if (ModelState.IsValid) {
+            bool nomeEmUso = _context.Users.Any(user => user.Nome == utilizador.Nome);
+
+            if (nomeEmUso)
+            {
+                ModelState.AddModelError("Nome", "Já existe um utilizador com esse nome.");
+                return View(utilizador);
+            }
+
+            if (ModelState.IsValid) {
             utilizador.CodPostal = utilizador.CodPostal?.ToUpper();
 
             _context.Add(utilizador);
@@ -101,6 +110,17 @@ namespace Duil_App.Controllers {
         {
             if (id != utilizador.Id)
                 return NotFound();
+
+            //se o utilizador mudou o nome
+            bool nomeEmUso = _context.Users.Any(user => user.Nome == utilizador.Nome && user.Id != id);
+
+            if (nomeEmUso)
+            {
+                ModelState.AddModelError("Nome", "Já existe um utilizador com esse nome.");
+                ViewBag.AllRoles = new List<string> { "Admin", "Cliente", "Funcionario", "Utilizador" };
+                ViewBag.UserCurrentRole = SelectedRole;
+                return View(utilizador);
+            }
 
             if (ModelState.IsValid)
             {
