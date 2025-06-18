@@ -38,6 +38,7 @@ namespace Duil_App.Models
         /// <summary>
         /// Quantidade de unidades da peça na encomenda
         /// </summary>
+        [Range(1, 999999, ErrorMessage = "A quantidade deve ser entre 1 e 999.999.")]
         public int Quantidade { get; set; }
     }
 }

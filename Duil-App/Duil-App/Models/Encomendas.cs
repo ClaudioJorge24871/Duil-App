@@ -41,7 +41,7 @@ namespace Duil_App.Models
         /// Quantidade total de peças na encomenda
         /// </summary>
         [Display(Name = "Quantidade")]
-        [Range(1, int.MaxValue, ErrorMessage = "A quantidade total deve ser maior que zero.")]
+        [Range(1, 1000000, ErrorMessage = "A quantidade total deve estar entre 1 e 999.999.")]
         [Required(ErrorMessage = "A {0} total é um campo obrigatório.")]
         public int QuantidadeTotal { get; set; }
 

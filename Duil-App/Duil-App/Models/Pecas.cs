@@ -39,6 +39,7 @@ namespace Duil_App.Models
         [Display(Name = "Preço unitário")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [Column(TypeName = "decimal(18, 2)")]
+        [RegularExpression(@"^\d{1,7}([.,]\d{1,3})?$", ErrorMessage = "Máximo de 10 dígitos, até 3 casas decimais.")]
         public decimal PrecoUnit { get; set; }
 
         /// <summary>
