@@ -71,7 +71,7 @@ namespace Duil_App.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Referencia,Designacao,PrecoUnit,FabricaId,ClienteId")] Pecas pecas,
-            IFormFile imagemFile, 
+            IFormFile? imagemFile, 
             [FromServices] IWebHostEnvironment hostingEnvironment)
         {
             if (ModelState.IsValid)
@@ -87,7 +87,6 @@ namespace Duil_App.Controllers
                         return View(pecas);
                     }
 
-
                     try
                     {
                         string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
@@ -101,12 +100,17 @@ namespace Duil_App.Controllers
                             await imagemFile.CopyToAsync(fileStream);
                         }
                         pecas.Imagem = uniqueFileName;
-                    }catch (Exception ex) {
+
+                    } catch (Exception ex) {
                         ModelState.AddModelError("Imagem", "Erro ao fazer upload da imagem: " + ex.Message);
                         return View(pecas);
                     }
                 }
-
+                else
+                {
+                    // Define a imagem padrão
+                    pecas.Imagem = "Default_Image.jpg";
+                }
 
                 if (_context.Pecas.Any(p => p.Referencia == pecas.Referencia))
                 {
@@ -118,6 +122,7 @@ namespace Duil_App.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+           
             return View(pecas);
         }
 
