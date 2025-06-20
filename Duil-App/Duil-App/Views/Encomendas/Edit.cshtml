@@ -25,32 +25,34 @@
                 <input asp-for="Data" class="form-control" />
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="TotalPrecoUnit" class="control-label"></label>
-                <input asp-for="TotalPrecoUnit" class="form-control" />
+                <input asp-for="TotalPrecoUnit" class="form-control" readonly />
                 <span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="QuantidadeTotal" class="control-label"></label>
-                <input asp-for="QuantidadeTotal" class="form-control" />
+                <input asp-for="QuantidadeTotal" class="form-control" readonly />
                 <span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Transportadora" class="control-label"></label>
                 <input asp-for="Transportadora" class="form-control" />
                 <span asp-validation-for="Transportadora" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Estado" class="control-label"></label>
                 <select asp-for="Estado" class="form-control" asp-items="@(ViewData["Estado"] as SelectList)"></select>
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
 
-
             <div class="form-group">
                 <label>Cliente</label>
-                <input type="text" id="cliente-nome" class="form-control"
-                       autocomplete="off" value="@Model.Cliente?.Nome" />
+                <input type="text" id="cliente-nome" class="form-control" autocomplete="off" value="@Model.Cliente?.Nome" />
                 <input asp-for="ClienteId" type="hidden" id="ClienteId" />
                 <span asp-validation-for="ClienteId" class="text-danger"></span>
             </div>
@@ -61,14 +63,11 @@
                     <div class="peca-row">
                         <div class="form-group">
                             <label>Peça</label>
-                            <select name="pecasSelecionadas" class="form-control peca-select"
-                                    data-selected="@linha.PecaId">
-                            </select>
+                            <select name="pecasSelecionadas" class="form-control peca-select" data-selected="@linha.PecaId"></select>
                         </div>
                         <div class="form-group">
                             <label>Quantidade</label>
-                            <input type="number" name="quantidades" class="form-control"
-                                   value="@linha.Quantidade" />
+                            <input type="number" name="quantidades" class="form-control" value="@linha.Quantidade" />
                             <button type="button" class="btn btn-danger remove-peca">Remover</button>
                         </div>
                     </div>
@@ -92,9 +91,8 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
     <script>
-
         $(function () {
-            var clienteSelected = @((parsedClienteId > 0).ToString().ToLower());
+            let clienteSelected = @((parsedClienteId > 0).ToString().ToLower());
             const pecasData = {};
 
             if (@parsedClienteId > 0) {
@@ -116,77 +114,93 @@
                 }
             });
 
-
             function populateSelect(select) {
-                const selectedValue = select.data('selected'); // lê o valor salvo no atributo
-
+                const selectedValue = select.data('selected');
                 select.empty().append('<option value="">-- Selecione uma peça --</option>');
 
                 for (const id in pecasData) {
                     const peca = pecasData[id];
                     const displayPrice = peca.preco.toFixed(2).replace('.', ',');
                     const option = new Option(`${peca.nome} (${displayPrice} €)`, id);
-
                     if (selectedValue && id == selectedValue) {
                         option.selected = true;
                     }
-
                     select.append(option);
+                }
+
+                select.removeAttr('data-selected');
             }
 
-            // Limpa o atributo data-selected para não interferir mais
-            select.removeAttr('data-selected');
-            }
+            function updateTotals() {
+                let totalQuantity = 0;
+                let totalPrice = 0;
 
+                $('.peca-row').each(function () {
+                    const select = $(this).find('select');
+                    const quantityInput = $(this).find('input[type="number"]');
+                    const pecaId = select.val();
+                    const quantity = parseInt(quantityInput.val()) || 0;
+
+                    if (pecaId && pecasData[pecaId]) {
+                        totalQuantity += quantity;
+                        totalPrice += parseFloat(pecasData[pecaId].preco) * quantity;
+                    }
+                });
+
+                $('#QuantidadeTotal').val(totalQuantity);
+                $('#TotalPrecoUnit').val(totalPrice.toFixed(2).replace('.', ',')); // Display with comma
+                $('input[name="QuantidadeTotal"]').val(totalQuantity);
+                $('input[name="TotalPrecoUnit"]').val(totalPrice.toFixed(2));
+            }
 
             function loadPecas(clienteId) {
-            fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
-                .then(response => response.json())
-                .then(data => {
-                    Object.keys(pecasData).forEach(key => delete pecasData[key]);
+                fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        Object.keys(pecasData).forEach(key => delete pecasData[key]);
+                        data.forEach(p => {
+                            pecasData[p.id] = {
+                                nome: p.nome,
+                                preco: parseFloat(p.preco)
+                            };
+                        });
 
-                    data.forEach(p => {
-                        pecasData[p.id] = {
-                            nome: p.nome,
-                            preco: parseFloat(p.preco)
-                        };
+                        $('select[name="pecasSelecionadas"]').each(function () {
+                            populateSelect($(this));
+                        });
+
+                        updateTotals();
                     });
-
-                    // Atualiza todos os selects existentes
-                    $('select[name="pecasSelecionadas"]').each(function () {
-                        populateSelect($(this));
-                    });
-
-                    updateTotals();
-                });
             }
 
             $('#addPeca').click(function () {
-            const newRow = $(`
-                <div class="peca-row">
-                    <div class="form-group">
-                        <label>Peça</label>
-                        <select name="pecasSelecionadas" class="form-control peca-select">
-                            <option value="">-- Selecione uma peça --</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Quantidade</label>
-                        <input type="number" name="quantidades" class="form-control" value="1" />
-                        <button type="button" class="btn btn-danger remove-peca">Remover</button>
-                    </div>
-                </div>`);
+                const newRow = $(`
+                    <div class="peca-row">
+                        <div class="form-group">
+                            <label>Peça</label>
+                            <select name="pecasSelecionadas" class="form-control peca-select">
+                                <option value="">-- Selecione uma peça --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantidade</label>
+                            <input type="number" name="quantidades" class="form-control" value="1" />
+                            <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                        </div>
+                    </div>`);
 
-            $('#pecasContainer').append(newRow);
-
-            // Popula o novo select com os dados existentes
-            const select = newRow.find('select[name="pecasSelecionadas"]');
-            populateSelect(select);
+                $('#pecasContainer').append(newRow);
+                populateSelect(newRow.find('select[name="pecasSelecionadas"]'));
+                updateTotals();
             });
-
 
             $(document).on('click', '.remove-peca', function () {
                 $(this).closest('.peca-row').remove();
+                updateTotals();
+            });
+
+            $(document).on('change', '.peca-select, input[name="quantidades"]', function () {
+                updateTotals();
             });
 
             $("form").on("submit", function (event) {

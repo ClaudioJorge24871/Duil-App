@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Duil_App.Models
 {
@@ -7,6 +8,7 @@ namespace Duil_App.Models
     /// <summary>
     /// utilizadores não anónimos da aplicação
     /// </summary>
+    [Index(nameof(Nome), IsUnique = true)]
     public class Utilizadores: IdentityUser
     {
         /// <summary>
@@ -42,7 +44,8 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "País")]
         [StringLength(50)]
-        public string? Pais { get; set; }
+        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        public required string Pais { get; set; }
 
         /// <summary>
         /// Número de identificação fiscal do Utilizador

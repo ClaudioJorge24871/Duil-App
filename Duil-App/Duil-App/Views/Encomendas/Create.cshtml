@@ -23,16 +23,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="TotalPrecoUnit" class="control-label"></label>
-                <input asp-for="TotalPrecoUnit" class="form-control" readonly />
+                <input type="text" id="TotalPrecoUnit_Visivel" class="form-control" readonly />
+                <input type="hidden" asp-for="TotalPrecoUnit" />
                 <span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="QuantidadeTotal" class="control-label"></label>
-                <input asp-for="QuantidadeTotal" class="form-control" readonly />
+                <input type="text" id="QuantidadeTotal_Visivel" class="form-control" readonly />
+                <input type="hidden" asp-for="QuantidadeTotal" />
                 <span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="TotalPrecoUnit" />
-            <input type="hidden" asp-for="QuantidadeTotal" />
 
             <div class="form-group">
                 <label asp-for="Transportadora" class="control-label"></label>
@@ -98,7 +98,7 @@
     </script>
     <script>
         $(function () {
-            var clienteSelected = false;
+
             const pecasData = {}; // Store peça prices
 
             function updateTotals() {
@@ -119,10 +119,11 @@
                 });
 
                 // Update display with comma, hidden field with dot
-                $('#QuantidadeTotal').val(totalQuantity);
-                $('#TotalPrecoUnit').val(totalPrice.toFixed(2).replace('.', ',')); // Display with comma
-                $('input[type="hidden"][asp-for="QuantidadeTotal"]').val(totalQuantity);
-                $('input[type="hidden"][asp-for="TotalPrecoUnit"]').val(totalPrice.toFixed(2)); // Store with dot
+                $('#QuantidadeTotal_Visivel').val(totalQuantity);
+                $('#TotalPrecoUnit_Visivel').val(totalPrice.toFixed(2).replace('.', ',')); // para exibição
+                $('input[name="QuantidadeTotal"]').val(totalQuantity); // hidden real enviado
+                $('input[name="TotalPrecoUnit"]').val(totalPrice.toFixed(2)); // hidden real enviado com ponto
+
             }
 
             function populateSelect(select) {
@@ -217,12 +218,6 @@
                 updateTotals();
             });
 
-            $("form").on("submit", function (event) {
-                const visibleTotal = $('#TotalPrecoUnit').val().replace(',', '.');
-                $('input[type="hidden"][asp-for="TotalPrecoUnit"]').val(visibleTotal);
-
-                $('#TotalPrecoUnit').rules('remove', 'number');
-            });
         });
     </script>
 }

@@ -127,6 +127,15 @@ namespace Duil_App.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            var nomeEmUso = _context.Users.Any(user => user.Nome == Input.Utilizador.Nome);
+
+            if(nomeEmUso)
+            {
+                ModelState.AddModelError("Input.Utilizador.Nome", "Já existe um utilizador com esse nome.");
+                return Page();
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new Utilizadores
@@ -152,7 +161,7 @@ namespace Duil_App.Areas.Identity.Pages.Account
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-              
+
                     await _userManager.AddToRoleAsync(user, "Utilizador");
                     await _context.SaveChangesAsync();
 
