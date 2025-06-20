@@ -99,7 +99,7 @@
     <script>
         $(function () {
 
-            const pecasData = {}; // Store peça prices
+            const pecasData = {}; // Guarda preços das Pecas
 
             function updateTotals() {
                 let totalQuantity = 0;
@@ -113,12 +113,12 @@
 
                     if (pecaId && pecasData[pecaId]) {
                         totalQuantity += quantity;
-                        // Parse price as float using invariant culture
+                        // Prarsing do preço para garantir que é um número
                         totalPrice += parseFloat(pecasData[pecaId].preco) * quantity;
                     }
                 });
 
-                // Update display with comma, hidden field with dot
+                // Atualiza com virgula
                 $('#QuantidadeTotal_Visivel').val(totalQuantity);
                 $('#TotalPrecoUnit_Visivel').val(totalPrice.toFixed(2).replace('.', ',')); // para exibição
                 $('input[name="QuantidadeTotal"]').val(totalQuantity); // hidden real enviado
@@ -218,6 +218,31 @@
                 updateTotals();
             });
 
+        });
+
+
+        // Verificação se o Formulário foi submetido
+        // Caso não tenha sido submetido e alterado e o utilizador quiser sair, envia um alert
+        let formularioSubmetido = false;
+        let formularioAlterado = false;
+
+        // Caso o formulario seja alterado
+        document.querySelectorAll('form input, form select').forEach(function (el) {
+            el.addEventListener('change', () => {
+                formularioAlterado = true;
+            });
+        });
+
+        document.querySelector('form').addEventListener('submit', function () {
+            formularioSubmetido = true; // Marca o formulario como submetido quando tal
+        });
+
+        //Interceta a tentativa de sair da página
+        window.addEventListener('beforeunload', function (e) {
+            if (!formularioSubmetido && formularioAlterado) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
         });
     </script>
 }

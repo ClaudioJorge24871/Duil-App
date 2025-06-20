@@ -147,7 +147,7 @@ namespace Duil_App.Controllers
                         }
                         await _context.SaveChangesAsync();
                     }
-
+                    TempData["SuccessMessage"] = "Encomenda criada com sucesso!";
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)

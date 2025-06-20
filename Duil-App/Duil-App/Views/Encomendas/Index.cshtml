@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Index";
 }
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 
 <h1>Listagem de Encomendas</h1>
 
