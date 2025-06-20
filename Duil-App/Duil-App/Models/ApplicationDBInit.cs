@@ -89,7 +89,8 @@
                     UserName = clienteEmail,
                     Email = clienteEmail,
                     EmailConfirmed = true,
-                    Nome = "Cliente",
+                    NIF = "250165487",
+                    Nome = "Cliente Exemplo",
                     Pais = "Portugal",
                 };
 
@@ -100,7 +101,21 @@
                 }
             }
 
-            
+            // Adicionar Cliente à base de dados
+            if (!context.Clientes.Any(c => c.Email == clienteEmail))
+            {
+                var cliente = new Clientes
+                {
+                    Nif = "250165487",
+                    Nome = "Cliente Exemplo",
+                    Email = clienteEmail,
+                    Telemovel = "912345678",
+                    Pais = "Portugal",
+                };
+
+                await context.Clientes.AddAsync(cliente);
+                await context.SaveChangesAsync();
+            }
 
 
             // Criar Fabrica
