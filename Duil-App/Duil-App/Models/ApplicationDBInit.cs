@@ -1,5 +1,6 @@
 ﻿namespace Duil_App.Models
 {
+    using Duil_App.Data;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
     using System;
@@ -7,6 +8,7 @@
 
     public class ApplicationDBInit
     {
+
         /// <summary>
         /// Seed da base de dados, com roles e utilizadores iniciais
         /// </summary>
@@ -17,6 +19,7 @@
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<Utilizadores>>();
+            var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
             string[] roles = { "Admin", "Cliente", "Funcionario", "Utilizador"}; // Roles
 
@@ -97,6 +100,25 @@
                 }
             }
 
+            
+
+
+            // Criar Fabrica
+            if (!context.Fabricas.Any(f => f.Nome == "Fábrica Exemplo"))
+            {
+                var fabricaDefault = new Fabricas
+                {
+                    Nif = "250123456",
+                    Nome = "Fábrica Exemplo",
+                    Email = "fabrica@exemplo.com",
+                    Telemovel = "912345678",
+                    Pais = "Portugal",
+                };
+
+                await context.Fabricas.AddAsync(fabricaDefault);
+                await context.SaveChangesAsync();
+
+            }
         }
     }
 }
