@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var clienteId = ViewBag.ClienteId as string;
 }
 
 <h1>Nova encomenda</h1>
@@ -11,6 +12,10 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (User.IsInRole("Cliente"))
+            {
+                <input type="hidden" asp-for="ClienteId" value="@clienteId" id="ClienteId" />
+            }
             <div class="form-group">
                 <label asp-for="IdLadoCliente" class="control-label"></label>
                 <input asp-for="IdLadoCliente" class="form-control" />
@@ -98,8 +103,15 @@
     </script>
     <script>
         $(function () {
+            const pecasData = {};
+            let initialLoadComplete = false; 
 
-            const pecasData = {}; // Guarda preços das Pecas
+            function initSelects() {
+                $('select[name="pecasSelecionadas"]').each(function () {
+                    populateSelect($(this));
+                });
+                initialLoadComplete = true;
+            }
 
             function updateTotals() {
                 let totalQuantity = 0;
@@ -137,11 +149,18 @@
             }
 
 
-            function loadPecas(clienteId) {
+            function loadPecas() {
+                const clienteId = $('#ClienteId').val()?.trim();
+                if (clienteId) {
+                    buscarPecas(clienteId);
+                }
+            }
+
+            function buscarPecas(clienteId) {
                 fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
                     .then(response => response.json())
                     .then(data => {
-                        Object.keys(pecasData).forEach(key => delete pecasData[key]);
+                        Object.keys(pecasData).forEach(k => delete pecasData[k]);
 
                         data.forEach(p => {
                             pecasData[p.id] = {
@@ -150,14 +169,18 @@
                             };
                         });
 
-                        // Atualiza todos os selects existentes
-                        $('select[name="pecasSelecionadas"]').each(function () {
-                            populateSelect($(this));
-                        });
-
+                        if (!initialLoadComplete) initSelects();
                         updateTotals();
-                    });
+                    })
+                    .catch(error => console.error('Fetch failed:', error));
             }
+
+            // Carrega peças automaticamente se cliente for autenticado
+            $(document).ready(function () {
+                loadPecas();
+            });
+
+
             $("#cliente-nome").autocomplete({
                 source: '/Clientes/Search',
                 minLength: 1,
@@ -226,6 +249,7 @@
         let formularioSubmetido = false;
         let formularioAlterado = false;
 
+
         // Caso o formulario seja alterado
         document.querySelectorAll('form input, form select').forEach(function (el) {
             el.addEventListener('change', () => {
@@ -233,15 +257,30 @@
             });
         });
 
-        document.querySelector('form').addEventListener('submit', function () {
-            formularioSubmetido = true; // Marca o formulario como submetido quando tal
+        const submitBtn = document.querySelector('form input[type="submit"]');
+
+        submitBtn.addEventListener('click', () => {
+            formularioSubmetido = true;
         });
 
         //Interceta a tentativa de sair da página
         window.addEventListener('beforeunload', function (e) {
             if (!formularioSubmetido && formularioAlterado) {
-                e.preventDefault();
-                e.returnValue = '';
+                const idLadoCliente = document.querySelector('input[name="IdLadoCliente"]').value.trim();
+                let pecaSelecionada = false;
+
+                document.querySelectorAll('select[name="pecasSelecionadas"]').forEach(select => {
+                    if (select.value.trim() !== "") {
+                        pecaSelecionada = true;
+                    }
+                });
+
+                // Só alerta se o campo IdLadoCliente estiver vazio ou nenhuma peça selecionada
+                if (idLadoCliente !== "" || pecaSelecionada)
+                {
+                    e.preventDefault();
+                    e.returnValue = '';
+                }
             }
         });
     </script>

@@ -56,12 +56,14 @@ namespace Duil_App.Controllers
             if (User.IsInRole("Cliente"))
             {
                 var userId = _userManager.GetUserId(User);
+                var user = _userManager.GetUserAsync(User).Result;
+                var userIdentificador = user.NIF;
 
                 if (userId == null)
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                ViewBag.ClienteId = _userManager.GetUserId(User);
+                ViewBag.ClienteId = userIdentificador;
             }
 
             return View();
@@ -95,10 +97,15 @@ namespace Duil_App.Controllers
 
                     if (User.IsInRole("Cliente")) // Se for CLiente apenas pode criar encomendas com as suas Pecas
                     {
+                        
                         var userId = _userManager.GetUserId(User);
+                        var user = await _userManager.GetUserAsync(User);
+                        var nif = user.NIF;
+
                         pecas = await _context.Pecas
-                            .Where(p => p.ClienteId == userId && pecasSelecionadas.Contains(p.Id))
+                            .Where(p => p.ClienteId == nif && pecasSelecionadas.Contains(p.Id))
                             .ToListAsync();
+                        
                     }
                     else if (User.IsInRole("Funcionario") || User.IsInRole("Admin")) // Se for Funcionario ou Admin pode criar encomendas com Pecas associadas ao cliente colocado
                     {
@@ -267,6 +274,12 @@ namespace Duil_App.Controllers
             return _context.Encomendas.Any(e => e.Id == id);
         }
 
+        /// <summary>
+        /// Buscar as pecas associadas ao Cliente.
+        /// Caso o Cliente esteja autenticado, busca o seu NIf e retorna as pecas associadas ao cliente NIf correspondente
+        /// </summary>
+        /// <param name="clienteId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetPecasPorCliente(string clienteId)
         {
