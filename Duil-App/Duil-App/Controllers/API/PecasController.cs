@@ -1,5 +1,6 @@
 ﻿using Duil_App.Data;
 using Duil_App.Models;
+using Duil_App.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -56,12 +57,30 @@ namespace Duil_App.Controllers.API
         /// <param name="peca"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<Pecas>> PostPeca (Pecas peca)
+        public async Task<ActionResult<Pecas>> PostPeca (PecaDTO dto)
         {
-            _context.Pecas.Add(peca);
+            var fabrica = await _context.Fabricas.FirstOrDefaultAsync(f => f.Nif == dto.FabricaId);
+            var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.Nif == dto.ClienteId);
+            
+            var novaPeca = new Pecas
+            {
+                Referencia = dto.Referencia,
+                Designacao = dto.Designacao,
+                PrecoUnit = dto.PrecoUnit,
+                FabricaId = dto.FabricaId,
+                Fabrica = fabrica ?? throw new ArgumentNullException(nameof(fabrica), "Fábrica não encontrada."),
+                ClienteId = dto.ClienteId,
+                Cliente = cliente ?? throw new ArgumentNullException(nameof(cliente), "Cliente não encontrado."),
+                Imagem = dto.Imagem
+            };
+
+
+            _context.Pecas.Add(novaPeca);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPecas", new {id = peca.Id}, peca);
+            return CreatedAtAction(nameof(GetPeca),
+                       new { id = novaPeca.Id },
+                       novaPeca);
         }
         
 
