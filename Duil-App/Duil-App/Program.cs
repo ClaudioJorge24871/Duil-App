@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,7 +52,12 @@ builder.Services.AddSwaggerGen(c =>
         Description = "API para o projeto Duil",
     });
 
+    // Adiciona o XML de documentação à API
+    // fonte: https://github.com/IPT-DW-2024-2025/tA-appFotos/blob/main/AppFotos/AppFotos/Program.cs#L141
 
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
 });
 
 
