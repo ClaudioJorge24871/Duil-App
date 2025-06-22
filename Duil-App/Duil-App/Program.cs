@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +41,19 @@ builder.Services.AddControllers(config =>
     config.Filters.Add(new AuthorizeFilter(policy));
 });
 
+// Adiciona o Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Duil API",
+        Version = "v1",
+        Description = "API para o projeto Duil",
+    });
+
+
+});
+
 
 // configurar o de uso de 'cookies'
 builder.Services.AddSession(options => {
@@ -71,6 +85,9 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
     app.UseMigrationsEndPoint();
 }
 else
@@ -90,6 +107,8 @@ app.UseAuthorization();
 
 // usar cookies
 app.UseSession();
+
+app.MapControllers();
 
 app.MapControllerRoute(
     name: "default",
