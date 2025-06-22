@@ -257,15 +257,30 @@
             });
         });
 
-        document.querySelector('form').addEventListener('submit', function () {
-            formularioSubmetido = true; // Marca o formulario como submetido quando tal
+        const submitBtn = document.querySelector('form input[type="submit"]');
+
+        submitBtn.addEventListener('click', () => {
+            formularioSubmetido = true;
         });
 
         //Interceta a tentativa de sair da página
         window.addEventListener('beforeunload', function (e) {
             if (!formularioSubmetido && formularioAlterado) {
-                e.preventDefault();
-                e.returnValue = '';
+                const idLadoCliente = document.querySelector('input[name="IdLadoCliente"]').value.trim();
+                let pecaSelecionada = false;
+
+                document.querySelectorAll('select[name="pecasSelecionadas"]').forEach(select => {
+                    if (select.value.trim() !== "") {
+                        pecaSelecionada = true;
+                    }
+                });
+
+                // Só alerta se o campo IdLadoCliente estiver vazio ou nenhuma peça selecionada
+                if (idLadoCliente !== "" || pecaSelecionada)
+                {
+                    e.preventDefault();
+                    e.returnValue = '';
+                }
             }
         });
     </script>
