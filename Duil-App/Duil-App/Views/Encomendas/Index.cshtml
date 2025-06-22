@@ -5,7 +5,7 @@
 }
 @if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success">
+    <div class="alert alert-success" id="success-alert">
         @TempData["SuccessMessage"]
     </div>
 }
@@ -81,3 +81,14 @@
         }
     </tbody>
 </table>
+
+<script>
+    setTimeout(function () {
+        var alert = document.getElementById("success-alert");
+        if (alert) {
+            alert.style.transition = "opacity 0.5s ease-out";
+            alert.style.opacity = "0";
+            setTimeout(() => alert.remove(), 500); // remove da DOM após fade out
+        }
+    }, 3000); // 3 segundos
+</script>
