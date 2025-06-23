@@ -1,6 +1,7 @@
 ﻿using Duil_App.Data;
 using Duil_App.Models;
 using Duil_App.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Duil_App.Controllers.API
 {
+    [Authorize(Roles = "Funcionario,Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class PecasController : ControllerBase
