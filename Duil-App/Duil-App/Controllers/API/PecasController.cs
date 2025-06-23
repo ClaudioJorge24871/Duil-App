@@ -33,7 +33,7 @@ namespace Duil_App.Controllers.API
 
         // GET api/<PecasController>/5
         /// <summary>
-        /// Obtem uma Peca em especifico
+        /// Obtem uma Peca especifica
         /// </summary>
         /// <param name="id">identificador da Peca</param>
         /// <returns>Peca com o ID passado</returns>
@@ -54,7 +54,7 @@ namespace Duil_App.Controllers.API
         /// <summary>
         /// Adiciona uma peca
         /// </summary>
-        /// <param name="peca"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Pecas>> PostPeca (PecaDTO dto)
@@ -89,13 +89,14 @@ namespace Duil_App.Controllers.API
         /// Modifica uma peca
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="peca"></param>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPeca(int id, Pecas peca)
         {
             if(id != peca.Id)
             {
                 return BadRequest();
+
             }
 
             _context.Entry(peca).State = EntityState.Modified;
