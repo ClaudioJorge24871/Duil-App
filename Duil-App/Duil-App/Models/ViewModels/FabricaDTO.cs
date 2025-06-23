@@ -1,6 +1,23 @@
-﻿namespace Duil_App.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Duil_App.Models.ViewModels
 {
     public class FabricaDTO
     {
+        public required string Nif { get; set; }
+
+        public required string Nome { get; set; }
+
+        public string? Morada { get; set; }
+
+        public string? CodPostal { get; set; }
+
+        public required string Pais { get; set; }
+
+        public string? Telemovel { get; set; }
+
+        public string? Email { get; set; }
+
+        public string? MoradaDescarga { get; set; }
     }
 }

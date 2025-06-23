@@ -43,7 +43,6 @@ namespace Duil_App.Controllers.API
             {
                 return NotFound();
             }
-            ;
 
             return encomenda;
         }
