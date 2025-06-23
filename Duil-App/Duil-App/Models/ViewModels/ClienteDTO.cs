@@ -1,6 +1,6 @@
 ﻿namespace Duil_App.Models.ViewModels
 {
-    public class FabricaDTO
+    public class ClienteDTO
     {
         public required string Nif { get; set; }
 
@@ -16,6 +16,8 @@
 
         public string? Email { get; set; }
 
-        public string? MoradaDescarga { get; set; }
+        public string? MoradaCarga { get; set; }
+        
+
     }
 }
