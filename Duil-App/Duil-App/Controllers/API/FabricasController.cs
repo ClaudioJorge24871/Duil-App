@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Duil_App.Controllers.API
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Funcionario")]
     [Route("api/[controller]")]
     [ApiController]
     public class FabricasController: ControllerBase

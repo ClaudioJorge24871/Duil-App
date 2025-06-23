@@ -27,7 +27,7 @@ namespace Duil_App.Controllers
 
         public async Task<IActionResult> Index()
         {
-            if (User.IsInRole("Cliente")){ // Se o utilizador autenticado for CLiente, mostra as encomendas dele
+            if (User.IsInRole("Cliente")){ 
                 await GetClientesEncomendas();
             }
 

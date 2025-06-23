@@ -9,4 +9,10 @@
         public required string ClienteId { get; set; }
 
     }
+
+    public class EncomendaClienteDTO
+    {
+        public int IdLadoCliente { get; set; } 
+        public string? Transportadora { get; set; } = string.Empty;
+    }
 }

@@ -1,23 +1,28 @@
 ﻿using Duil_App.Data;
 using Duil_App.Models;
 using Duil_App.Models.ViewModels;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Duil_App.Controllers.API
 {
-    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
     public class EncomendasController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<Utilizadores> _userManager;
 
-        public EncomendasController(ApplicationDbContext context)
+        public EncomendasController(ApplicationDbContext context, UserManager<Utilizadores> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
 
         // GET: api/<EncomendasController>
         /// <summary>
@@ -80,6 +85,58 @@ namespace Duil_App.Controllers.API
             return CreatedAtAction(nameof(GetEncomenda),
                        new { id = novaEncomenda.Id },
                        novaEncomenda);
+        }
+
+
+        // GET: api/Encomendas/minhasEncomendas
+        /// <summary>
+        /// Devolve uma lista com todas as Encomendas do cliente autenticado
+        /// </summary>
+        [HttpGet("minhasEncomendas")]
+        [Authorize(Roles = "Cliente")]
+        public async Task<ActionResult<IEnumerable<Encomendas>>> VerMinhas()
+        {
+            var userNif = _userManager.Users
+                .Where(u => u.Id == _userManager.GetUserId(User))
+                .Select(u => u.NIF)
+                .FirstOrDefault();
+            
+            return await _context.Encomendas
+                .Where(e => e.ClienteId == userNif)
+                .ToListAsync();
+        }
+
+        // POST: api/Encomendas/cliente
+        /// <summary>
+        /// Cria a encomenda do cliente autenticado
+        /// </summary>
+        /// <param name="dto"></param>
+        [HttpPost("cliente")]
+        [Authorize(Roles = "Cliente")]
+        public async Task<ActionResult<Encomendas>> CriarEncomendaCliente([FromBody] EncomendaClienteDTO dto)
+        {
+            var userNif = _userManager.Users
+               .Where(u => u.Id == _userManager.GetUserId(User))
+               .Select(u => u.NIF)
+               .FirstOrDefault();
+
+            var novaEncomenda = new Encomendas
+            {
+                IdLadoCliente = dto.IdLadoCliente,
+                //Como é autenticado, existe
+                ClienteId = userNif!,
+                Cliente = _context.Clientes.FirstOrDefault(e => e.Nif == userNif)!,
+                Data = DateTime.Today,
+                Estado = Estados.Pendente,
+                TotalPrecoUnit = 1,                    //Duvida aqui.
+                QuantidadeTotal = 1,                   // e aqui
+                Transportadora = dto.Transportadora
+            };
+
+            _context.Encomendas.Add(novaEncomenda);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(VerMinhas), new { id = novaEncomenda.Id }, novaEncomenda);
         }
 
 
