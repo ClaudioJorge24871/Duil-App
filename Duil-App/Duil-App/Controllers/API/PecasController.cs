@@ -82,40 +82,45 @@ namespace Duil_App.Controllers.API
                        new { id = novaPeca.Id },
                        novaPeca);
         }
-        
+
 
         // PUT api/<PecasController>/5
         /// <summary>
         /// Modifica uma peca
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="peca"></param>
+        /// <param name="dto"></param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPeca(int id, Pecas peca)
+        public async Task<IActionResult> PutPeca(int id, PecaDTO dto)
         {
-            if(id != peca.Id)
+            var peca = await _context.Pecas.FindAsync(id);
+
+            if (peca == null)
             {
                 return BadRequest();
 
             }
 
+            peca.Referencia = dto.Referencia;
+            peca.Designacao = dto.Designacao;
+            peca.PrecoUnit = dto.PrecoUnit;
+            peca.FabricaId = dto.FabricaId;
+            peca.ClienteId = dto.ClienteId;
+            peca.Imagem = dto.Imagem;
+           
             _context.Entry(peca).State = EntityState.Modified;
+            
             try
             {
                 await _context.SaveChangesAsync();
-            }catch (DbUpdateConcurrencyException)
+            }
+            catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Pecas.Any(e => e.Id == id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(500, "Erro de concorrência ao atualizar a encomenda.");
             }
 
             return NoContent();
+
         }
 
         // DELETE api/<PecasController>/5
