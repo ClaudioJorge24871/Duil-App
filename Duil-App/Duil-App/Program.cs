@@ -1,6 +1,7 @@
 using Duil_App.Code;
 using Duil_App.Data;
 using Duil_App.Models;
+using Duil_App.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -9,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
 using System.Reflection;
+using System.Text;
 using System.Text.Json.Serialization;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +37,7 @@ builder.Services.AddDefaultIdentity<Utilizadores>(options => {
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// Obrigar todos os utilizadores a estarem autenticados
+// Obrigatoriedade da autenticação dos utilizadores
 builder.Services.AddControllers(config =>
 {
     var policy = new AuthorizationPolicyBuilder()
@@ -43,9 +46,11 @@ builder.Services.AddControllers(config =>
     config.Filters.Add(new AuthorizeFilter(policy));
 });
 
-// Eliminar proteção de ciclos
+
+//  proteção de ciclos
 builder.Services.AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 
 // Adiciona o Swagger
 builder.Services.AddSwaggerGen(c =>
@@ -54,25 +59,72 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Duil API",
         Version = "v1",
-        Description = "API para o projeto Duil",
+        Description = "API para o gestão de utilizadores, clientes, encomendas e f ábricas",
+    });
+    // JWT Auth
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Introduz o token JWT com o esquema 'Bearer'. Exemplo: Bearer {o_teu_token}"
     });
 
-    // Adiciona o XML de documentação à API
-    // fonte: https://github.com/IPT-DW-2024-2025/tA-appFotos/blob/main/AppFotos/AppFotos/Program.cs#L141
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+      {
+         new OpenApiSecurityScheme {
+            Reference = new OpenApiReference {
+               Type = ReferenceType.SecurityScheme,
+               Id = "Bearer"
+            }
+         },
+         Array.Empty<string>()
+      }
+   });
 
+    // XML de documentação à API
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
 
 
-// configurar o de uso de 'cookies'
+// Configuração de uso de 'cookies'
 builder.Services.AddSession(options => {
     options.IdleTimeout = TimeSpan.FromSeconds(60);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 builder.Services.AddDistributedMemoryCache();
+
+
+// Configuração JWT
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
+
+builder.Services.AddAuthentication(options => { })
+   .AddCookie("Cookies", options => {
+       options.LoginPath = "/Identity/Account/Login";
+       options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+   })
+   .AddJwtBearer("Bearer", options => {
+       options.TokenValidationParameters = new TokenValidationParameters
+       {
+           ValidateIssuer = true,
+           ValidateAudience = true,
+           ValidateLifetime = true,
+           ValidateIssuerSigningKey = true,
+           ValidIssuer = jwtSettings["Issuer"],
+           ValidAudience = jwtSettings["Audience"],
+           IssuerSigningKey = new SymmetricSecurityKey(key)
+       };
+   });
+
+// configuração do JWT
+builder.Services.AddScoped<TokenService>();
+
 
 var app = builder.Build();
 
@@ -92,8 +144,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 });
 
 
-
-// Configure the HTTP request pipeline.
+// Configuração do pipeline dos pedidos HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -107,6 +158,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
