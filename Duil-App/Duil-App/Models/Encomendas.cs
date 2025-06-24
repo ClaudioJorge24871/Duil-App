@@ -75,7 +75,6 @@ namespace Duil_App.Models
     /// <summary>
     /// Estados das encomendas
     /// </summary>
-    /// </summary>
     public enum Estados
     {
         Pendente,
