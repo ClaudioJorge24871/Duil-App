@@ -37,7 +37,7 @@ builder.Services.AddDefaultIdentity<Utilizadores>(options => {
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// Obrigatoriedade da autenticação dos utilizadores
+// Obrigatoriedade da autenticaï¿½ï¿½o dos utilizadores
 builder.Services.AddControllers(config =>
 {
     var policy = new AuthorizationPolicyBuilder()
@@ -47,7 +47,7 @@ builder.Services.AddControllers(config =>
 });
 
 
-//  proteção de ciclos
+//  proteï¿½ï¿½o de ciclos
 builder.Services.AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
@@ -59,7 +59,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Duil API",
         Version = "v1",
-        Description = "API para o gestão de utilizadores, clientes, encomendas e f ábricas",
+        Description = "API para o gestï¿½o de utilizadores, clientes, encomendas e f ï¿½bricas",
     });
     // JWT Auth
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -84,14 +84,14 @@ builder.Services.AddSwaggerGen(c =>
       }
    });
 
-    // XML de documentação à API
+    // XML de documentaï¿½ï¿½o ï¿½ API
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
 
 
-// Configuração de uso de 'cookies'
+// Configuraï¿½ï¿½o de uso de 'cookies'
 builder.Services.AddSession(options => {
     options.IdleTimeout = TimeSpan.FromSeconds(60);
     options.Cookie.HttpOnly = true;
@@ -100,7 +100,7 @@ builder.Services.AddSession(options => {
 builder.Services.AddDistributedMemoryCache();
 
 
-// Configuração JWT
+// Configuraï¿½ï¿½o JWT
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
 
@@ -122,7 +122,7 @@ builder.Services.AddAuthentication(options => { })
        };
    });
 
-// configuração do JWT
+// configuraï¿½ï¿½o do JWT
 builder.Services.AddScoped<TokenService>();
 
 
@@ -144,7 +144,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 });
 
 
-// Configuração do pipeline dos pedidos HTTP
+// Configuraï¿½ï¿½o do pipeline dos pedidos HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
