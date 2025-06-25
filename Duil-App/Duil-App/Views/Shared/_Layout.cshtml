@@ -14,18 +14,17 @@
         {
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Duil</a>
+                    <a class="navbar-brand align-content-center" asp-area="" asp-controller="Home" asp-action="Index">Duil</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item d-flex align-items-center">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Termos e Políticas</a>
-                                @if (User.IsInRole("Admin") || User.IsInRole("Funcionario") || User.IsInRole("Cliente"))
+                            <li class="nav-item d-flex align-items-center ms-5">
+                                @if (!(User.IsInRole("Admin") || User.IsInRole("Funcionario") || User.IsInRole("Cliente")))
                                 {
-                                   <span class="vr mx-1"></span> 
+                                   <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Termos e Políticas</a>
                                 }
                                 
                             </li>
@@ -76,7 +75,7 @@
 
     @if (ViewData["HideNavbar"] == null || !(bool)ViewData["HideNavbar"])
     {
-        <footer class="border-top footer text-muted">
+        <footer class="border-top footer text-muted mb-3 w-100" style="position: absolute; bottom: 0;">
             <div class="container">
                 &copy; 2025 - Duil - <a asp-area="" asp-controller="Home" asp-action="Privacy">Termos e Políticas</a>
             </div>
