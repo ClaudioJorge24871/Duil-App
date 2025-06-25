@@ -1,0 +1,19 @@
+﻿@page
+@model ConfirmLogoutModel
+@{
+    ViewData["Title"] = "Confirmar Terminar Sessão";
+    ViewData["HideNavbar"] = true;
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center">
+        <h2>Terminar Sessão</h2>
+        <p>Tem a certeza que deseja terminar a sessão?</p>
+
+        <form method="post">
+            <button type="submit" class="btn btn-danger m-2">Sim, terminar sessão</button>
+            <a asp-page="/Index" class="btn btn-secondary m-2">Cancelar</a>
+        </form>
+    </div>
+</div>
+
