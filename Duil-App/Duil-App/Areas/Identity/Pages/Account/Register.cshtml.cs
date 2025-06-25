@@ -176,7 +176,7 @@ namespace Duil_App.Areas.Identity.Pages.Account
                     {
                         Destinatario = Input.Email,
                         Subject = "Confirmação de email",
-                        Body = $"Por favor confirme o seu email clicando aqui: <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>link</a>"
+                        Body = GetEmailBody(callbackUrl)
                     };
 
                     var resposta = await _ferramenta.EnviaEmailAsync(email);
@@ -224,6 +224,81 @@ namespace Duil_App.Areas.Identity.Pages.Account
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<Utilizadores>)_userStore;
+        }
+
+        private string GetEmailBody(string callbackUrl)
+        {
+            string Body = $@"
+                <!DOCTYPE html>
+                <html lang='pt'>
+                <head>
+                    <meta charset='UTF-8' />
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+                    <title>Confirmação de Email</title>
+                    <style>
+                        body {{
+                            font-family: Arial, sans-serif;
+                            background-color: #f4f6f8;
+                            margin: 0;
+                            padding: 0;
+                        }}
+                        .container {{
+                            max-width: 600px;
+                            background-color: #ffffff;
+                            margin: 30px auto;
+                            padding: 20px;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                            color: #333333;
+                        }}
+                        h1 {{
+                            color: #007bff;
+                            font-size: 24px;
+                            margin-bottom: 20px;
+                        }}
+                        p {{
+                            font-size: 16px;
+                            line-height: 1.5;
+                        }}
+                        a.button {{
+                            display: inline-block;
+                            padding: 12px 24px;
+                            margin-top: 20px;
+                            background-color: #007bff;
+                            color: #ffffff !important;
+                            text-decoration: none;
+                            border-radius: 5px;
+                            font-weight: bold;
+                        }}
+                        a.button:hover {{
+                            background-color: #0056b3;
+                        }}
+                        .footer {{
+                            margin-top: 30px;
+                            font-size: 12px;
+                            color: #888888;
+                            text-align: center;
+                        }}
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <h1>Confirmação de Email</h1>
+                        <p>Olá,</p>
+                        <p>Obrigado por se registar na nossa plataforma.</p>
+                        <p>Por favor, confirme o seu endereço de email ao clicar no botão abaixo:</p>
+                        <p style='text-align: center;'>
+                            <a href='{HtmlEncoder.Default.Encode(callbackUrl)}' class='button'>Confirmar Email</a>
+                        </p>
+                        <div class='footer'>
+                            &copy; {DateTime.Now.Year} Duil. Todos os direitos reservados.
+                        </div>
+                    </div>
+                </body>
+                </html>
+                ";
+
+                return Body;
         }
     }
 }
