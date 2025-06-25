@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace Duil_App.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<Utilizadores> _userManager;
