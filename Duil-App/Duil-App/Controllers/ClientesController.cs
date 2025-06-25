@@ -104,7 +104,7 @@ namespace Duil_App.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateException ex)
+                catch (DbUpdateException)
                 {
                     ModelState.AddModelError("", "Ocorreu um erro ao guardar os dados. Nif inserido já existe");
                 }
