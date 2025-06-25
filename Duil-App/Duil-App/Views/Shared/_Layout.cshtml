@@ -21,9 +21,15 @@
                     </button>
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
+                            <li class="nav-item d-flex align-items-center">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Termos e Políticas</a>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Funcionario") || User.IsInRole("Cliente"))
+                                {
+                                   <span class="vr mx-1"></span> 
+                                }
+                                
                             </li>
+
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
