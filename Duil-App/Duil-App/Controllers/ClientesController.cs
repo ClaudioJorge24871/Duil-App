@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Duil_App.Data;
 using Duil_App.Models;
 using Microsoft.AspNetCore.Authorization;
+using Duil_App.Code;
 
 namespace Duil_App.Controllers
 {
@@ -17,15 +18,7 @@ namespace Duil_App.Controllers
 
         private List<SelectListItem> ObterPaises()
         {
-            return new List<SelectListItem>
-            {
-            new SelectListItem { Value = "Dinamarca", Text = "Dinamarca" },
-            new SelectListItem { Value = "EUA", Text = "Estados Unidos da América" },
-            new SelectListItem { Value = "França", Text = "França" },
-            new SelectListItem { Value = "Holanda", Text = "Holanda" },
-            new SelectListItem { Value = "Inglaterra", Text = "Inglaterra" },
-            new SelectListItem { Value = "Suecia", Text = "Suécia"}
-            };
+            return ListasHelper.ObterListaDePaises();
         }
 
         public ClientesController(ApplicationDbContext context)

@@ -17,9 +17,7 @@
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @curUser.Nome</a>
     </li>
     <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Terminar Sessão</button>
-        </form>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/ConfirmLogout">Terminar Sessão</a>
     </li>
 }
 else
