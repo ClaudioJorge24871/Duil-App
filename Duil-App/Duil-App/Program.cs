@@ -51,6 +51,8 @@ builder.Services.AddControllers(config =>
 builder.Services.AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+// Adicionar o serviço SignalR
+builder.Services.AddSignalR();
 
 // Adiciona o Swagger
 builder.Services.AddSwaggerGen(c =>
@@ -177,5 +179,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+// cria "endpoint" entre a app e SignalR
+app.MapHub<RealTimeHub>("realtimehub");
 
 app.Run();
