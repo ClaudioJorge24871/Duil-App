@@ -10,6 +10,8 @@ using Duil_App.Models;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Duil_App.Services;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Duil_App.Controllers
 {
@@ -18,11 +20,17 @@ namespace Duil_App.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<Utilizadores> _userManager;
+        private readonly IHubContext<RealTimeHub> _hubcontext;
 
-        public EncomendasController(ApplicationDbContext context, UserManager<Utilizadores> userManager)
+        public EncomendasController(
+                ApplicationDbContext context, 
+                UserManager<Utilizadores> userManager,
+                IHubContext<RealTimeHub> hubContext
+            )
         {
             _context = context;
             _userManager = userManager;
+            _hubcontext = hubContext;
         }
 
         public async Task<IActionResult> Index()
@@ -105,7 +113,6 @@ namespace Duil_App.Controllers
                         pecas = await _context.Pecas
                             .Where(p => p.ClienteId == nif && pecasSelecionadas.Contains(p.Id))
                             .ToListAsync();
-                        
                     }
                     else if (User.IsInRole("Funcionario") || User.IsInRole("Admin")) // Se for Funcionario ou Admin pode criar encomendas com Pecas associadas ao cliente colocado
                     {
@@ -155,6 +162,23 @@ namespace Duil_App.Controllers
                         await _context.SaveChangesAsync();
                     }
                     TempData["SuccessMessage"] = "Encomenda criada com sucesso!";
+
+                    // Se quem criou a encomenda for Cliente
+                    if (User.IsInRole("Cliente"))
+                    {
+                        var cliente = await _context.Clientes.FindAsync(encomenda.ClienteId);
+                        var nomeCliente = cliente.Nome ?? "Cliente Desconhecido";
+
+                        //Notificar os Funcionarios com o Signal R
+                        await _hubcontext.Clients.Group("Funcionarios").SendAsync("ReceberNotificacao", new
+                        {
+                            nomeCliente,
+                            data = encomenda.Data.ToString("dd/MM/yyyy"),
+                            precoTotal = encomenda.TotalPrecoUnit,
+                            quantidadeTotal = encomenda.QuantidadeTotal
+                        });
+                    }
+
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
