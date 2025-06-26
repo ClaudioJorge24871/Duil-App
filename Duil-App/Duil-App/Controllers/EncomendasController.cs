@@ -163,21 +163,18 @@ namespace Duil_App.Controllers
                     }
                     TempData["SuccessMessage"] = "Encomenda criada com sucesso!";
 
-                    // Se quem criou a encomenda for Cliente
-                    if (User.IsInRole("Cliente"))
-                    {
-                        var cliente = await _context.Clientes.FindAsync(encomenda.ClienteId);
-                        var nomeCliente = cliente.Nome ?? "Cliente Desconhecido";
+                    // Quando a encomenda é criada, obtemos os seus dados e enviamos a notificação
+                    var cliente = await _context.Clientes.FindAsync(encomenda.ClienteId);
+                    var nomeCliente = cliente.Nome ?? "Cliente Desconhecido";
 
-                        //Notificar os Funcionarios com o Signal R
-                        await _hubcontext.Clients.Group("Funcionarios").SendAsync("ReceberNotificacao", new
-                        {
-                            nomeCliente,
-                            data = encomenda.Data.ToString("dd/MM/yyyy"),
-                            precoTotal = encomenda.TotalPrecoUnit,
-                            quantidadeTotal = encomenda.QuantidadeTotal
-                        });
-                    }
+                    //Notificar os Funcionarios com o Signal R
+                    await _hubcontext.Clients.Group("Funcionarios").SendAsync("ReceberNotificacao", new
+                    {
+                        nomeCliente,
+                        data = encomenda.Data.ToString("dd/MM/yyyy"),
+                        precoTotal = encomenda.TotalPrecoUnit,
+                        quantidadeTotal = encomenda.QuantidadeTotal
+                    });
 
                     return RedirectToAction(nameof(Index));
                 }
