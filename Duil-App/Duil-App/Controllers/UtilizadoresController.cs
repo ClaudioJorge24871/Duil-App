@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow.ValueContentAnalysis;
 using System.Runtime.Intrinsics.X86;
+using Microsoft.Identity.Client;
 
 namespace Duil_App.Controllers {
 
@@ -47,6 +48,9 @@ namespace Duil_App.Controllers {
          if (utilizador == null) {
             return NotFound();
          }
+
+        var role = await _userManager.GetRolesAsync(utilizador);
+            ViewBag.UserRole = role[0];
 
          return View(utilizador);
       }
