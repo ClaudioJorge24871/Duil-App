@@ -53,10 +53,13 @@
                     </div>
 
                     <div class="form-floating mb-4">
-                        <input asp-for="Input.Utilizador.Pais" class="form-control" />
-                        <label asp-for="Input.Utilizador.Pais"></label>
+                        <select asp-for="Input.Utilizador.Pais" class="form-select" asp-items="Model.ListaPaises">
+                            <option value="">Selecione um país</option>
+                        </select>
+                        <label asp-for="Input.Utilizador.Pais">País</label>
                         <span asp-validation-for="Input.Utilizador.Pais" class="text-danger"></span>
                     </div>
+
 
                     <div class="form-floating mb-4">
                         <input asp-for="Input.Utilizador.Telemovel" class="form-control" />
