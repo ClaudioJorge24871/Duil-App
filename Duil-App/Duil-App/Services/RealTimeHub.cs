@@ -1,4 +1,5 @@
-﻿using Duil_App.Data;
+﻿using Azure.Identity;
+using Duil_App.Data;
 using Microsoft.AspNetCore.SignalR;
 
 
@@ -25,14 +26,35 @@ namespace Duil_App.Services
         /// este é o primeiro método a ser executado
         /// </summary>
         /// <returns></returns>
-        public override Task OnConnectedAsync()
+        public override async Task OnConnectedAsync()
         {
             // lOg de id de conexão
             _logger.LogInformation("OnConnectedAsync: {0}", Context.ConnectionId);
-            
-            //lógica para guardar o id da conexão para poder enviar mensagens ao utilizador mais tarde.
 
-            return base.OnConnectedAsync();
+            // Adiciona o utilizador ao grupo de Funcionarios caso assim o seja
+            // Permite que o Func receba notificações quando NotificarFuncionarios acontece
+            var user = Context.User;
+
+            if (user != null && user.IsInRole("Funcionario")) 
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, "Funcionarios");
+            }
+            
+            await base.OnConnectedAsync();
+        }
+
+        /// <summary>
+        /// Notifica os funcionarios quando um Cliente cria uma encomenda
+        /// </summary>
+        public async Task NotificarFuncionarios (string nomeCliente, DateTime data, decimal precoTotal, int quantidadeTotal)
+        {
+            await Clients.Group("Funcionarios").SendAsync("ReceberNotificacao", new
+            {
+                nomeCliente,
+                data = data.ToString("dd/MM/yyyy"),
+                precoTotal,
+                quantidadeTotal
+            });
         }
 
 
