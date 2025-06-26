@@ -181,6 +181,6 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 // cria "endpoint" entre a app e SignalR
-app.MapHub<RealTimeHub>("realtimehub");
+app.MapHub<RealTimeHub>("/realtimehub");
 
 app.Run();
