@@ -46,10 +46,11 @@ namespace Duil_App.Services
         /// <summary>
         /// Notifica os funcionarios quando um Cliente cria uma encomenda
         /// </summary>
-        public async Task NotificarFuncionarios (string nomeCliente, DateTime data, decimal precoTotal, int quantidadeTotal)
+        public async Task NotificarFuncionarios (int idEncomenda, string nomeCliente, DateTime data, decimal precoTotal, int quantidadeTotal)
         {
             await Clients.Group("Funcionarios").SendAsync("ReceberNotificacao", new
             {
+                idEncomenda,
                 nomeCliente,
                 data = data.ToString("dd/MM/yyyy"),
                 precoTotal,
@@ -57,15 +58,5 @@ namespace Duil_App.Services
             });
         }
 
-
-        /// <summary>
-        /// Envia notificação a todos os clientes
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public async Task SendNotification(string message)
-        {
-            await Clients.All.SendAsync("ReceiveNotification", message);
-        }
     }
 }

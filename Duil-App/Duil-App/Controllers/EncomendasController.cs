@@ -170,6 +170,7 @@ namespace Duil_App.Controllers
                     //Notificar os Funcionarios com o Signal R
                     await _hubcontext.Clients.Group("Funcionarios").SendAsync("ReceberNotificacao", new
                     {
+                        idEncomenda = encomenda.Id,
                         nomeCliente,
                         data = encomenda.Data.ToString("dd/MM/yyyy"),
                         precoTotal = encomenda.TotalPrecoUnit,
