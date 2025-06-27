@@ -5,7 +5,16 @@
     ViewData["HideNavbar"] = true;
 }
 
-<div class="d-flex justify-content-center align-items-center vh-100">
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+</style>
+
+<div class="d-flex justify-content-center align-items-center min-vh-100">
     <div class="text-center">
         <h2>Terminar Sessão</h2>
         <p>Tem a certeza que deseja terminar a sessão?</p>
@@ -16,4 +25,3 @@
         </form>
     </div>
 </div>
-

@@ -147,13 +147,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.0/signalr.min.js"></script>
     <!--Funcionarios recebem a notificação em todas as páginas que utilizem o Layout-->
     <script>
-        const connection = new signalR.HubConnectionBuilder().withUrl("/realtimehub").build();
+        const connection = new signalR.HubConnectionBuilder().withUrl("/realtimehub").withAutomaticReconnect().build();
 
         connection.on("ReceberNotificacao", (data) => {
             showSuccessToast(
                 `Cliente: ${data.nomeCliente}\nData: ${data.data}\nTotal: ${data.precoTotal}€\nQuantidade: ${data.quantidadeTotal}`,
                 data.idEncomenda
             );
+        });
+
+        connection.onreconnected(connectionId => {
+            console.log("Reconectado com sucesso. ID da conexão:", connectionId);
+        });
+
+        connection.onclose(error => {
+            console.error("Conexão fechada permanentemente.", error);
         });
 
 

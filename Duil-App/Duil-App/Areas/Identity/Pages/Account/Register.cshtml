@@ -40,11 +40,6 @@
                 </div>
 
                 <div class="col-md-5">
-                    <div class="form-floating mb-4">
-                        <input asp-for="Input.Utilizador.NIF" class="form-control" />
-                        <label asp-for="Input.Utilizador.NIF"></label>
-                        <span asp-validation-for="Input.Utilizador.NIF" class="text-danger"></span>
-                    </div>
 
                     <div class="form-floating mb-4">
                         <input asp-for="Input.Utilizador.CodPostal" class="form-control" />
@@ -58,6 +53,12 @@
                         </select>
                         <label asp-for="Input.Utilizador.Pais">País</label>
                         <span asp-validation-for="Input.Utilizador.Pais" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input asp-for="Input.Utilizador.NIF" class="form-control" />
+                        <label asp-for="Input.Utilizador.NIF"></label>
+                        <span asp-validation-for="Input.Utilizador.NIF" class="text-danger"></span>
                     </div>
 
 
