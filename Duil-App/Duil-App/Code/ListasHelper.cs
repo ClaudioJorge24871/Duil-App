@@ -22,7 +22,6 @@ namespace Duil_App.Code
                 new SelectListItem { Value = "Holanda", Text = "Holanda" },
                 new SelectListItem { Value = "Inglaterra", Text = "Inglaterra" },
                 new SelectListItem { Value = "Suecia", Text = "Suécia"},
-                new SelectListItem { Value = "Outro", Text = "Outro"} // Fallback de País. CAso outro cliente. Não deveria ser utilizado
             };
         }
     }
