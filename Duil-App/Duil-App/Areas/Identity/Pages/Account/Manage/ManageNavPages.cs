@@ -25,6 +25,11 @@ namespace  Duil_App.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public static string ChangePassword => "ChangePassword";
 
+        /// <summary>
+        /// Estatísticas do Utilizador rem relação ao serviço
+        /// </summary>
+        public static string Statistics => "Statistics";
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -37,6 +42,8 @@ namespace  Duil_App.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
+
+        public static string UserStatisticsNavClass(ViewContext viewContext) => PageNavClass(viewContext, Statistics);
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
