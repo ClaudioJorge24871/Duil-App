@@ -10,6 +10,8 @@ using Duil_App.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Duil_App.Code;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace Duil_App.Areas.Identity.Pages.Account.Manage
 {
@@ -31,6 +33,9 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Email { get; set; }
+
+        public string Pais {  get; set; }
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -56,21 +61,37 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Phone]
             [Display(Name = "Telemóvel")]
-            public string PhoneNumber { get; set; }
+            public string Telemovel { get; set; }
+
+            [Display (Name = "Nome")]
+            public string Nome { get; set; }
+
+            [Display (Name = "Morada")]
+            public string Morada { get; set; }
+
+            [Display (Name = "Código Postal")]
+            public string CodPostal { get; set; }
+
         }
 
         private async Task LoadAsync(Utilizadores user)
         {
-            var userName = await _userManager.GetEmailAsync(user);
+            var userName = user.UserName;
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
+            var nome = user.Nome;
+            var morada = user.Morada;
+            var codPostal = user.CodPostal;
+            
             Email = userName;
+            Pais = user.Pais;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                Telemovel = phoneNumber,
+                Nome = nome,
+                Morada = morada,
+                CodPostal = codPostal,
             };
         }
 
@@ -100,10 +121,16 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            if (!ValidaTelemovel(Input.Telemovel, user.Pais))
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+                StatusMessage = "Error: O telémovel introduzido não corresponde com o País guardado.";
+                return RedirectToPage();
+            }
+
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            if (Input.Telemovel != phoneNumber)
+            {
+                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.Telemovel);
                 if (!setPhoneResult.Succeeded)
                 {
                     StatusMessage = "Ocorreu um erro ao alterar o número de telemóvel.";
@@ -114,6 +141,67 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Os seus dados foram atualizados";
             return RedirectToPage();
+        }
+
+
+        /// <summary>
+        ///  Valida o numero de telemovel a partir do pais do user
+        /// </summary>
+        /// <returns></returns>
+        public bool ValidaTelemovel(string Telemovel, string pais)
+        {
+            if (pais.Trim().ToLowerInvariant() == "portugal")
+            {
+                //Validação do telemóvel português
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^9[1236][0-9]{7}$"))
+                    return false;
+            }
+            else if (pais.Trim().ToLowerInvariant() == "dinamarca")
+            {
+                // Validação do telemóvel dinamarquês (começa geralmente por 2, 3, 4, 5, 6 ou 7 + 7 dígitos)
+                if (!string.IsNullOrWhiteSpace(Telemovel) && !System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^[2-7]\d{7}$"))
+                    return false;
+            }
+            else if (pais.Trim().ToLowerInvariant() == "eua" || pais.Trim().ToLowerInvariant() == "estados unidos da américa")
+            {
+                // Telemóvel: 10 dígitos
+                if (!string.IsNullOrWhiteSpace(Telemovel) && !System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^\d{10}$"))
+                    return false;
+            }
+            else if (pais.Trim().ToLowerInvariant() == "frança" || pais.Trim().ToLowerInvariant() == "franca")
+            {
+                // Telemóvel francês: começa com 06 ou 07 e tem 10 dígitos
+                // Fonte: https://www.my-french-house.com/blog/article/75391/telephone-numbers-in-france
+                if (!string.IsNullOrWhiteSpace(Telemovel) &&
+                    !System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^0[67]\d{8}$"))
+                    return false;
+            }
+            else if (pais.Trim().ToLowerInvariant() == "holanda")
+            {
+                // Telemóvel holandês: começa com 06 seguido de 8 dígitos (total 10 dígitos)
+                if (!string.IsNullOrWhiteSpace(Telemovel) && !System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^06\d{8}$"))
+                    return false;
+            }
+            else if (pais.Trim().ToLowerInvariant() == "inglaterra" || pais.Trim().ToLowerInvariant() == "uk")
+            {
+                // Telemóvel: começa com 07 seguido de 9 dígitos (total 11)
+                if (!string.IsNullOrWhiteSpace(Telemovel) && !System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^07\d{9}$"))
+                    return false;
+            }
+            else if (pais.Trim().ToLowerInvariant() == "suecia" || pais.Trim().ToLowerInvariant() == "suécia")
+            {
+                // Telemóvel sueco: começa por 07 e seguido de 8 dígitos (10 no total)
+                if (!string.IsNullOrWhiteSpace(Telemovel) &&
+                    !System.Text.RegularExpressions.Regex.IsMatch(Telemovel, @"^07\d{8}$"))
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+
+
+            return true;
         }
     }
 }

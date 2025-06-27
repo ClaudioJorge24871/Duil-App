@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Perfil";
+    ViewData["Title"] = "Dados Pessoais";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
@@ -16,9 +16,28 @@
                 <label asp-for="Email" class="form-label"></label>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                <input asp-for="Input.Nome" class="form-control" placeholder="Por favor coloque um nome." />
+                <label asp-for="Input.Nome" class="form-label"></label>
+                <span asp-validation-for="Input.Nome" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Pais" class="form-control" placeholder="Por favor escreva um email" disabled />
+                <label asp-for="Pais" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Morada" class="form-control" placeholder="Por favor coloque a sua morada." />
+                <label asp-for="Input.Morada" class="form-label"></label>
+                <span asp-validation-for="Input.Morada" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.CodPostal" class="form-control" placeholder="Por favor coloque a sua morada." />
+                <label asp-for="Input.CodPostal" class="form-label"></label>
+                <span asp-validation-for="Input.CodPostal" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Telemovel" class="form-control" placeholder="Por favor coloque o seu telemóvel."/>
+                <label asp-for="Input.Telemovel" class="form-label"></label>
+                <span asp-validation-for="Input.Telemovel" class="text-danger"></span>
             </div>
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Confirmar alterações</button>
         </form>
