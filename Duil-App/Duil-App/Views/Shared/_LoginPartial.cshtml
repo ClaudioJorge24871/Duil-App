@@ -14,19 +14,19 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @curUser.Nome</a>
+        <a  class="nav-link text-white me-3" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @curUser.Nome</a>
     </li>
     <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/ConfirmLogout">Terminar Sessão</a>
+            <a class="nav-link text-white me-3" asp-area="Identity" asp-page="/Account/ConfirmLogout">Terminar Sessão</a>
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registar-se</a>
+        <a class="nav-link text-white me-3" asp-area="Identity" asp-page="/Account/Register">Registar-se</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Iniciar Sessão</a>
+        <a class="nav-link text-white " asp-area="Identity" asp-page="/Account/Login">Iniciar Sessão</a>
     </li>
 }
 </ul>
