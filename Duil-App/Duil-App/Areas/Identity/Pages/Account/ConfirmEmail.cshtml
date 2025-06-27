@@ -6,3 +6,24 @@
 
 <h1>@ViewData["Title"]</h1>
 <partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<br />
+<p class="text-center text-muted mt-3">
+    Será redirecionado para a página de login em <span id="counter">3</span> segundos...
+</p>
+
+<!--Contador decrescente de Redirecionamento-->
+@section Scripts {
+    <script>
+        let counter = 3;
+        const interval = setInterval(function () {
+            counter--;
+            document.getElementById('counter').textContent = counter;
+            if (counter === 0) {
+                clearInterval(interval);
+                window.location.href = '/Identity/Account/Login';
+            }
+        }, 1000);
+    </script>
+}
+
