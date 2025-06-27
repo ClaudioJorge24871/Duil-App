@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Duil_App.Code;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ namespace Duil_App.Models
     /// utilizadores não anónimos da aplicação
     /// </summary>
     [Index(nameof(Nome), IsUnique = true)]
+    [ValidaPorPais]
     public class Utilizadores: IdentityUser
     {
         /// <summary>
@@ -31,13 +33,7 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Código Postal")]
         [StringLength(50)]
-        [RegularExpression("[1-9][0-9]{3}-[0-9]{3} [A-Za-z ]+",
-                           ErrorMessage = "No {0} só são aceites algarismos e letras inglesas.")]
         public string? CodPostal { get; set; }
-        /* exemplo de exp. regulares sobre o Código Postal
-         * [1-9][0-9]{3}-[0-9]{3} [A-Za-z ]+  --> Portugal
-         * [1-9][0-9]{3,4}-[0-9]{3,4}( [A-Za-z ]*)?  --> fora de Portugal
-         */
 
         /// <summary>
         /// País da morada do utilizador
@@ -52,7 +48,6 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "NIF")]
         [StringLength(9)]
-        [RegularExpression("[1-9][0-9]{8}", ErrorMessage = "Deve escrever apenas 9 digitos no {0}")]
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         public string NIF { get; set; } = String.Empty;
 
@@ -61,12 +56,7 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Telemóvel")]
         [StringLength(18)]
-        [RegularExpression("(([+]|00)[0-9]{1,5})?[1-9][0-9]{5,10}", ErrorMessage = "Escreva um nº de telefone. Pode adicionar indicativo do país.")]
         public string? Telemovel { get; set; }
-        /*  9[1236][0-9]{7}  --> nºs telemóvel nacional
-         *  (([+]|00)[0-9]{1,5})?[1-9][0-9]{5,10}  -->  nºs telefone internacionais
-         */
-
 
         /* *************************
        * Definição dos relacionamentos

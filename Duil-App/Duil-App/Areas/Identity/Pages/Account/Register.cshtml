@@ -6,6 +6,7 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+<div asp-validation-summary="All" class="text-danger" role="alert"></div>
 
 <div class="row">
     <div class="col-md-10">
@@ -33,39 +34,41 @@
                     </div>
 
                     <div class="form-floating mb-4">
-                        <input asp-for="Input.Utilizador.Nome" class="form-control" />
-                        <label asp-for="Input.Utilizador.Nome"></label>
-                        <span asp-validation-for="Input.Utilizador.Nome" class="text-danger"></span>
+                        <input asp-for="Input.Nome" class="form-control" />
+                        <label asp-for="Input.Nome"></label>
+                        <span asp-validation-for="Input.Nome" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="col-md-5">
 
-                    <div class="form-floating mb-4">
-                        <input asp-for="Input.Utilizador.CodPostal" class="form-control" />
-                        <label asp-for="Input.Utilizador.CodPostal"></label>
-                        <span asp-validation-for="Input.Utilizador.CodPostal" class="text-danger"></span>
-                    </div>
+                   
 
                     <div class="form-floating mb-4">
-                        <select asp-for="Input.Utilizador.Pais" class="form-select" asp-items="Model.ListaPaises">
+                        <select asp-for="Input.Pais" class="form-select" asp-items="Model.ListaPaises">
                             <option value="">Selecione um país</option>
                         </select>
-                        <label asp-for="Input.Utilizador.Pais">País</label>
-                        <span asp-validation-for="Input.Utilizador.Pais" class="text-danger"></span>
+                        <label asp-for="Input.Pais">País</label>
+                        <span asp-validation-for="Input.Pais" class="text-danger"></span>
                     </div>
 
                     <div class="form-floating mb-4">
-                        <input asp-for="Input.Utilizador.NIF" class="form-control" />
-                        <label asp-for="Input.Utilizador.NIF"></label>
-                        <span asp-validation-for="Input.Utilizador.NIF" class="text-danger"></span>
+                        <input asp-for="Input.NIF" class="form-control" />
+                        <label asp-for="Input.NIF"></label>
+                        <span asp-validation-for="Input.NIF" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input asp-for="Input.CodPostal" class="form-control" />
+                        <label asp-for="Input.CodPostal"></label>
+                        <span asp-validation-for="Input.CodPostal" class="text-danger"></span>
                     </div>
 
 
                     <div class="form-floating mb-4">
-                        <input asp-for="Input.Utilizador.Telemovel" class="form-control" />
-                        <label asp-for="Input.Utilizador.Telemovel"></label>
-                        <span asp-validation-for="Input.Utilizador.Telemovel" class="text-danger"></span>
+                        <input asp-for="Input.Telemovel" class="form-control" />
+                        <label asp-for="Input.Telemovel"></label>
+                        <span asp-validation-for="Input.Telemovel" class="text-danger"></span>
                     </div>
                 </div>
             </div>

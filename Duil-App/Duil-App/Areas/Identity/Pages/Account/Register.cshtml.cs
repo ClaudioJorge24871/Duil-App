@@ -119,7 +119,15 @@ namespace Duil_App.Areas.Identity.Pages.Account
             /// Incorporação dos dados de um utilizador 
             /// no formulario de Registo
             /// </summary>
-            public Utilizadores Utilizador { get; set; }
+            [Required] public string Nome { get; set; }
+            [Required] public string Pais { get; set; }
+            [Required] public string NIF { get; set; }
+            public string? CodPostal { get; set; }
+            public string? Telemovel { get; set; }
+
+            [Display(Name = "Morada")]
+            [StringLength(50)]
+            public string? Morada { get; set; }
 
         }
 
@@ -135,8 +143,9 @@ namespace Duil_App.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ListaPaises = ListasHelper.ObterListaDePaises();
 
-            var nomeEmUso = _context.Users.Any(user => user.Nome == Input.Utilizador.Nome);
+            var nomeEmUso = _context.Users.Any(user => user.Nome == Input.Nome);
 
             if(nomeEmUso)
             {
@@ -150,14 +159,21 @@ namespace Duil_App.Areas.Identity.Pages.Account
                 {
                     UserName = Input.Email,
                     Email = Input.Email,
-                    Nome = Input.Utilizador.Nome,
-                    Morada = Input.Utilizador.Morada,
-                    CodPostal = Input.Utilizador.CodPostal,
-                    Pais = Input.Utilizador.Pais,
-                    NIF = Input.Utilizador.NIF,
-                    Telemovel = Input.Utilizador.Telemovel,
-                    PhoneNumber = Input.Utilizador.Telemovel
+                    Nome = Input.Nome,
+                    Morada = Input.Morada,
+                    CodPostal = Input.CodPostal,
+                    Pais = Input.Pais,
+                    NIF = Input.NIF,
+                    Telemovel = Input.Telemovel,
+                    PhoneNumber = Input.Telemovel
                 };
+
+                // tenta validar os inputs do user através do [ValidaPorPais] em Utilizadores
+                if (!TryValidateModel(user))
+                {
+                    ListaPaises = ListasHelper.ObterListaDePaises();
+                    return Page();
+                }
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -219,6 +235,11 @@ namespace Duil_App.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+            }
+            else
+            {
+                ListaPaises = ListasHelper.ObterListaDePaises();
+                return Page();
             }
 
             // If we got this far, something failed, redisplay form
