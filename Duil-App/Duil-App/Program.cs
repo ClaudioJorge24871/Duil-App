@@ -28,7 +28,11 @@ builder.Services.AddSingleton(typeof(Ferramentas));
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString, sqlOptions =>
+    {
+        sqlOptions.CommandTimeout(180); //3 minutos de timeout antes de query ser cancelada
+        sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(30), null); //retry automatico
+    }));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<Utilizadores>(options => {
