@@ -2,7 +2,7 @@
 	ViewData["Title"] = "Página Inicial";
 }
 
-<div class="position-relative mb-5" style="height: 35vw; width:100vw; overflow: hidden;">
+<div class="position-relative mb-5" style="height: 35vw; overflow: hidden;">
 	<!-- Imagem de fundo -->
 	<img src="~/images/ceramica.png"
 		 class="position-absolute top-0 start-0 w-100 h-100 mb-5"
@@ -19,9 +19,10 @@
 <!-- Secção 1: Quem somos -->
 <div class="text-center position-relative">
 	<hr class="mt-5" />
-	<span class="position-absolute top-50 start-50 translate-middle px-3 bg-white fs-2 grey-text ">
+	<strong><span class="position-absolute top-50 start-50 translate-middle px-3 bg-white fs-2 grey-text ">
 		Quem somos
-	</span>
+		</span>
+	</strong>
 </div>
 
 <p class="fs-5 ps-5 mt-5 text-center">A Duil é uma agência que atua como escritório de exportação para um grupo de fábricas portuguesas.</p>
@@ -34,7 +35,7 @@
 		<div class="col-md-1">
 		</div>
 		<div class="col-md-6">
-			<p class=" fs-2 mb-5 grey-text">O que fazemos</p>
+			<strong><p class=" fs-2 mb-5 grey-text">O que fazemos</p></strong>
 			<p class=" fs-5">Promovemos produtos, apoiamos o desenvolvimento de novas ideias e acompanhamos todo o processo até ao envio.</p>
 		</div>
 		<div class="col-md-1">
@@ -46,28 +47,44 @@
 	</div>
 
 	<!-- Secção 3: A nossa missão -->
-	<div class="row align-items-center mb-5">
-		<!--<div class="col-md-1">
-		</div>
-		<div class="col-md-4">
-			<img src="~/images/ligacao.jpg" alt="Conexão internacional" class="img-fluid rounded shadow">
-		</div>
-		
-		-->
+	<div class="row align-items-center mb-5"> 
 		<div class="col-md-1">
 		</div>
-		 
-		<div class="col-md-6">
-			<p class=" fs-2 grey-text">A nossa missão</>
-			<p>Criar ligações duradouras entre as nossas fábricas e os mercados internacionais.</p>
+
+		<div class="col-md-4">
+			<img src="~/images/global-social.png" alt="Conexão internacional"
+				 class="d-block rounded" style="width: 60%;">
 		</div>
 
+		<!-- Texto à direita -->
+		<div class="col-md-6 text-end">
+			<strong><p class="fs-2 grey-text s">A nossa missão</p></strong>
+			<p class="fs-5">Criar ligações duradouras entre as nossas fábricas e os mercados internacionais.</p>
+		</div>
+	</div>
+
+	<!-- Secção 4: A nossa história -->
+	<div class="row align-items-center mb-5" style="background-color:#E1BC8F66">
+		<!-- Texto à esquerda -->
+		<div class="col-md-5 offset-md-1">
+			<strong><p class="fs-2 grey-text">A nossa história</p></strong>
+			<p class="fs-5">
+				A Duil começou em 1972. Nasceu com o sonho de promover produtos e competências portuguesas no estrangeiro, com foco nos mercados escandinavos, mantendo a porta aberta para o resto do mundo.
+			</p>
+		</div>
+		<div class="col-md-1">
+		</div>
+		<!-- Imagem com espaçamento -->
+		<div class="col-md-5 py-4 d-flex justify-content-center">
+			<img src="~/images/nossa-historia.jpg" alt="Conexão internacional"
+				 class="rounded shadow" style="width: 50%; max-width: 500px; max-height: 300px; object-fit: cover;">
+		</div>
 	</div>
 
 	<!-- Frase de impacto -->
-	<div class="text-center bg-light p-5 rounded mb-5">
+	<div class="text-center  p-5 rounded">
 		<h3 class="fw-bold">Levamos o melhor de Portugal ao mundo</h3>
-		<p class="lead">com qualidade, proximidade e inovação.</p>
+		<p class="lead">com <strong>qualidade</strong>, <strong>proximidade</strong> e <strong>inovação.</strong></p>
 	</div>
 
 </div>
