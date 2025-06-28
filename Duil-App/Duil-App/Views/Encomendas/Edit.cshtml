@@ -6,81 +6,89 @@
     int.TryParse(Model.ClienteId, out parsedClienteId);
 }
 
-<h4>Encomenda: @Html.DisplayFor(Model => Model.Id)</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div>
+    <a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" style="color:#6B97AC"></i></a>
+</div>
+
+<div class="d-flex justify-content-center mt-5 min-vh-100">
+    <div class="container mt-5" style="width:80%">
+        <h3 class="mb-2 grey-text">Editar Encomenda @Html.DisplayFor(Model => Model.Id)</h3>
+        <hr />
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
 
-            <div class="form-group">
-                <label asp-for="IdLadoCliente" class="control-label"></label>
-                <input asp-for="IdLadoCliente" class="form-control" />
-                <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" class="form-control" />
-                <span asp-validation-for="Data" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="TotalPrecoUnit" class="control-label"></label>
-                <input asp-for="TotalPrecoUnit" class="form-control" readonly />
-                <span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="QuantidadeTotal" class="control-label"></label>
-                <input asp-for="QuantidadeTotal" class="form-control" readonly />
-                <span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Transportadora" class="control-label"></label>
-                <input asp-for="Transportadora" class="form-control" />
-                <span asp-validation-for="Transportadora" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <select asp-for="Estado" class="form-control" asp-items="@(ViewData["Estado"] as SelectList)"></select>
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label>Cliente</label>
-                <input type="text" id="cliente-nome" class="form-control" autocomplete="off" value="@Model.Cliente?.Nome" />
-                <input asp-for="ClienteId" type="hidden" id="ClienteId" />
-                <span asp-validation-for="ClienteId" class="text-danger"></span>
-            </div>
-
-            <div id="pecasContainer">
-                @foreach (var linha in Model.LinhasEncomenda)
-                {
-                    <div class="peca-row">
-                        <div class="form-group">
-                            <label>Peça</label>
-                            <select name="pecasSelecionadas" class="form-control peca-select" data-selected="@linha.PecaId"></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Quantidade</label>
-                            <input type="number" name="quantidades" class="form-control" value="@linha.Quantidade" />
-                            <button type="button" class="btn btn-danger remove-peca">Remover</button>
-                        </div>
+            <div class="row mt-5">
+                <div class="col-md-5 me-5">
+                    <div class="form-group mb-3">
+                        <input asp-for="IdLadoCliente" class="form-control" placeholder="ID Lado Cliente" />
+                        <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
                     </div>
-                }
-            </div>
-            <button type="button" id="addPeca" class="btn btn-secondary mb-3">Adicionar Peça</button>
 
-            <div class="form-group mt-3">
-                <input type="submit" value="Guardar Alterações" class="btn btn-primary" />
+                    <div class="form-group mb-3">
+                        <input asp-for="Data" class="form-control" placeholder="Data" />
+                        <span asp-validation-for="Data" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <input asp-for="Transportadora" class="form-control" placeholder="Transportadora" />
+                        <span asp-validation-for="Transportadora" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <select asp-for="Estado" class="form-control" asp-items="@(ViewData["Estado"] as SelectList)">
+                            <option value="">-- Estado --</option>
+                        </select>
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <input type="text" id="cliente-nome" class="form-control" value="@Model.Cliente?.Nome" placeholder="Cliente" />
+                        <input asp-for="ClienteId" type="hidden" id="ClienteId" />
+                        <span asp-validation-for="ClienteId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <input asp-for="QuantidadeTotal" class="form-control" readonly placeholder="Quantidade Total" />
+                        <span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <input asp-for="TotalPrecoUnit" class="form-control" readonly placeholder="Total (€)" />
+                        <span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <input type="submit" value="Guardar Alterações" class="btn btn-custom mt-3" />
+                    </div>
+                </div>
+
+                <div class="col-md-6 ms-2">
+                    <div id="pecasContainer">
+                        @foreach (var linha in Model.LinhasEncomenda)
+                        {
+                            <div class="peca-row mb-4">
+                                <div class="form-group mb-2">
+                                    <label>Peça</label>
+                                    <select name="pecasSelecionadas" class="form-control peca-select" data-selected="@linha.PecaId">
+                                        <option value="">-- Selecione uma peça --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group d-flex align-items-center gap-3">
+                                    <input type="number" name="quantidades" class="form-control" value="@linha.Quantidade" placeholder="Quantidade" />
+                                    <button type="button" class="btn btn-danger remove-peca">Remover</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <button type="button" id="addPeca" class="btn btn-secondary mb-3">Adicionar Peça</button>
+                </div>
             </div>
         </form>
     </div>
 </div>
+
 
 @section Scripts {
     @{
@@ -148,7 +156,7 @@
                 });
 
                 $('#QuantidadeTotal').val(totalQuantity);
-                $('#TotalPrecoUnit').val(totalPrice.toFixed(2).replace('.', ',')); // Display with comma
+                $('#TotalPrecoUnit').val(totalPrice.toFixed(2).replace('.', ',')); // Mostra com virgula
                 $('input[name="QuantidadeTotal"]').val(totalQuantity);
                 $('input[name="TotalPrecoUnit"]').val(totalPrice.toFixed(2));
             }
