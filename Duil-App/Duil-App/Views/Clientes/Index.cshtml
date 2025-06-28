@@ -8,7 +8,7 @@
 <div class="container-fluid d-flex justify-content-center align-items-center position-relative"
      style="height: 250px; background-color: #b4bdc1;">
 
-    <h1 class="fw-light">Clientes</h1>
+    <h1 class="fw-light text-white">Clientes</h1>
 
     @if (User.IsInRole("Admin"))
     {
@@ -39,7 +39,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody class="table bg-white shadow-sm ">  
+        <tbody>  
                 @foreach (var item in Model) {
                 <tr>
                     <td>

@@ -34,9 +34,13 @@ grey-text {
 }
 
 body.paginas-index-fundo {
-    background-color: #E1E1E1;
+    background-color: #E1E1E166;
 }
 
 thead th {
+    border-bottom: none !important;
+}
+
+tbody td {
     border-bottom: none !important;
 }
