@@ -3,45 +3,56 @@
 @{
     ViewData["Title"] = "Dados Pessoais";
     ViewData["ActivePage"] = ManageNavPages.Index;
+    ViewData["BodyClass"] = "paginas-index-fundo";
 }
 
-<h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Email" class="form-control" placeholder="Por favor escreva um email" disabled />
-                <label asp-for="Email" class="form-label"></label>
+<div class="container pt-3 px-5">
+    <partial name="_StatusMessage" for="StatusMessage" />
+
+    <div class="mb-4">
+        <h3 style="display:inline">Os seus dados pessoais</h3>
+        <i class="ms-3 bi bi-person-lines-fill text-secondary"></i>
+        <hr class="mt-2 mb-4" />
+    </div>
+
+    <form id="profile-form" method="post">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="Email" class="form-label fw-semibold">Email</label>
+                <input asp-for="Email" class="form-control" disabled />
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Nome" class="form-control" placeholder="Por favor coloque um nome." />
-                <label asp-for="Input.Nome" class="form-label"></label>
+            <div class="col-md-6">
+                <label asp-for="Input.Nome" class="form-label fw-semibold">Nome</label>
+                <input asp-for="Input.Nome" class="form-control" />
                 <span asp-validation-for="Input.Nome" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Pais" class="form-control" placeholder="Por favor escreva um email" disabled />
-                <label asp-for="Pais" class="form-label"></label>
+            <div class="col-md-6">
+                <label asp-for="Pais" class="form-label fw-semibold">País</label>
+                <input asp-for="Pais" class="form-control" disabled />
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Morada" class="form-control" placeholder="Por favor coloque a sua morada." />
-                <label asp-for="Input.Morada" class="form-label"></label>
+            <div class="col-md-6">
+                <label asp-for="Input.Morada" class="form-label fw-semibold">Morada</label>
+                <input asp-for="Input.Morada" class="form-control" />
                 <span asp-validation-for="Input.Morada" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.CodPostal" class="form-control" placeholder="Por favor coloque a sua morada." />
-                <label asp-for="Input.CodPostal" class="form-label"></label>
+            <div class="col-md-6">
+                <label asp-for="Input.CodPostal" class="form-label fw-semibold">Código Postal</label>
+                <input asp-for="Input.CodPostal" class="form-control" />
                 <span asp-validation-for="Input.CodPostal" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Telemovel" class="form-control" placeholder="Por favor coloque o seu telemóvel."/>
-                <label asp-for="Input.Telemovel" class="form-label"></label>
+            <div class="col-md-6">
+                <label asp-for="Input.Telemovel" class="form-label fw-semibold">Telemóvel</label>
+                <input asp-for="Input.Telemovel" class="form-control" />
                 <span asp-validation-for="Input.Telemovel" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Confirmar alterações</button>
-        </form>
-    </div>
+        </div>
+
+        <div class="mt-4 text-end">
+            <button id="update-profile-button" type="submit" class="btn px-4 py-2 navbar-blue text-white rounded-3">
+                Confirmar alterações
+            </button>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
