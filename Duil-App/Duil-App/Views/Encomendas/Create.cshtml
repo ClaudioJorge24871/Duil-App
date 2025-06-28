@@ -211,6 +211,7 @@
                 }
             }).on('input', function () {
                 $('#ClienteId').val('');
+                loaded = false; // carrega as peças novamente quando muda de cliente
                 toggleSection();
             });
 
