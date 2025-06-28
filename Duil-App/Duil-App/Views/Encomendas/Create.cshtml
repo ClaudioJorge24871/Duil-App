@@ -20,7 +20,9 @@
         <h3 class="mb-2 grey-text">Nova encomenda</h3>
         <hr />
 
-        <form asp-action="Create">
+        <form asp-action="Create" id="encomendaForm">
+            @Html.AntiForgeryToken()
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <!-- Top fields: Ordem de Encomenda e Data -->
@@ -29,19 +31,31 @@
                     <input asp-for="IdLadoCliente" class="form-control form-control-lg" placeholder="Ordem de Encomenda" />
                     <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <input asp-for="Data" type="date" class="form-control form-control-lg" value="@DateTime.Today:yyyy-MM-dd" />
-                    <span asp-validation-for="Data" class="text-danger"></span>
-                </div>
+                @if (User.IsInRole("Cliente"))
+                {
+                    <div class="col-md-6 mb-3">
+                        <input asp-for="Data" type="date" class="form-control form-control-lg" value="@DateTime.Today:yyyy-MM-dd" readonly />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6 mb-3">
+                        <input asp-for="Data" type="date" class="form-control form-control-lg" value="@DateTime.Today:yyyy-MM-dd" />
+                        <span asp-validation-for="Data" class="text-danger"></span>
+                    </div>
+                }
             </div>
 
             <!-- Middle fields: Cliente e Transportadora -->
             <div class="row mb-4">
                 <div class="col-md-6">
+                    <input asp-for="Transportadora" class="form-control" placeholder="Transportadora" />
+                    <span asp-validation-for="Transportadora" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
                     @if (User.IsInRole("Cliente"))
                     {
                         <input type="hidden" asp-for="ClienteId" value="@clienteId" id="ClienteId" />
-                        <p class="lead">Cliente autenticado: @ViewBag.ClienteNome</p>
                     }
                     else
                     {
@@ -49,10 +63,6 @@
                         <input type="text" id="cliente-nome" class="form-control" placeholder="Nome do cliente" autocomplete="off" />
                         <span asp-validation-for="ClienteId" class="text-danger"></span>
                     }
-                </div>
-                <div class="col-md-6">
-                    <input asp-for="Transportadora" class="form-control" placeholder="Transportadora" />
-                    <span asp-validation-for="Transportadora" class="text-danger"></span>
                 </div>
             </div>
 
@@ -63,9 +73,12 @@
                 </div>
                 <div id="pecasCards" class="row g-3"></div>
                 <div class="mt-3">
-                    <button type="button" id="addPecaBtn" class="btn btn-secondary" disabled>Adicionar Peça</button>
+                    <button type="button" id="addPecaBtn" class="btn btn-secondary" style="display:none;">Adicionar Peça</button>
                 </div>
             </div>
+
+            <!-- Hidden container for piece inputs -->
+            <div id="hidden-inputs-container"></div>
 
             <!-- Estado as Select from Enum -->
             <div class="form-group mt-4">
@@ -96,9 +109,7 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
@@ -112,18 +123,16 @@
                 const cId = $('#ClienteId').val();
                 if (cId) {
                     $('#sem-cliente').hide();
-                    $('#addPecaBtn').prop('disabled', false);
                     if (!loaded) loadPecas(cId);
                 } else {
                     $('#sem-cliente').show();
                     $('#pecasCards').empty();
-                    $('#addPecaBtn').prop('disabled', true);
+                    hideAddButton();
                 }
             }
 
             function loadPecas(clienteId) {
                 $.getJSON(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`, function (data) {
-                    console.log(data);
                     pecasData = {};
                     data.forEach(p => pecasData[p.id] = p);
                     renderAllCards();
@@ -132,11 +141,13 @@
             }
 
             function renderAllCards() {
-                $('#pecasCards').empty();
+                const $cards = $('#pecasCards');
+                $cards.empty();
                 Object.keys(pecasData).forEach(id => {
-                    $('#pecasCards').append(createCard(id));
+                    $cards.append(createCard(id));
                 });
                 updateTotals();
+                toggleAddButton();
             }
 
             function updateTotals() {
@@ -150,7 +161,7 @@
                     }
                 });
                 $('#QuantidadeTotal_Visivel').val(totalQty);
-                $('#TotalPrecoUnit_Visivel').val(totalPrice.toFixed(2).replace(',', ',').replace('.', ','));
+                $('#TotalPrecoUnit_Visivel').val(totalPrice.toFixed(2).replace('.', ','));
                 $('input[name="QuantidadeTotal"]').val(totalQty);
                 $('input[name="TotalPrecoUnit"]').val(totalPrice.toFixed(2));
             }
@@ -161,10 +172,7 @@
                 return `
                         <div class="col-md-4">
                           <div class="card shadow-sm">
-                            <img src="${p.imagem}"
-                                class="card-img-top img-fluid"
-                                alt="${p.nome}"
-                                style="max-width:100%; max-height:100px; object-fit:contain;" />
+                            <img src="${p.imagem}" class="card-img-top img-fluid" alt="${p.nome}" style="max-width:100%; max-height:100px; object-fit:contain;" />
                             <div class="card-body" data-id="${id}">
                               <h5 class="card-title">${p.nome}</h5>
                               <p class="card-text">Preço unitário: ${displayPrice} €</p>
@@ -177,21 +185,22 @@
                         </div>`;
             }
 
-            $('#addPecaBtn').click(function () {
-                const ids = Object.keys(pecasData).filter(id => !$('#pecasCards .card-body').filter(`*[data-id='${id}']`).length);
-                if (!ids.length) return;
-                const id = ids[0];
-                $('#pecasCards').append(createCard(id));
-                updateTotals();
-            });
+            function toggleAddButton() {
+                const count = $('#pecasCards .card').length;
+                $('#addPecaBtn').toggle(count === 0);
+            }
+            function hideAddButton() { $('#addPecaBtn').hide(); }
 
+            // Remove card
             $(document).on('click', '.remove-card', function () {
                 $(this).closest('.col-md-4').remove();
                 updateTotals();
+                toggleAddButton();
             });
-
+            // Qty change
             $(document).on('input change', '.peca-qty', updateTotals);
 
+            // Auto-complete cliente
             $('#cliente-nome').autocomplete({
                 source: '/Clientes/Search', minLength: 1,
                 select: (e, ui) => {
@@ -200,9 +209,29 @@
                     toggleSection();
                     return false;
                 }
+            }).on('input', function () {
+                $('#ClienteId').val('');
+                toggleSection();
             });
 
-            $('#cliente-nome').on('input', function () { $('#ClienteId').val(''); toggleSection(); });
+            // Quando clicam em submit, monta os hidden inputs
+            $('#encomendaForm').on('submit', function () {
+                // Limpa antigos
+                $('#hidden-inputs-container').empty();
+
+                $('#pecasCards .card-body').each(function (i) {
+                    const id = $(this).data('id');
+                    const qty = parseInt($(this).find('.peca-qty').val()) || 0;
+                    if (qty > 0) {
+                        $('#hidden-inputs-container').append(
+                            `<input type="hidden" name="pecasSelecionadas" value="${id}" />` +
+                            `<input type="hidden" name="quantidades" value="${qty}" />`
+                        );
+                    }
+                });
+            });
+
+            hideAddButton();
             toggleSection();
         });
     </script>
