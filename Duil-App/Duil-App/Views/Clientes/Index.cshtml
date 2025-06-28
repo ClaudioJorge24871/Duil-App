@@ -2,16 +2,23 @@
 
 @{
     ViewData["Title"] = "Index";
+    ViewData["BodyClass"] = "paginas-index-fundo";
 }
 
-<h1>Clientes</h1>
+<div class="container-fluid d-flex justify-content-center align-items-center position-relative"
+     style="height: 250px; background-color: #002333;">
 
-@if (User.IsInRole("Admin"))
-{
-   <p>
-        <a asp-action="Create">Adicionar um Cliente</a>
-   </p> 
-}
+    <h1 class="fw-light">Clientes</h1>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Create"
+           class="btn position-absolute fs-5 px-5 py-3 navbar-blue text-white "
+           style="bottom: 0; transform: translateY(50%); right: 80px; border-radius: 10px;">
+            Adicionar Cliente
+        </a>
+    }
+</div>
 
 <table class="table">
     <thead>

@@ -25,6 +25,14 @@ body {
     background-color: #A08585;
 }
 
+.navbar-blue {
+    background-color: #6B97AC;
+}
+
 grey-text {
     color: #414141;
+}
+
+body.paginas-index-fundo {
+    background-color: #E1E1E1;
 }

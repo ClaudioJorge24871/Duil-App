@@ -9,9 +9,16 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
 </head>
-<body>
+<body class="@ViewData["BodyClass"]">
+    @{
+        var navBarClass = (User.IsInRole("Admin") || User.IsInRole("Funcionario") || User.IsInRole("Cliente"))
+        ? "navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-blue box-shadow"
+        : "navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-pink box-shadow";
+    }
+
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-pink box-shadow">
+        <nav class="@navBarClass">
             <div class="container-fluid">
                 <a class="fs-4 ms-1 me-4 navbar-brand text-dark" asp-area="" asp-controller="Home" asp-action="Index">Duil</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
