@@ -32,6 +32,14 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
         public string? PecaMaisEncomendada { get; set; }
         public int TotalQuantidadePecas { get; set; }
 
+
+        // Estados:
+        public int NumPendente { get; set; }
+        public int NumConfirmada { get; set; }
+        public int NumConcretizada { get; set; }
+        public int NumCancelada { get; set; }
+
+
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -64,6 +72,12 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
                 .OrderByDescending(p => p.Sum(le => le.Quantidade))
                 .Select(p => p.Key)
                 .FirstOrDefaultAsync();
+
+            NumPendente = await _context.Encomendas.CountAsync(e => e.ClienteId == user.NIF && e.Estado == Estados.Pendente);
+            NumConfirmada = await _context.Encomendas.CountAsync(e => e.ClienteId == user.NIF && e.Estado == Estados.Confirmada);
+            NumConcretizada = await _context.Encomendas.CountAsync(e => e.ClienteId == user.NIF && e.Estado == Estados.Concretizada);
+            NumCancelada = await _context.Encomendas.CountAsync(e => e.ClienteId == user.NIF && e.Estado == Estados.Cancelada);
+
 
             return Page();
         }
