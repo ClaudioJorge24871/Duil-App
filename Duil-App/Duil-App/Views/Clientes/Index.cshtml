@@ -10,14 +10,12 @@
 
     <h1 class="fw-light text-white">Clientes</h1>
 
-    @if (User.IsInRole("Admin"))
-    {
-        <a asp-action="Create"
-           class="btn position-absolute fs-5 px-5 py-3 navbar-blue text-white"
-           style="bottom: 0; transform: translateY(50%); right: 80px; border-radius: 10px;">
-            Adicionar Cliente
-        </a>
-    }
+    <a asp-action="Create"
+        class="btn position-absolute fs-5 px-5 py-3 navbar-blue text-white"
+        style="bottom: 0; transform: translateY(50%); right: 80px; border-radius: 10px;">
+        Adicionar Cliente
+    </a>
+    
 </div>
 
 <div class="container p-5 mt-4">

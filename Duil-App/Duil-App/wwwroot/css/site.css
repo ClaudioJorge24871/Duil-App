@@ -29,7 +29,7 @@ body {
     background-color: #6B97AC;
 }
 
-grey-text {
+.grey-text {
     color: #414141;
 }
 
@@ -43,4 +43,12 @@ thead th {
 
 tbody td {
     border-bottom: none !important;
+}
+
+.btn-custom {
+    background-color: #6B97AC !important;
+    border-color: #6B97AC !important;
+    width:100%;
+    color: white !important;
+    font-size: 1.25rem; 
 }
