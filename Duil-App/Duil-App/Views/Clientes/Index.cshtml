@@ -34,7 +34,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Telemovel)
                 </th>
-                <th></th>
+                <th>
+                    Ações
+                </th>
             </tr>
         </thead>
         <tbody>  
@@ -53,12 +55,24 @@
                         @Html.DisplayFor(modelItem => item.Telemovel)
                     </td>
                     <td>
+                        <a asp-action="Details" asp-route-id="@item.Nif"
+                           class="btn btn-sm btn-outline-secondary"
+                           title="Mais Info">
+                            <i class="bi bi-info-circle-fill"></i>
+                        </a>
                         @if (User.IsInRole("Admin"))
                         {
-                            <a asp-action="Edit" asp-route-id="@item.Nif">Modificar | </a> 
-                            <a asp-action="Delete" asp-route-id="@item.Nif">Apagar</a> 
+                            <a asp-action="Edit" asp-route-id="@item.Nif"
+                               class="btn btn-sm btn-outline-primary ms-1"
+                               title="Modificar">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Nif"
+                               class="btn btn-sm btn-outline-danger ms-1"
+                               title="Apagar">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
                         }
-                        <a asp-action="Details" asp-route-id="@item.Nif">Mais info</a> 
                     </td>
                 </tr>
                 }
