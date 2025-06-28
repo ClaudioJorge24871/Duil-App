@@ -29,9 +29,14 @@ body {
     background-color: #6B97AC;
 }
 
+.texto-cor-azul {
+    color: #6B97AC;
+}
+
 .grey-text {
     color: #414141;
 }
+
 
 body.paginas-index-fundo {
     background-color: #E1E1E166;
