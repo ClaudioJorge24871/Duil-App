@@ -4,6 +4,7 @@ using Duil_App.Data;
 using Duil_App.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Duil_App.Models.ViewModels;
 
 namespace Duil_App.Areas.Identity.Pages.Account.Manage
 {
@@ -25,6 +26,12 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
         public int EncomendasConcretizadas { get; set; }
         public int NumeroPecas { get; set; }
 
+        public DateTime? DataUltimaEncomenda { get; set; }
+
+        public DateTime? DataPrimeiraEncomenda { get; set; }
+        public string? PecaMaisEncomendada { get; set; }
+        public int TotalQuantidadePecas { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -36,6 +43,27 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
             EncomendasConcretizadas = await _context.Encomendas.CountAsync(e=> e.ClienteId == user.NIF && e.Estado == Estados.Concretizada);
 
             NumeroPecas = await _context.Pecas.CountAsync(p => p.ClienteId == user.NIF);
+
+            DataUltimaEncomenda = await _context.Encomendas.Where(e => e.ClienteId == user.NIF)
+                .OrderByDescending(e => e.Data)
+                .Select(e => e.Data)
+                .FirstOrDefaultAsync();
+
+            DataPrimeiraEncomenda = await _context.Encomendas.Where(e => e.ClienteId == user.NIF)
+                .OrderBy(e => e.Data)
+                .Select(e => e.Data)
+                .FirstOrDefaultAsync();
+            
+            // toal de peças encomendadas
+            TotalQuantidadePecas = await _context.LinhasEncomendas.Where(le => le.Encomenda.ClienteId == user.NIF)
+                .SumAsync(le => (int?)le.Quantidade) ?? 0;
+
+
+            PecaMaisEncomendada = await _context.LinhasEncomendas.Where(le => le.Encomenda.ClienteId == user.NIF)
+                .GroupBy(le => le.Peca.Designacao)
+                .OrderByDescending(p => p.Sum(le => le.Quantidade))
+                .Select(p => p.Key)
+                .FirstOrDefaultAsync();
 
             return Page();
         }
