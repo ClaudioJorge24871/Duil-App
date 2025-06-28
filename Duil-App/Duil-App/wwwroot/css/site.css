@@ -36,3 +36,7 @@ grey-text {
 body.paginas-index-fundo {
     background-color: #E1E1E1;
 }
+
+thead th {
+    border-bottom: none !important;
+}
