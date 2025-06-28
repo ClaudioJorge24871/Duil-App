@@ -1,61 +1,83 @@
 ﻿@model IEnumerable<Duil_App.Models.Clientes>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Empresas Clientes";
+    ViewData["BodyClass"] = "paginas-index-fundo";
 }
 
-<h1>Clientes</h1>
+<div class="container-fluid d-flex justify-content-center align-items-center position-relative"
+     style="height: 250px; background-color: #b4bdc1;">
 
-@if (User.IsInRole("Admin"))
-{
-   <p>
-        <a asp-action="Create">Adicionar um Cliente</a>
-   </p> 
-}
+    <h1 class="fw-light text-white">Clientes</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nif)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pais)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telemovel)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nif)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pais)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telemovel)
-            </td>
-            <td>
-                @if (User.IsInRole("Admin"))
-                {
-                    <a asp-action="Edit" asp-route-id="@item.Nif">Modificar | </a> 
-                    <a asp-action="Delete" asp-route-id="@item.Nif">Apagar</a> 
+    <a asp-action="Create"
+        class="btn position-absolute fs-5 px-5 py-3 navbar-blue text-white"
+        style="bottom: 0; transform: translateY(50%); right: 80px; border-radius: 10px;">
+        Adicionar Cliente
+    </a>
+    
+</div>
+
+<div class="container p-5 mt-4">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nif)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pais)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Telemovel)
+                </th>
+                <th>
+                    Ações
+                </th>
+            </tr>
+        </thead>
+        <tbody>  
+                @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nif)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pais)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telemovel)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Nif"
+                           class="btn btn-sm btn-outline-secondary"
+                           title="Mais Info">
+                            <i class="bi bi-info-circle-fill"></i>
+                        </a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Nif"
+                               class="btn btn-sm btn-outline-primary ms-1"
+                               title="Modificar">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Nif"
+                               class="btn btn-sm btn-outline-danger ms-1"
+                               title="Apagar">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        }
+                    </td>
+                </tr>
                 }
-                <a asp-action="Details" asp-route-id="@item.Nif">Mais info</a> 
-             
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            </tbody>
+        </table>
+
+
+</div>

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Duil_App.Services;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace Duil_App.Controllers
 {
@@ -91,7 +92,10 @@ namespace Duil_App.Controllers
             List<int> pecasSelecionadas,
             List<int> quantidades)
         {
-            encomenda.Estado = Estados.Pendente;
+            if (User.IsInRole("Cliente"))
+            {
+                encomenda.Estado = Estados.Pendente;
+            }
 
             if (quantidades == null || pecasSelecionadas.Count == 0)
             {
@@ -273,6 +277,7 @@ namespace Duil_App.Controllers
             if (id == null) return NotFound();
 
             var encomenda = await _context.Encomendas
+                .Include(e => e.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             return encomenda == null ? NotFound() : View(encomenda);
@@ -283,6 +288,7 @@ namespace Duil_App.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var encomenda = await _context.Encomendas.FindAsync(id);
+
             if (encomenda != null)
             {
                 _context.Encomendas.Remove(encomenda);
@@ -305,12 +311,14 @@ namespace Duil_App.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPecasPorCliente(string clienteId)
         {
+
             var pecas = await _context.Pecas
                 .Where(p => p.ClienteId == clienteId)
                 .Select(p => new {
                     id = p.Id,
                     nome = p.Designacao,
-                    preco = p.PrecoUnit.ToString(CultureInfo.InvariantCulture) 
+                    preco = p.PrecoUnit.ToString(CultureInfo.InvariantCulture),
+                    imagem = "/images/" + p.Imagem
                 })
                 .ToListAsync();
 

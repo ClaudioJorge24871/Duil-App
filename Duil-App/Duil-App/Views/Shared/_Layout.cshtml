@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html lang="pt-pt">
 <head>
     <meta charset="utf-8" />
@@ -6,190 +7,82 @@
     <title>@ViewData["Title"] - Duil</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"> <!--BS icons-->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 </head>
+<body class="@ViewData["BodyClass"]">
+    @{
+        var navBarClass = (User.IsInRole("Admin") || User.IsInRole("Funcionario") || User.IsInRole("Cliente"))
+        ? "navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-blue box-shadow"
+        : "navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-pink box-shadow";
 
-<style>
-    .custom-toast {
-        background: #d4edda;
-        color: #155724;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        font-family: 'Segoe UI', sans-serif;
-        animation: fadeInUp 0.4s ease-in-out;
-        min-width: 300px;
-        max-width: 400px;
+        var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
+        var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
     }
 
-    .custom-toast .toast-header {
-        background-color: transparent;
-        border-bottom: 1px solid rgba(21, 87, 36, 0.3);
-        font-weight: 600;
-        color: #155724;
-    }
 
-    .custom-toast .toast-body {
-        font-size: 1rem;
-        line-height: 1.3; 
-        margin-bottom: 0.5rem;
-    }
-
-    .btn-close-white {
-        filter: invert(0.4); 
-    }
-
-    .custom-toast .btn-outline-success {
-        border: none;
-        background-color: transparent;
-        color: #198754;
-        transition: transform 0.2s ease;
-    }
-
-    .custom-toast .btn-outline-success:hover {
-        transform: scale(1.15);
-        color: #145c32;
-    }
-
-</style>
-
-
-<body>
     <header>
-        @if (ViewData["HideNavbar"] == null || !(bool)ViewData["HideNavbar"])
-        {
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container-fluid">
-                    <a class="navbar-brand align-content-center" asp-area="" asp-controller="Home" asp-action="Index">Duil</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item d-flex align-items-center ms-5">
-                                @if (!(User.IsInRole("Admin") || User.IsInRole("Funcionario") || User.IsInRole("Cliente")))
-                                {
-                                   <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Termos e Políticas</a>
-                                }
-                                
+        <nav class="@navBarClass">
+            <div class="container-fluid">
+                <a class="fs-4 ms-1 me-4 navbar-brand text-dark" asp-area="" asp-controller="Home" asp-action="Index">Duil</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link mx-2 @(currentController == "Utilizadores" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Utilizadores" asp-action="Index">Utilizadores</a>
                             </li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Funcionario"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link mx-2 @(currentController == "Encomendas" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Encomendas" asp-action="Index">Encomendas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-2 @(currentController == "Fabricas" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Fabricas" asp-action="Index">Fábricas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-2 @(currentController == "Pecas" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Pecas" asp-action="Index">Peças</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-2 @(currentController == "Clientes" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                            </li>
+                        }
 
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Utilizadores" asp-action="Index">Gerir Utilizadores</a>
-                                </li>
-                            }
-                            @if (User.IsInRole("Admin") || User.IsInRole("Funcionario"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Encomendas" asp-action="Index">Encomendas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Fabricas" asp-action="Index">Fabricas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pecas" asp-action="Index">Pecas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
-                                </li>
-                            }
-                            @if (User.IsInRole("Cliente"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Encomendas" asp-action="Create"> Criar Encomenda</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Encomendas" asp-action="Index">Registo de Encomendas</a>
-                                </li>
-                            }
-                        </ul>
-                        <partial name="_LoginPartial" />
-                    </div>
+                        @if (User.IsInRole("Cliente"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link mx-2 @(currentController == "Encomendas" & currentAction=="Create" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Encomendas" asp-action="Create">Criar Encomenda</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-2 @(currentController == "Encomendas" & currentAction=="Index" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Encomendas" asp-action="Index">Registo de Encomendas</a>
+                            </li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
                 </div>
-            </nav>
-        }
+            </div>
+        </nav>
     </header>
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <!--Toast de Notificação de Encomenda-->
-    <div class="position-fixed bottom-0 end-0 p-4" style="z-index: 1055;">
-        <div id="toastSuccess" class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Nova Encomenda Criada ✅ </strong>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Fechar"></button>
-            </div>
-            <div class="toast-body" id="toastSuccessBody">
-                Encomenda criada com sucesso!
-            </div>
+    <footer class="border-top footer text-muted mb-3 w-100" style="position: absolute; bottom: 0;">
+        <div class="container">
+            &copy; 2025 - Duil - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </div>
-
-
-    @if (ViewData["HideNavbar"] == null || !(bool)ViewData["HideNavbar"])
-    {
-        <footer class="border-top footer text-muted mb-3 w-100" style="position: absolute; bottom: 0;">
-            <div class="container">
-                &copy; 2025 - Duil - <a asp-area="" asp-controller="Home" asp-action="Privacy">Termos e Políticas</a>
-            </div>
-        </footer>
-    }
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.0/signalr.min.js"></script>
-    <!--Funcionarios recebem a notificação em todas as páginas que utilizem o Layout-->
-    <script>
-        const connection = new signalR.HubConnectionBuilder().withUrl("/realtimehub").withAutomaticReconnect().build();
-
-        connection.on("ReceberNotificacao", (data) => {
-            showSuccessToast(
-                `Cliente: ${data.nomeCliente}\nData: ${data.data}\nTotal: ${data.precoTotal}€\nQuantidade: ${data.quantidadeTotal}`,
-                data.idEncomenda
-            );
-        });
-
-        connection.onreconnected(connectionId => {
-            console.log("Reconectado com sucesso. ID da conexão:", connectionId);
-        });
-
-        connection.onclose(error => {
-            console.error("Conexão fechada permanentemente.", error);
-        });
-
-
-        connection.start().catch(err => console.error(err.toString())); 
-    </script>
-
-    <!--Toast-->
-    <script>
-        function showSuccessToast(message, encomendaId) {
-            const toastBody = document.getElementById('toastSuccessBody');
-            toastBody.innerHTML = `
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        ${message.replace(/\n/g, '<br>')}
-                    </div>
-                    <button class="btn btn-sm btn-outline-success ms-3" title="Ver detalhes" onclick="window.location.href='/Encomendas/Details/${encomendaId}'">
-                        <i class="bi bi-eye" style="font-size: 1.3rem;"></i>
-                    </button>
-                </div>
-            `;
-
-            const toastElement = new bootstrap.Toast(document.getElementById('toastSuccess'), { delay: 4000}); 
-            toastElement.show();
-        }
-    </script>
-
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-

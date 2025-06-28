@@ -1,287 +1,236 @@
 ﻿@model Duil_App.Models.Encomendas
 
+@using Duil_App.Models
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nova Encomenda";
     var clienteId = ViewBag.ClienteId as string;
+    ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)));
 }
 
-<h1>Nova encomenda</h1>
+@if (!User.IsInRole("Cliente"))
+{
+    <div>
+        <a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" style="color:#6B97AC"></i></a>
+    </div>
+}
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<div class="d-flex justify-content-center mt-5 min-vh-100">
+    <div class="container mt-5" style="width:80%">
+        <h3 class="mb-2 grey-text">Nova encomenda</h3>
+        <hr />
+
+        <form asp-action="Create" id="encomendaForm">
+            @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @if (User.IsInRole("Cliente"))
-            {
-                <input type="hidden" asp-for="ClienteId" value="@clienteId" id="ClienteId" />
-            }
-            <div class="form-group">
-                <label asp-for="IdLadoCliente" class="control-label"></label>
-                <input asp-for="IdLadoCliente" class="form-control" />
-                <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                <span asp-validation-for="Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TotalPrecoUnit" class="control-label"></label>
-                <input type="text" id="TotalPrecoUnit_Visivel" class="form-control" readonly />
-                <input type="hidden" asp-for="TotalPrecoUnit" />
-                <span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="QuantidadeTotal" class="control-label"></label>
-                <input type="text" id="QuantidadeTotal_Visivel" class="form-control" readonly />
-                <input type="hidden" asp-for="QuantidadeTotal" />
-                <span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
+
+            <div class="row mt-3">
+                <div class="col-md-6 mb-3">
+                    <input asp-for="IdLadoCliente" class="form-control" placeholder="Ordem de Encomenda" />
+                    <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
+                </div>
+                @if (User.IsInRole("Cliente"))
+                {
+                    <div class="col-md-6 mb-3">
+                        <input asp-for="Data" type="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" readonly />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6 mb-3">
+                        <input asp-for="Data" type="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="Data" class="text-danger"></span>
+                    </div>
+                }
             </div>
 
-            <div class="form-group">
-                <label asp-for="Transportadora" class="control-label"></label>
-                <input asp-for="Transportadora" class="form-control" />
-                <span asp-validation-for="Transportadora" class="text-danger"></span>
+            <div class="row mb-3">
+                <div class="col-md-6 mb-3">
+                    <input asp-for="Transportadora" class="form-control" placeholder="Transportadora" />
+                    <span asp-validation-for="Transportadora" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <input type="hidden" asp-for="ClienteId" value="@clienteId" id="ClienteId" />
+                    }
+                    else
+                    {
+                        <input type="hidden" asp-for="ClienteId" id="ClienteId" />
+                        <input type="text" id="cliente-nome" class="form-control" placeholder="Nome do cliente" autocomplete="off" />
+                        <span asp-validation-for="ClienteId" class="text-danger"></span>
+                    }
+                </div>
             </div>
+
+            <div id="pecasSection">
+                <div id="sem-cliente" class="text-center mt-4">
+                    <h5 class="text-muted">Por favor, adicione um cliente para ver as peças</h5>
+                </div>
+                <div id="pecasCards" class="row g-3"></div>
+                <div class="mt-2">
+                    <button type="button" id="addPecaBtn" class="btn btn-secondary btn-sm" style="display:none;">Adicionar Peça</button>
+                </div>
+            </div>
+
+            <div id="hidden-inputs-container"></div>
+
             @if (!User.IsInRole("Cliente"))
             {
-                <div class="form-group">
-                    <label>Nome do Cliente</label>
-                    <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
-                    <input asp-for="ClienteId" type="hidden" id="ClienteId" />
-                    <span asp-validation-for="ClienteId" class="text-danger"></span>
+                <div class="row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Estado" class="form-label">Estado</label>
+                        <select asp-for="Estado" asp-items="ViewBag.Estado" class="form-control">
+                            <option value="">-- Selecione Estado --</option>
+                        </select>
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
                 </div>
             }
-            
-            <div id="pecasContainer">
-                <div class="peca-row">
-                    <div class="form-group">
-                        <label>Peça</label>
-                        <select name="pecasSelecionadas" class="form-control">
-                            <option value="">-- Selecione uma peça --</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Quantidade</label>
-                        <input type="number" name="quantidades" class="form-control" value="1" min="1" />
-                        <br />
-                        <button type="button" class="btn btn-danger remove-peca">Remover Peça</button>
-                    </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6 mb-3">
+                    <input type="text" id="QuantidadeTotal_Visivel" class="form-control" placeholder="Quantidade Total" readonly />
+                    <input type="hidden" asp-for="QuantidadeTotal" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="text" id="TotalPrecoUnit_Visivel" class="form-control" placeholder="Preço Total (€)" readonly />
+                    <input type="hidden" asp-for="TotalPrecoUnit" />
                 </div>
             </div>
-            <br />
-            <button type="button" id="addPeca" class="btn btn-secondary mb-3">Adicionar Peça</button>
 
-            <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-primary" />
+            <div class="form-group mb-3">
+                <input type="submit" value="Criar" class="btn btn-custom mt-2" />
             </div>
         </form>
     </div>
 </div>
 
-@if (!User.IsInRole("Cliente"))
-{
-    <div>
-        <a asp-action="Index">Voltar</a>
-    </div>
-}
-
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
-    <script>
-        $.validator.methods.number = function (value, element) {
-            return this.optional(element) ||
-                /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
-        };
-    </script>
+
     <script>
         $(function () {
-            const pecasData = {};
-            let initialLoadComplete = false; 
+            let pecasData = {};
+            let loaded = false;
 
-            function initSelects() {
-                $('select[name="pecasSelecionadas"]').each(function () {
-                    populateSelect($(this));
+            function toggleSection() {
+                const cId = $('#ClienteId').val();
+                if (cId) {
+                    $('#sem-cliente').hide();
+                    if (!loaded) loadPecas(cId);
+                } else {
+                    $('#sem-cliente').show();
+                    $('#pecasCards').empty();
+                    hideAddButton();
+                }
+            }
+
+            function loadPecas(clienteId) {
+                $.getJSON(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`, function (data) {
+                    pecasData = {};
+                    data.forEach(p => pecasData[p.id] = p);
+                    renderAllCards();
+                    loaded = true;
                 });
-                initialLoadComplete = true;
+            }
+
+            function renderAllCards() {
+                const $cards = $('#pecasCards');
+                $cards.empty();
+                Object.keys(pecasData).forEach(id => {
+                    $cards.append(createCard(id));
+                });
+                updateTotals();
+                toggleAddButton();
             }
 
             function updateTotals() {
-                let totalQuantity = 0;
-                let totalPrice = 0;
-
-                $('.peca-row').each(function () {
-                    const select = $(this).find('select');
-                    const quantityInput = $(this).find('input[type="number"]');
-                    const pecaId = select.val();
-                    const quantity = parseInt(quantityInput.val()) || 0;
-
-                    if (pecaId && pecasData[pecaId]) {
-                        totalQuantity += quantity;
-                        // Prarsing do preço para garantir que é um número
-                        totalPrice += parseFloat(pecasData[pecaId].preco) * quantity;
+                let totalQty = 0, totalPrice = 0;
+                $('#pecasCards .card-body').each(function () {
+                    const id = $(this).data('id');
+                    const qty = parseInt($(this).find('.peca-qty').val()) || 0;
+                    if (id && pecasData[id]) {
+                        totalQty += qty;
+                        totalPrice += parseFloat(pecasData[id].preco) * qty;
                     }
                 });
-
-                // Atualiza com virgula
-                $('#QuantidadeTotal_Visivel').val(totalQuantity);
-                $('#TotalPrecoUnit_Visivel').val(totalPrice.toFixed(2).replace('.', ',')); // para exibição
-                $('input[name="QuantidadeTotal"]').val(totalQuantity); // hidden real enviado
-                $('input[name="TotalPrecoUnit"]').val(totalPrice.toFixed(2)); // hidden real enviado com ponto
-
+                $('#QuantidadeTotal_Visivel').val(totalQty);
+                $('#TotalPrecoUnit_Visivel').val(totalPrice.toFixed(2).replace('.', ','));
+                $('input[name="QuantidadeTotal"]').val(totalQty);
+                $('input[name="TotalPrecoUnit"]').val(totalPrice.toFixed(2));
             }
 
-            function populateSelect(select) {
-                select.empty().append('<option value="">-- Selecione uma peça --</option>');
-                for (const id in pecasData) {
-                    const peca = pecasData[id];
-                    const displayPrice = peca.preco.toFixed(2).replace('.', ',');
-                    const option = new Option(`${peca.nome} (${displayPrice} €)`, id);
-                    select.append(option);
-                }
+            function createCard(id) {
+                const p = pecasData[id];
+                const displayPrice = parseFloat(p.preco).toFixed(2).replace('.', ',');
+                return `
+                            <div class="col-md-4">
+                                <div class="card shadow-sm">
+                                    <img src="${p.imagem}" class="card-img-top img-fluid" alt="${p.nome}" style="max-width:100%; max-height:100px; object-fit:contain;" />
+                                    <div class="card-body" data-id="${id}">
+                                        <h6 class="card-title">${p.nome}</h6>
+                                        <p class="card-text small">Preço unitário: ${displayPrice} €</p>
+                                        <div class="input-group input-group-sm mb-2">
+                                            <input type="number" class="form-control peca-qty" value="1" min="1">
+                                            <button class="btn btn-danger btn-sm remove-card">Remover</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
             }
 
-
-            function loadPecas() {
-                const clienteId = $('#ClienteId').val()?.trim();
-                if (clienteId) {
-                    buscarPecas(clienteId);
-                }
+            function toggleAddButton() {
+                const count = $('#pecasCards .card').length;
+                $('#addPecaBtn').toggle(count === 0);
             }
 
-            function buscarPecas(clienteId) {
-                fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        Object.keys(pecasData).forEach(k => delete pecasData[k]);
-
-                        data.forEach(p => {
-                            pecasData[p.id] = {
-                                nome: p.nome,
-                                preco: parseFloat(p.preco)
-                            };
-                        });
-
-                        if (!initialLoadComplete) initSelects();
-                        updateTotals();
-                    })
-                    .catch(error => console.error('Fetch failed:', error));
+            function hideAddButton() {
+                $('#addPecaBtn').hide();
             }
 
-            // Carrega peças automaticamente se cliente for autenticado
-            $(document).ready(function () {
-                loadPecas();
+            $(document).on('click', '.remove-card', function () {
+                $(this).closest('.col-md-4').remove();
+                updateTotals();
+                toggleAddButton();
             });
 
+            $(document).on('input change', '.peca-qty', updateTotals);
 
-            $("#cliente-nome").autocomplete({
+            $('#cliente-nome').autocomplete({
                 source: '/Clientes/Search',
                 minLength: 1,
-                select: function (event, ui) {
-                    $("#cliente-nome").val(ui.item.label);
-                    $("#ClienteId").val(ui.item.value);
-                    clienteSelected = true;
-                    loadPecas(ui.item.value);
+                select: (e, ui) => {
+                    $('#cliente-nome').val(ui.item.label);
+                    $('#ClienteId').val(ui.item.value);
+                    toggleSection();
                     return false;
-                },
-                focus: function (event, ui) {
-                    event.preventDefault();
                 }
+            }).on('input', function () {
+                $('#ClienteId').val('');
+                loaded = false; // carrega as peças novamente quando muda de cliente
+                toggleSection();
             });
 
-            $("#cliente-nome").on("input", function () {
-                $("#ClienteId").val("");
-                clienteSelected = false;
-                $('select[name="pecasSelecionadas"]').empty().append('<option value="">-- Selecione uma peça --</option>');
-                $('#QuantidadeTotal').val('');
-                $('#TotalPrecoUnit').val('');
-            });
-
-            $('#addPeca').click(function () {
-                const newRow = `
-                        <div class="peca-row">
-                            <div class="form-group">
-                                <label>Peça</label>
-                                <select name="pecasSelecionadas" class="form-control">
-                                    <option value="">-- Selecione uma peça --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Quantidade</label>
-                                <input type="number" name="quantidades" class="form-control" value="1" min="1" />
-                                <button type="button" class="btn btn-danger remove-peca">Remover</button>
-                            </div>
-                        </div>`;
-
-                const $row = $(newRow);
-                $('#pecasContainer').append($row);
-
-                if (Object.keys(pecasData).length > 0) {
-                    populateSelect($row.find('select'));
-                }
-                // Reload peças if client is selected
-                //if ($('#ClienteId').val()) {
-                //loadPecas($('#ClienteId').val());
-                //}
-            });
-
-            $(document).on('click', '.remove-peca', function () {
-                $(this).closest('.peca-row').remove();
-                updateTotals();
-            });
-
-            $(document).on('input change', 'select[name="pecasSelecionadas"], input[name="quantidades"]', function () {
-                updateTotals();
-            });
-
-        });
-
-
-        // Verificação se o Formulário foi submetido
-        // Caso não tenha sido submetido e alterado e o utilizador quiser sair, envia um alert
-        let formularioSubmetido = false;
-        let formularioAlterado = false;
-
-
-        // Caso o formulario seja alterado
-        document.querySelectorAll('form input, form select').forEach(function (el) {
-            el.addEventListener('change', () => {
-                formularioAlterado = true;
-            });
-        });
-
-        const submitBtn = document.querySelector('form input[type="submit"]');
-
-        submitBtn.addEventListener('click', () => {
-            formularioSubmetido = true;
-        });
-
-        //Interceta a tentativa de sair da página
-        window.addEventListener('beforeunload', function (e) {
-            if (!formularioSubmetido && formularioAlterado) {
-                const idLadoCliente = document.querySelector('input[name="IdLadoCliente"]').value.trim();
-                let pecaSelecionada = false;
-
-                document.querySelectorAll('select[name="pecasSelecionadas"]').forEach(select => {
-                    if (select.value.trim() !== "") {
-                        pecaSelecionada = true;
+            $('#encomendaForm').on('submit', function () {
+                $('#hidden-inputs-container').empty();
+                $('#pecasCards .card-body').each(function () {
+                    const id = $(this).data('id');
+                    const qty = parseInt($(this).find('.peca-qty').val()) || 0;
+                    if (qty > 0) {
+                        $('#hidden-inputs-container').append(
+                            `<input type="hidden" name="pecasSelecionadas" value="${id}" />` +
+                            `<input type="hidden" name="quantidades" value="${qty}" />`
+                        );
                     }
                 });
+            });
 
-                // Só alerta se o campo IdLadoCliente estiver vazio ou nenhuma peça selecionada
-                if (idLadoCliente !== "" || pecaSelecionada)
-                {
-                    e.preventDefault();
-                    e.returnValue = '';
-                }
-            }
+            hideAddButton();
+            toggleSection();
         });
     </script>
 }
