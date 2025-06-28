@@ -10,12 +10,12 @@
 
 
 <div class="w-50" style="margin-left:10%; margin-top:5%">
-    <h3 style="display:inline;  font-weight: bold">@Html.DisplayFor(model => model.Nome)</h3>
+    <h3 style="display:inline;>@Html.DisplayFor(model => model.Nome)</h3>
     <a asp-action="Edit" asp-route-id="@Model?.Nif" title="Modificar"
     ><i class="ms-3 bi bi-pencil-fill"></i></a>
     <hr class="mb-5" />
     <dl class="row mt-4">
-        <dt class="col-sm-4 mb-3 mb-3">
+        <dt class="col-sm-4 mb-3">
             @Html.DisplayNameFor(model => model.Nif)
         </dt>
         <dd class="col-sm-5 mb-3">

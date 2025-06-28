@@ -5,56 +5,56 @@
     var role = ViewBag.UserRole;
 }
 
-
 <div>
-    <h4 style="font-weight: bold">@Html.DisplayFor(model => model.Nome)</h4>
-    <hr />
+    <a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" title="Voltar" style="color:#6B97AC"></i></a>
+</div>
+
+<div class="w-50" style="margin-left:10%; margin-top:5%">
+    <h3 style="display:inline" >Detalhes do Utilizador: @Html.DisplayFor(model => model.Nome)</h3>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" title="Modificar"><i class="ms-3 bi bi-pencil-fill"></i></a>
+    <hr class="mb-5" />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4 mb-3">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-5 mb-3">
             @Html.DisplayFor(model => model.Nome)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Morada)
+        <dt class = "col-sm-4 mb-3">
+            @Html.DisplayNameFor(model => model.Morada) 
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Morada)
+        <dd class = "col-sm-5 mb-3">
+            @(string.IsNullOrWhiteSpace(Model.Morada) ? "Sem informação" : Model.Morada)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4 mb-3">
             @Html.DisplayNameFor(model => model.CodPostal)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CodPostal)
+        <dd class = "col-sm-5 mb-3">
+            @(string.IsNullOrWhiteSpace(Model.CodPostal) ? "Sem informação" : Model.CodPostal)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4 mb-3">
             @Html.DisplayNameFor(model => model.Pais)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-5 mb-3">
             @Html.DisplayFor(model => model.Pais)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4 mb-3">
             @Html.DisplayNameFor(model => model.NIF)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-5 mb-3">
             @Html.DisplayFor(model => model.NIF)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4 mb-3">
             @Html.DisplayNameFor(model => model.Telemovel)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telemovel)
+        <dd class = "col-sm-5 mb-3">
+            @(string.IsNullOrWhiteSpace(Model.Telemovel) ? "Sem informação" : Model.Telemovel)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4 mb-3">
             Role
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-5 mb-3">
             @role
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Modificar</a> |
-    <a asp-action="Index">Voltar</a>
 </div>
