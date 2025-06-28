@@ -1,4 +1,5 @@
 ﻿@model Duil_App.Models.Utilizadores
+@using Duil_App.Code
 
 @{
     ViewData["Title"] = "Adicionar Utilizadores";
@@ -45,7 +46,9 @@
                         <span asp-validation-for="CodPostal" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <input asp-for="Pais" class="form-control" placeholder="País *" />
+                        <select asp-for="Pais" class="form-select" asp-items="ListasHelper.ObterListaDePaises()">
+                            <option value="">Selecione um país *</option>
+                        </select>
                         <span asp-validation-for="Pais" class="text-danger"></span>
                     </div>
                     <p class="text-danger mt-4">* é de preenchimento obrigatório</p>
