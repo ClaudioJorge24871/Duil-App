@@ -1,24 +1,78 @@
 ﻿@{
-    ViewData["Title"] = "Página Inicial";
+	ViewData["Title"] = "Página Inicial";
 }
 
-<div class="position-relative" style="height: 35vw; width:100vw; overflow: hidden;">
-    <!-- Imagem de fundo -->
-    <img src="~/images/ceramica.png"
-         class="position-absolute top-0 start-0 w-100 h-100"
-         style="z-index: -1; object-fit: cover;" alt="Imagem de fundo" />
+<div class="position-relative mb-5" style="height: 35vw; width:100vw; overflow: hidden;">
+	<!-- Imagem de fundo -->
+	<img src="~/images/ceramica.png"
+		 class="position-absolute top-0 start-0 w-100 h-100 mb-5"
+		 style="z-index: -1; object-fit: cover;" alt="Imagem de fundo" />
 
-    <div class="container-fluid d-flex justify-content-center align-items-center"
-         style="height: 300px; background-color: rgba(49, 0, 13, 0.25);">
-        <h1 class="text-white fw-semibold fs-1 mb-0">
-            Bem vindo à plataforma da Duil!
-        </h1>
-    </div>
+	<div class="container-fluid d-flex justify-content-center align-items-center"
+		 style="height: 250px; background-color: rgba(49, 0, 13, 0.25);">
+		<h1 class="text-white fw-semibold fs-1 mb-0">
+			Bem vindo à plataforma da Duil!
+		</h1>
+	</div>
 </div>
 
-<div class="p-5 m-5">
-    <p class="p-5 m-5 fs-3">
-        Duil is an agency that works as an Export Office for a group of Portuguese factories, for the markets where we are focused.
-        Keeping and building-up a deep and close relation with each of “our” factories. Our task is to promote factory's products, thecnical habilities and skills. We care about a constant flow of new products, supplying new ideas through our design department, or getting new ideas from customers own design sources, selecting then the right producer for each of the new ideas and needs. Among our concerns and goals, is the evolution of the factories, pushing for trips to the markets or trips from the customers to the factories. We assure to the ones working with us, a constant follow-up and information flow, about the matters, needs and targets, from the first steps of the modling and developing, to the last steps of the shipping. Also with the target of promoting Portugal, and turning the relations even more tight and interesting, we can promote special company events to the customers in the markets, that can involve family, final customers and/or employees, organizing wine-trips, golf, and other leisure activities. As a conclusion, our main target is to promote Portugal, and give a bit of our heart and soul, establishing long relations between the markets and Portugal.
-    </p>
+<!-- Secção 1: Quem somos -->
+<div class="text-center position-relative">
+	<hr class="mt-5" />
+	<span class="position-absolute top-50 start-50 translate-middle px-3 bg-white fs-2 grey-text ">
+		Quem somos
+	</span>
+</div>
+
+<p class="fs-5 ps-5 mt-5 text-center">A Duil é uma agência que atua como escritório de exportação para um grupo de fábricas portuguesas.</p>
+
+
+<div class="container-fluid py-5 mt-3">
+
+	<!-- Secção 2: O que fazemos -->
+	<div class="row align-items-center mb-4" style="background-color:#E1BC8F66">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-6">
+			<p class=" fs-2 mb-5 grey-text">O que fazemos</p>
+			<p class=" fs-5">Promovemos produtos, apoiamos o desenvolvimento de novas ideias e acompanhamos todo o processo até ao envio.</p>
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-4">
+			<img src="~/images/processo.png" alt="Processo de desenvolvimento" class="d-block ms-5 rounded " style="width:60%">
+		</div>
+
+	</div>
+
+	<!-- Secção 3: A nossa missão -->
+	<div class="row align-items-center mb-5">
+		<!--<div class="col-md-1">
+		</div>
+		<div class="col-md-4">
+			<img src="~/images/ligacao.jpg" alt="Conexão internacional" class="img-fluid rounded shadow">
+		</div>
+		
+		-->
+		<div class="col-md-1">
+		</div>
+		 
+		<div class="col-md-6">
+			<p class=" fs-2 grey-text">A nossa missão</>
+			<p>Criar ligações duradouras entre as nossas fábricas e os mercados internacionais.</p>
+		</div>
+
+	</div>
+
+	<!-- Frase de impacto -->
+	<div class="text-center bg-light p-5 rounded mb-5">
+		<h3 class="fw-bold">Levamos o melhor de Portugal ao mundo</h3>
+		<p class="lead">com qualidade, proximidade e inovação.</p>
+	</div>
+
+	<!-- Call to action -->
+	<div class="text-center">
+		<a href="/Sobre" class="btn btn-primary btn-lg">Saber mais</a>
+	</div>
+
 </div>
