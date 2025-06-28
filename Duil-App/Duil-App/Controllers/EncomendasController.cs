@@ -273,6 +273,7 @@ namespace Duil_App.Controllers
             if (id == null) return NotFound();
 
             var encomenda = await _context.Encomendas
+                .Include(e => e.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             return encomenda == null ? NotFound() : View(encomenda);
@@ -283,6 +284,7 @@ namespace Duil_App.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var encomenda = await _context.Encomendas.FindAsync(id);
+
             if (encomenda != null)
             {
                 _context.Encomendas.Remove(encomenda);
