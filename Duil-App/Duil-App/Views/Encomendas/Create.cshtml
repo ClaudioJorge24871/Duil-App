@@ -1,287 +1,234 @@
 ﻿@model Duil_App.Models.Encomendas
 
 @{
-    ViewData["Title"] = "Create";
-    var clienteId = ViewBag.ClienteId as string;
+	ViewData["Title"] = "Create";
+	var clienteId = ViewBag.ClienteId as string;
 }
 
-<h1>Nova encomenda</h1>
+<div>
+	<a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" style="color:#6B97AC"></i></a>
+</div>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @if (User.IsInRole("Cliente"))
-            {
-                <input type="hidden" asp-for="ClienteId" value="@clienteId" id="ClienteId" />
-            }
-            <div class="form-group">
-                <label asp-for="IdLadoCliente" class="control-label"></label>
-                <input asp-for="IdLadoCliente" class="form-control" />
-                <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                <span asp-validation-for="Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TotalPrecoUnit" class="control-label"></label>
-                <input type="text" id="TotalPrecoUnit_Visivel" class="form-control" readonly />
-                <input type="hidden" asp-for="TotalPrecoUnit" />
-                <span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="QuantidadeTotal" class="control-label"></label>
-                <input type="text" id="QuantidadeTotal_Visivel" class="form-control" readonly />
-                <input type="hidden" asp-for="QuantidadeTotal" />
-                <span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
-            </div>
+<div class="d-flex justify-content-center mt-5 min-vh-100">
+	<div class="container mt-5" style="width:80%">
+		<h3 class="mb-2 grey-text">Nova encomenda</h3>
+		<hr />
 
-            <div class="form-group">
-                <label asp-for="Transportadora" class="control-label"></label>
-                <input asp-for="Transportadora" class="form-control" />
-                <span asp-validation-for="Transportadora" class="text-danger"></span>
-            </div>
-            @if (!User.IsInRole("Cliente"))
-            {
-                <div class="form-group">
-                    <label>Nome do Cliente</label>
-                    <input type="text" id="cliente-nome" class="form-control" autocomplete="off" />
-                    <input asp-for="ClienteId" type="hidden" id="ClienteId" />
-                    <span asp-validation-for="ClienteId" class="text-danger"></span>
-                </div>
-            }
-            
-            <div id="pecasContainer">
-                <div class="peca-row">
-                    <div class="form-group">
-                        <label>Peça</label>
-                        <select name="pecasSelecionadas" class="form-control">
-                            <option value="">-- Selecione uma peça --</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Quantidade</label>
-                        <input type="number" name="quantidades" class="form-control" value="1" min="1" />
-                        <br />
-                        <button type="button" class="btn btn-danger remove-peca">Remover Peça</button>
-                    </div>
-                </div>
-            </div>
-            <br />
-            <button type="button" id="addPeca" class="btn btn-secondary mb-3">Adicionar Peça</button>
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+			<div class="row mt-5">
+				<div class="col-md-5 me-5">
+					@if (User.IsInRole("Cliente"))
+					{
+						<input type="hidden" asp-for="ClienteId" value="@clienteId" id="ClienteId" />
+					}
+					<div class="form-group mb-3">
+						<input asp-for="IdLadoCliente" class="form-control" placeholder="Ordem de Encomenda" />
+						<span asp-validation-for="IdLadoCliente" class="text-danger"></span>
+					</div>
+					<div class="form-group mb-3">
+						<input asp-for="Data" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+						<span asp-validation-for="Data" class="text-danger"></span>
+					</div>
+					<div class="form-group mb-3">
+						<input type="text" id="TotalPrecoUnit_Visivel" class="form-control" placeholder="Total preço unitário (€)" readonly />
+						<input type="hidden" asp-for="TotalPrecoUnit" />
+						<span asp-validation-for="TotalPrecoUnit" class="text-danger"></span>
+					</div>
+					<div class="form-group mb-3">
+						<input type="text" id="QuantidadeTotal_Visivel" class="form-control" placeholder="Quantidade total" readonly />
+						<input type="hidden" asp-for="QuantidadeTotal" />
+						<span asp-validation-for="QuantidadeTotal" class="text-danger"></span>
+					</div>
+					<div class="form-group mb-3">
+						<input asp-for="Transportadora" class="form-control" placeholder="Transportadora" />
+						<span asp-validation-for="Transportadora" class="text-danger"></span>
+					</div>
+					<div class="form-group mb-3">
+						<input type="submit" value="Criar" class="btn btn-custom mt-2" />
+					</div>
+				</div>
+
+				<div class="col-md-5 ms-2">
+					@if (!User.IsInRole("Cliente"))
+					{
+						<div class="form-group mb-3">
+							<input type="text" id="cliente-nome" class="form-control" placeholder="Nome do cliente" autocomplete="off" />
+							<input asp-for="ClienteId" type="hidden" id="ClienteId" />
+							<span asp-validation-for="ClienteId" class="text-danger"></span>
+						</div>
+					}
+
+					<div id="pecasContainer">
+						<div class="peca-row mb-3">
+							<div class="form-group">
+								<select name="pecasSelecionadas" class="form-control">
+									<option value="">-- Selecione uma peça --</option>
+								</select>
+							</div>
+							<div class="form-group mt-2">
+								<input type="number" name="quantidades" class="form-control" value="1" min="1" placeholder="Quantidade" />
+								<button type="button" class="btn btn-danger mt-2 remove-peca">Remover Peça</button>
+							</div>
+						</div>
+					</div>
+
+					<button type="button" id="addPeca" class="btn btn-secondary mb-4">Adicionar Peça</button>
+					<p class="text-danger mt-4">* campos obrigatórios</p>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 
 @if (!User.IsInRole("Cliente"))
 {
-    <div>
-        <a asp-action="Index">Voltar</a>
-    </div>
+	<div class="mt-3 ms-4">
+		<a asp-action="Index">Voltar</a>
+	</div>
 }
 
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
-    <script>
-        $.validator.methods.number = function (value, element) {
-            return this.optional(element) ||
-                /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
-        };
-    </script>
-    <script>
-        $(function () {
-            const pecasData = {};
-            let initialLoadComplete = false; 
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
-            function initSelects() {
-                $('select[name="pecasSelecionadas"]').each(function () {
-                    populateSelect($(this));
-                });
-                initialLoadComplete = true;
-            }
+	<script>
+		$.validator.methods.number = function (value, element) {
+			return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
+		};
+	</script>
 
-            function updateTotals() {
-                let totalQuantity = 0;
-                let totalPrice = 0;
+	<script>
+		$(function () {
+			const pecasData = {};
+			let initialLoadComplete = false;
 
-                $('.peca-row').each(function () {
-                    const select = $(this).find('select');
-                    const quantityInput = $(this).find('input[type="number"]');
-                    const pecaId = select.val();
-                    const quantity = parseInt(quantityInput.val()) || 0;
+			function initSelects() {
+				$('select[name="pecasSelecionadas"]').each(function () {
+					populateSelect($(this));
+				});
+				initialLoadComplete = true;
+			}
 
-                    if (pecaId && pecasData[pecaId]) {
-                        totalQuantity += quantity;
-                        // Prarsing do preço para garantir que é um número
-                        totalPrice += parseFloat(pecasData[pecaId].preco) * quantity;
-                    }
-                });
+			function updateTotals() {
+				let totalQuantity = 0;
+				let totalPrice = 0;
 
-                // Atualiza com virgula
-                $('#QuantidadeTotal_Visivel').val(totalQuantity);
-                $('#TotalPrecoUnit_Visivel').val(totalPrice.toFixed(2).replace('.', ',')); // para exibição
-                $('input[name="QuantidadeTotal"]').val(totalQuantity); // hidden real enviado
-                $('input[name="TotalPrecoUnit"]').val(totalPrice.toFixed(2)); // hidden real enviado com ponto
+				$('.peca-row').each(function () {
+					const select = $(this).find('select');
+					const quantityInput = $(this).find('input[type="number"]');
+					const pecaId = select.val();
+					const quantity = parseInt(quantityInput.val()) || 0;
 
-            }
+					if (pecaId && pecasData[pecaId]) {
+						totalQuantity += quantity;
+						// Prarsing do preço para garantir que é um número
+						totalPrice += parseFloat(pecasData[pecaId].preco) * quantity;
+					}
+				});
 
-            function populateSelect(select) {
-                select.empty().append('<option value="">-- Selecione uma peça --</option>');
-                for (const id in pecasData) {
-                    const peca = pecasData[id];
-                    const displayPrice = peca.preco.toFixed(2).replace('.', ',');
-                    const option = new Option(`${peca.nome} (${displayPrice} €)`, id);
-                    select.append(option);
-                }
-            }
+				// Atualiza com virgula
+				$('#QuantidadeTotal_Visivel').val(totalQuantity);
+				$('#TotalPrecoUnit_Visivel').val(totalPrice.toFixed(2).replace('.', ','));
+				$('input[name="QuantidadeTotal"]').val(totalQuantity);
+				$('input[name="TotalPrecoUnit"]').val(totalPrice.toFixed(2));
+			}
 
+			function populateSelect(select) {
+				select.empty().append('<option value="">-- Selecione uma peça --</option>');
+				for (const id in pecasData) {
+					const peca = pecasData[id];
+					const displayPrice = peca.preco.toFixed(2).replace('.', ',');
+					const option = new Option(`${peca.nome} (${displayPrice} €)`, id);
+					select.append(option);
+				}
+			}
 
-            function loadPecas() {
-                const clienteId = $('#ClienteId').val()?.trim();
-                if (clienteId) {
-                    buscarPecas(clienteId);
-                }
-            }
+			function loadPecas() {
+				const clienteId = $('#ClienteId').val()?.trim();
+				if (clienteId) {
+					buscarPecas(clienteId);
+				}
+			}
 
-            function buscarPecas(clienteId) {
-                fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        Object.keys(pecasData).forEach(k => delete pecasData[k]);
+			function buscarPecas(clienteId) {
+				fetch(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`)
+					.then(response => response.json())
+					.then(data => {
+						Object.keys(pecasData).forEach(k => delete pecasData[k]);
+						data.forEach(p => {
+							pecasData[p.id] = {
+								nome: p.nome,
+								preco: parseFloat(p.preco)
+							};
+						});
+						if (!initialLoadComplete) initSelects();
+						updateTotals();
+					})
+					.catch(error => console.error('Fetch failed:', error));
+			}
 
-                        data.forEach(p => {
-                            pecasData[p.id] = {
-                                nome: p.nome,
-                                preco: parseFloat(p.preco)
-                            };
-                        });
+			// Carrega peças automaticamente se cliente for autenticado
+			$(document).ready(function () {
+				loadPecas();
+			});
 
-                        if (!initialLoadComplete) initSelects();
-                        updateTotals();
-                    })
-                    .catch(error => console.error('Fetch failed:', error));
-            }
+			$("#cliente-nome").autocomplete({
+				source: '/Clientes/Search',
+				minLength: 1,
+				select: function (event, ui) {
+					$("#cliente-nome").val(ui.item.label);
+					$("#ClienteId").val(ui.item.value);
+					loadPecas(ui.item.value);
+					return false;
+				},
+				focus: function (event, ui) {
+					event.preventDefault();
+				}
+			});
 
-            // Carrega peças automaticamente se cliente for autenticado
-            $(document).ready(function () {
-                loadPecas();
-            });
+			$("#cliente-nome").on("input", function () {
+				$("#ClienteId").val("");
+				$('select[name="pecasSelecionadas"]').empty().append('<option value="">-- Selecione uma peça --</option>');
+				$('#QuantidadeTotal_Visivel').val('');
+				$('#TotalPrecoUnit_Visivel').val('');
+			});
 
+			$('#addPeca').click(function () {
+				const newRow = `
+								<div class="peca-row mb-3">
+									<div class="form-group">
+										<select name="pecasSelecionadas" class="form-control">
+											<option value="">-- Selecione uma peça --</option>
+										</select>
+									</div>
+									<div class="form-group mt-2">
+										<input type="number" name="quantidades" class="form-control" value="1" min="1" placeholder="Quantidade" />
+										<button type="button" class="btn btn-danger mt-2 remove-peca">Remover Peça</button>
+									</div>
+								</div>`;
+				$('#pecasContainer').append(newRow);
+				populateSelect($('#pecasContainer').find('select').last());
+				const $row = $(newRow);
 
-            $("#cliente-nome").autocomplete({
-                source: '/Clientes/Search',
-                minLength: 1,
-                select: function (event, ui) {
-                    $("#cliente-nome").val(ui.item.label);
-                    $("#ClienteId").val(ui.item.value);
-                    clienteSelected = true;
-                    loadPecas(ui.item.value);
-                    return false;
-                },
-                focus: function (event, ui) {
-                    event.preventDefault();
-                }
-            });
+				if (Object.keys(pecasData).length > 0) {
+					populateSelect($row.find('select'));
+				}
+			});
 
-            $("#cliente-nome").on("input", function () {
-                $("#ClienteId").val("");
-                clienteSelected = false;
-                $('select[name="pecasSelecionadas"]').empty().append('<option value="">-- Selecione uma peça --</option>');
-                $('#QuantidadeTotal').val('');
-                $('#TotalPrecoUnit').val('');
-            });
+			$(document).on('click', '.remove-peca', function () {
+				$(this).closest('.peca-row').remove();
+				updateTotals();
+			});
 
-            $('#addPeca').click(function () {
-                const newRow = `
-                        <div class="peca-row">
-                            <div class="form-group">
-                                <label>Peça</label>
-                                <select name="pecasSelecionadas" class="form-control">
-                                    <option value="">-- Selecione uma peça --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Quantidade</label>
-                                <input type="number" name="quantidades" class="form-control" value="1" min="1" />
-                                <button type="button" class="btn btn-danger remove-peca">Remover</button>
-                            </div>
-                        </div>`;
-
-                const $row = $(newRow);
-                $('#pecasContainer').append($row);
-
-                if (Object.keys(pecasData).length > 0) {
-                    populateSelect($row.find('select'));
-                }
-                // Reload peças if client is selected
-                //if ($('#ClienteId').val()) {
-                //loadPecas($('#ClienteId').val());
-                //}
-            });
-
-            $(document).on('click', '.remove-peca', function () {
-                $(this).closest('.peca-row').remove();
-                updateTotals();
-            });
-
-            $(document).on('input change', 'select[name="pecasSelecionadas"], input[name="quantidades"]', function () {
-                updateTotals();
-            });
-
-        });
-
-
-        // Verificação se o Formulário foi submetido
-        // Caso não tenha sido submetido e alterado e o utilizador quiser sair, envia um alert
-        let formularioSubmetido = false;
-        let formularioAlterado = false;
-
-
-        // Caso o formulario seja alterado
-        document.querySelectorAll('form input, form select').forEach(function (el) {
-            el.addEventListener('change', () => {
-                formularioAlterado = true;
-            });
-        });
-
-        const submitBtn = document.querySelector('form input[type="submit"]');
-
-        submitBtn.addEventListener('click', () => {
-            formularioSubmetido = true;
-        });
-
-        //Interceta a tentativa de sair da página
-        window.addEventListener('beforeunload', function (e) {
-            if (!formularioSubmetido && formularioAlterado) {
-                const idLadoCliente = document.querySelector('input[name="IdLadoCliente"]').value.trim();
-                let pecaSelecionada = false;
-
-                document.querySelectorAll('select[name="pecasSelecionadas"]').forEach(select => {
-                    if (select.value.trim() !== "") {
-                        pecaSelecionada = true;
-                    }
-                });
-
-                // Só alerta se o campo IdLadoCliente estiver vazio ou nenhuma peça selecionada
-                if (idLadoCliente !== "" || pecaSelecionada)
-                {
-                    e.preventDefault();
-                    e.returnValue = '';
-                }
-            }
-        });
-    </script>
+			$(document).on('input change', 'select[name="pecasSelecionadas"], input[name="quantidades"]', function () {
+				updateTotals();
+			});
+		});
+	</script>
 }
