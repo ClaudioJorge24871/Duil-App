@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Duil_App.Services;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace Duil_App.Controllers
 {
@@ -91,7 +92,10 @@ namespace Duil_App.Controllers
             List<int> pecasSelecionadas,
             List<int> quantidades)
         {
-            encomenda.Estado = Estados.Pendente;
+            if (User.IsInRole("Cliente"))
+            {
+                encomenda.Estado = Estados.Pendente;
+            }
 
             if (quantidades == null || pecasSelecionadas.Count == 0)
             {
@@ -307,12 +311,14 @@ namespace Duil_App.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPecasPorCliente(string clienteId)
         {
+
             var pecas = await _context.Pecas
                 .Where(p => p.ClienteId == clienteId)
                 .Select(p => new {
                     id = p.Id,
                     nome = p.Designacao,
-                    preco = p.PrecoUnit.ToString(CultureInfo.InvariantCulture) 
+                    preco = p.PrecoUnit.ToString(CultureInfo.InvariantCulture),
+                    imagem = "/images/" + p.Imagem
                 })
                 .ToListAsync();
 
