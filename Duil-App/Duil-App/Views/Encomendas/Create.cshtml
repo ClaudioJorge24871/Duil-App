@@ -25,7 +25,6 @@
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <!-- Top fields: Ordem de Encomenda e Data -->
             <div class="row mt-4">
                 <div class="col-md-6 mb-3">
                     <input asp-for="IdLadoCliente" class="form-control form-control-lg" placeholder="Ordem de Encomenda" />
@@ -34,19 +33,18 @@
                 @if (User.IsInRole("Cliente"))
                 {
                     <div class="col-md-6 mb-3">
-                        <input asp-for="Data" type="date" class="form-control form-control-lg" value="@DateTime.Today:yyyy-MM-dd" readonly />
+                        <input asp-for="Data" type="date" class="form-control form-control-lg" value="@DateTime.Today.ToString("yyyy-MM-dd")" readonly />
                     </div>
                 }
                 else
                 {
                     <div class="col-md-6 mb-3">
-                        <input asp-for="Data" type="date" class="form-control form-control-lg" value="@DateTime.Today:yyyy-MM-dd" />
+                        <input asp-for="Data" type="date" class="form-control form-control-lg" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                         <span asp-validation-for="Data" class="text-danger"></span>
                     </div>
                 }
             </div>
 
-            <!-- Middle fields: Cliente e Transportadora -->
             <div class="row mb-4">
                 <div class="col-md-6">
                     <input asp-for="Transportadora" class="form-control" placeholder="Transportadora" />
@@ -66,7 +64,6 @@
                 </div>
             </div>
 
-            <!-- Peças Section -->
             <div id="pecasSection">
                 <div id="sem-cliente" class="text-center mt-5">
                     <h2 class="text-muted">Por favor, adicione um cliente para ver as peças</h2>
@@ -77,19 +74,24 @@
                 </div>
             </div>
 
-            <!-- Hidden container for piece inputs -->
             <div id="hidden-inputs-container"></div>
 
-            <!-- Estado as Select from Enum -->
-            <div class="form-group mt-4">
-                <label asp-for="Estado" class="form-label">Estado</label>
-                <select asp-for="Estado" asp-items="ViewBag.Estado" class="form-control">
-                    <option value="">-- Selecione Estado --</option>
-                </select>
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
+            @if (!User.IsInRole("Cliente"))
+            {
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Estado" class="form-label">Estado</label>
+                        <select asp-for="Estado"
+                                asp-items="ViewBag.Estado"
+                                class="form-control form-control-lg">
+                            <option value="">-- Selecione Estado --</option>
+                        </select>
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
+                </div>
 
-            <!-- Totais -->
+            }
+
             <div class="row mt-4">
                 <div class="col-md-6 mb-3">
                     <input type="text" id="QuantidadeTotal_Visivel" class="form-control" placeholder="Quantidade Total" readonly />
@@ -170,19 +172,19 @@
                 const p = pecasData[id];
                 const displayPrice = parseFloat(p.preco).toFixed(2).replace('.', ',');
                 return `
-                        <div class="col-md-4">
-                          <div class="card shadow-sm">
-                            <img src="${p.imagem}" class="card-img-top img-fluid" alt="${p.nome}" style="max-width:100%; max-height:100px; object-fit:contain;" />
-                            <div class="card-body" data-id="${id}">
-                              <h5 class="card-title">${p.nome}</h5>
-                              <p class="card-text">Preço unitário: ${displayPrice} €</p>
-                              <div class="input-group mb-2">
-                                <input type="number" class="form-control peca-qty" value="1" min="1">
-                                <button class="btn btn-danger remove-card">Remover</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>`;
+                                <div class="col-md-4">
+                                  <div class="card shadow-sm">
+                                    <img src="${p.imagem}" class="card-img-top img-fluid" alt="${p.nome}" style="max-width:100%; max-height:100px; object-fit:contain;" />
+                                    <div class="card-body" data-id="${id}">
+                                      <h5 class="card-title">${p.nome}</h5>
+                                      <p class="card-text">Preço unitário: ${displayPrice} €</p>
+                                      <div class="input-group mb-2">
+                                        <input type="number" class="form-control peca-qty" value="1" min="1">
+                                        <button class="btn btn-danger remove-card">Remover</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>`;
             }
 
             function toggleAddButton() {
@@ -191,16 +193,14 @@
             }
             function hideAddButton() { $('#addPecaBtn').hide(); }
 
-            // Remove card
+            // Remove o cartao
             $(document).on('click', '.remove-card', function () {
                 $(this).closest('.col-md-4').remove();
                 updateTotals();
                 toggleAddButton();
             });
-            // Qty change
             $(document).on('input change', '.peca-qty', updateTotals);
 
-            // Auto-complete cliente
             $('#cliente-nome').autocomplete({
                 source: '/Clientes/Search', minLength: 1,
                 select: (e, ui) => {

@@ -92,7 +92,10 @@ namespace Duil_App.Controllers
             List<int> pecasSelecionadas,
             List<int> quantidades)
         {
-            encomenda.Estado = Estados.Pendente;
+            if (User.IsInRole("Cliente"))
+            {
+                encomenda.Estado = Estados.Pendente;
+            }
 
             if (quantidades == null || pecasSelecionadas.Count == 0)
             {
