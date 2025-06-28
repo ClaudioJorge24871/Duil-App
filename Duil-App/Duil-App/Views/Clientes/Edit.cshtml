@@ -4,11 +4,13 @@
 	ViewData["Title"] = "Edit";
 }
 
-
+<div>
+	<a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" style="color:#6B97AC"></i></a>
+</div>
 
 <div class="d-flex justify-content-center mt-5 min-vh-100">
 	<div class="container mt-5" style="width:80%">
-		<h3 class="mb-2 grey-text">@Html.DisplayFor(Model => Model.Nome)</h3>
+		<h3 class="mb-2 grey-text">Editar informações de @Html.DisplayFor(Model => Model.Nome)</h3>
 		<hr />
 		<form asp-action="Edit">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -55,9 +57,6 @@
 	</div>
 </div>
 
-<div>
-	<a asp-action="Index">Voltar</a>
-</div>
 
 @section Scripts {
 	@{
