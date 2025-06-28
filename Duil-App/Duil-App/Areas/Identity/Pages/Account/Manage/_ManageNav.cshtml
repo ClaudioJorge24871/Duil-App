@@ -1,0 +1,11 @@
+﻿@using Duil_App.Models
+@inject SignInManager<Utilizadores> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Dados Pessoais</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Redifinir Palavra-Passe</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.UserStatisticsNavClass(ViewContext)" id="statistics" asp-page="./Statistics">Estatísticas</a></li>
+
+</ul>
