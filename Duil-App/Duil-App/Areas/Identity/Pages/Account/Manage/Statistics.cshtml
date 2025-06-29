@@ -1,7 +1,8 @@
 ﻿@page
 @model Duil_App.Areas.Identity.Pages.Account.Manage.StatisticsModel
+@using Duil_App.Resources
 @{
-    ViewData["Title"] = "Estatísticas";
+    ViewData["Title"] = Resource.Estatisticas;
     ViewData["ActivePage"] = ManageNavPages.Statistics;
     ViewData["BodyClass"] = "paginas-index-fundo";
 }
@@ -18,19 +19,19 @@
             <div class="d-flex">
                 <ul class="list-group flex-grow-1 me-3 shadow-sm">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-bag-fill me-2 text-primary"></i> Total de Encomendas</span>
+                        <span><i class="bi bi-bag-fill me-2 text-primary"></i> @Resource.TotalEncomendas</span>
                         <strong>@Model.TotalEncomendas</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-check-circle-fill me-2 text-success"></i> Encomendas Concretizadas</span>
+                        <span><i class="bi bi-check-circle-fill me-2 text-success"></i> @Resource.EncomendasConcretizadas</span>
                         <strong>@Model.EncomendasConcretizadas</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-gear-fill me-2 text-warning"></i> Número de Peças Associadas</span>
+                        <span><i class="bi bi-gear-fill me-2 text-warning"></i> @Resource.NPecas</span>
                         <strong>@Model.NumeroPecas</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-calendar-check-fill me-2 text-info"></i> Última Encomenda</span>
+                        <span><i class="bi bi-calendar-check-fill me-2 text-info"></i> @Resource.LastE</span>
                         <strong>
                             @(Model.DataUltimaEncomenda.HasValue
                                 ? Model.DataUltimaEncomenda.Value.ToString("dd/MM/yyyy")
@@ -38,21 +39,21 @@
                         </strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-award-fill me-2 text-secondary"></i> Peça Mais Encomendada</span>
+                        <span><i class="bi bi-award-fill me-2 text-secondary"></i> @Resource.moree</span>
                         <strong>@(!string.IsNullOrEmpty(Model.PecaMaisEncomendada) ? Model.PecaMaisEncomendada : "N/A")</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-boxes me-2 text-dark"></i> Total de Peças Encomendadas</span>
+                        <span><i class="bi bi-boxes me-2 text-dark"></i> @Resource.TotalEnee</span>
                         <strong>@Model.TotalQuantidadePecas</strong>
                     </li>
                 </ul>
 
                 <div class="d-flex flex-column align-items-center ms-5">
-                    <h5 class="mb-3">Distribuição</h5>
+                    <h5 class="mb-3">@Resource.Dist</h5>
 
                     @if (Model.TotalEncomendas == 0)
                     {
-                        <p class="text-muted">Não existem encomendas para comparação.</p>
+                        <p class="text-muted">@Resource.NoEE</p>
                     }
                     else
                     {
@@ -66,16 +67,16 @@
         <div class="col-md-2 mt-4">
             <ul style="list-style:none; padding-left:0;">
                 <li style="display:flex; align-items:center; margin-bottom:0.25rem;">
-                    <span class="legend-box bg-warning"></span> Pendente
+                    <span class="legend-box bg-warning"></span> @Resource.Pendente
                 </li>
                 <li style="display:flex; align-items:center; margin-bottom:0.25rem;">
-                    <span class="legend-box bg-primary"></span> Confirmada
+                    <span class="legend-box bg-primary"></span> @Resource.Confirmada
                 </li>
                 <li style="display:flex; align-items:center; margin-bottom:0.25rem;">
-                    <span class="legend-box bg-success"></span> Concretizada
+                    <span class="legend-box bg-success"></span> @Resource.Concretizada
                 </li>
                 <li style="display:flex; align-items:center;">
-                    <span class="legend-box bg-danger"></span> Cancelada
+                    <span class="legend-box bg-danger"></span> @Resource.Cancelada
                 </li>
             </ul>
         </div>

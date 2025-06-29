@@ -47,8 +47,10 @@ body {
 }
 
 .texto-cor-azul {
-    color: #6B97AC;
+    color: #6B97AC !important;
 }
+
+
 
 .grey-text {
     color: #414141;
@@ -83,4 +85,8 @@ textarea:focus {
 .btn-danger {
     border: 1px solid red !important;
     box-shadow: 0 0 0 0 0.15rem red !important
+}
+
+.texto-cor-pink {
+    color: #A08585 !important;
 }

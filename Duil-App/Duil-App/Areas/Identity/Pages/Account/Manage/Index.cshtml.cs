@@ -61,16 +61,16 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Display(Name = "Telemóvel")]
+            [Display(Name = "Telemovel", ResourceType = typeof(Resources.Resource))]
             public string Telemovel { get; set; }
 
-            [Display (Name = "Nome")]
+            [Display(Name = "Nome", ResourceType = typeof(Resources.Resource))]
             public string Nome { get; set; }
 
-            [Display (Name = "Morada")]
+            [Display(Name = "Morada", ResourceType = typeof(Resources.Resource))]
             public string Morada { get; set; }
 
-            [Display (Name = "Código Postal")]
+            [Display(Name = "CodPostal", ResourceType = typeof(Resources.Resource))]
             public string CodPostal { get; set; }
 
         }

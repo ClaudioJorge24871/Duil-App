@@ -13,25 +13,31 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Localização: manter culture en-US para formatação e parsing, UI em pt-PT e en-US
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.Configure<RequestLocalizationOptions>(options => {
     var supportedCultures = new[] { new CultureInfo("en-US") };
-    options.DefaultRequestCulture = new RequestCulture("en-US");
+    var supportedUICultures = new[] { new CultureInfo("pt-PT"), new CultureInfo("en-US") };
+    options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "pt-PT");
     options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
+    options.SupportedUICultures = supportedUICultures;
+    options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider()); // cookies de linguagem
 });
 
 builder.Services.AddSingleton(typeof(Ferramentas));
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, sqlOptions =>
     {
-        sqlOptions.CommandTimeout(180); //3 minutos de timeout antes de query ser cancelada
-        sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(30), null); //retry automatico
+        sqlOptions.CommandTimeout(180);
+        sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(30), null);
     }));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -41,19 +47,16 @@ builder.Services.AddDefaultIdentity<Utilizadores>(options => {
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// Obrigatoriedade da autentica��o dos utilizadores
+// Obrigatoriedade da autenticação dos utilizadores
 builder.Services.AddControllers(config =>
 {
     var policy = new AuthorizationPolicyBuilder()
                      .RequireAuthenticatedUser()
                      .Build();
     config.Filters.Add(new AuthorizeFilter(policy));
-});
-
-
-//  prote��o de ciclos
-builder.Services.AddControllers()
-                .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+})
+// protecção de ciclos
+.AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // Adicionar o serviço SignalR
 builder.Services.AddSignalR();
@@ -65,7 +68,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Duil API",
         Version = "v1",
-        Description = "API para o gest�o de utilizadores, clientes, encomendas e f �bricas",
+        Description = "API para o gestão de utilizadores, clientes, encomendas e fábricas",
     });
     // JWT Auth
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -90,14 +93,13 @@ builder.Services.AddSwaggerGen(c =>
       }
    });
 
-    // XML de documenta��o � API
+    // XML de documentação à API
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
 
-
-// Configura��o de uso de 'cookies'
+// Configuração de uso de 'cookies'
 builder.Services.AddSession(options => {
     options.IdleTimeout = TimeSpan.FromSeconds(60);
     options.Cookie.HttpOnly = true;
@@ -105,8 +107,7 @@ builder.Services.AddSession(options => {
 });
 builder.Services.AddDistributedMemoryCache();
 
-
-// Configura��o JWT
+// Configuração JWT
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
 
@@ -128,9 +129,8 @@ builder.Services.AddAuthentication(options => { })
        };
    });
 
-// configura��o do JWT
+// configuração do JWT
 builder.Services.AddScoped<TokenService>();
-
 
 var app = builder.Build();
 
@@ -141,30 +141,22 @@ using (var scope = app.Services.CreateScope())
     await ApplicationDBInit.SeedAsync(service, builder.Configuration);
 }
 
-var supportedCultures = new[] { new CultureInfo("en-US") };
-app.UseRequestLocalization(new RequestLocalizationOptions
-{
-    DefaultRequestCulture = new RequestCulture("en-US"),
-    SupportedCultures = supportedCultures,
-    SupportedUICultures = supportedCultures
-});
+// Pipeline de Localization
+var locOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
+app.UseRequestLocalization(locOptions);
 
-
-// Configura��o do pipeline dos pedidos HTTP
+// Configuração do pipeline dos pedidos HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
     app.UseMigrationsEndPoint();
 }
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -184,7 +176,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-// cria "endpoint" entre a app e SignalR
+// crea "endpoint" entre a app e SignalR
 app.MapHub<RealTimeHub>("/realtimehub");
 
 app.Run();

@@ -1,8 +1,9 @@
 ﻿@page
 @model RegisterModel
+@using Duil_App.Resources
 
 @{
-    ViewData["Title"] = "Registar-se";
+    ViewData["Title"] = @Resource.RegistarSE;
 }
 <div asp-validation-summary="All" class="text-danger" role="alert"></div>
 
@@ -16,20 +17,20 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-floating mb-4  ">
-                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder=@Resource.EmailExemplo />
                         <label asp-for="Input.Email">Email</label>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
 
                     <div class="form-floating mb-4  ">
-                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                        <label asp-for="Input.Password">Palavra-passe</label>
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder=@Resource.Palavrapasse />
+                        <label asp-for="Input.Password">@Resource.Palavrapasse</label>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
 
                     <div class="form-floating mb-4  ">
-                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                        <label asp-for="Input.ConfirmPassword">Confirmar palavra-passe</label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder=@Resource.Palavrapasse />
+                        <label asp-for="Input.ConfirmPassword">@Resource.ConfirmarPasse</label>
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
 
@@ -38,14 +39,14 @@
                         <label asp-for="Input.Nome"></label>
                         <span asp-validation-for="Input.Nome" class="text-danger"></span>
                     </div>
-                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg text-white" style="background:#6B97AC">Confirmar registo</button>
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg text-white" style="background:#6B97AC">@Resource.ConfirmarRegisto</button>
 
                 </div>
 
                 <div class="col-md-6 ms-auto">
                     <div class="form-floating mb-4 pe-0">
                         <select asp-for="Input.Pais" class="form-select" asp-items="Model.ListaPaises">
-                            <option value="">Selecione um país</option>
+                            <option value="">@Resource.SelecionarPais</option>
                         </select>
                         <label asp-for="Input.Pais">País</label>
                         <span asp-validation-for="Input.Pais" class="text-danger"></span>

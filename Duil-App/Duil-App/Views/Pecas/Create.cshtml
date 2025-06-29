@@ -1,7 +1,8 @@
 ﻿@model Duil_App.Models.Pecas
+@using Duil_App.Resources
 
 @{
-    ViewData["Title"] = "Adicionar Peça";
+    ViewData["Title"] = Resource.AdicionarPecaVT;
 }
 
 <div>
@@ -10,7 +11,7 @@
 
 <div class="d-flex justify-content-center mt-5 min-vh-100">
     <div class="container mt-5" style="width:80%">
-        <h3 class="mb-2 grey-text">Adicionar peça</h3>
+        <h3 class="mb-2 grey-text">@Resource.AdicionarPecaVT</h3>
         <hr />
 
         <form asp-action="Create" enctype="multipart/form-data">
@@ -19,11 +20,11 @@
             <div class="row mt-5">
                 <div class="col-md-5 me-5">
                     <div class="form-group mb-3">
-                        <input asp-for="Referencia" class="form-control" placeholder="Referência *" />
+                        <input asp-for="Referencia" class="form-control" placeholder="@Resource.referenciaPEca *" />
                         <span asp-validation-for="Referencia" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <input asp-for="Designacao" class="form-control" placeholder="Designação *" />
+                        <input asp-for="Designacao" class="form-control" placeholder="@Resource.Designacao *" />
                         <span asp-validation-for="Designacao" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
@@ -31,23 +32,23 @@
                                class="form-control"
                                type="text"
                                inputmode="decimal"
-                               placeholder="Preço unitário (0.00) *"
+                               placeholder=@Resource.PrecoUnit *
                                oninput="this.value = this.value.replace(/\,/g, '.').replace(/(\..*)\./g, '$1')" />
                         <span asp-validation-for="PrecoUnit" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <input type="submit" value="Adicionar" class="btn btn-custom mt-3" />
+                        <input type="submit" value=@Resource.Adicionar class="btn btn-custom mt-3" />
                     </div>
                 </div>
 
                 <div class="col-md-5 ms-2">
                     <div class="form-group mb-3">
-                        <input type="text" id="fabrica-nome" class="form-control" placeholder="Nome da fábrica *" autocomplete="off" />
+                        <input type="text" id="fabrica-nome" class="form-control" placeholder="@Resource.FabricaNome *" autocomplete="off" />
                         <input asp-for="FabricaId" type="hidden" id="FabricaId" />
                         <span asp-validation-for="FabricaId" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <input type="text" id="cliente-nome" class="form-control" placeholder="Nome do cliente *" autocomplete="off" />
+                        <input type="text" id="cliente-nome" class="form-control" placeholder="@Resource.ClienteNome *" autocomplete="off" />
                         <input asp-for="ClienteId" type="hidden" id="ClienteId" />
                         <span asp-validation-for="ClienteId" class="text-danger"></span>
                     </div>
@@ -58,11 +59,11 @@
                                accept=".jpg,.jpeg,.png,.webp"
                                aria-describedby="fileHelp" />
                         <small id="fileHelp" class="form-text text-muted">
-                            Formatos permitidos: .jpg, .jpeg, .png, .gif, .webp
+                            @Resource.FormatosImagemPermitidos
                         </small>
                         <span asp-validation-for="Imagem" class="text-danger"></span>
                     </div>
-                    <p class="text-danger mt-4">* é de preenchimento obrigatório</p>
+                    <p class="text-danger mt-4">@Resource.eDePreenchimentoObrigatorio</p>
                 </div>
             </div>
         </form>
@@ -120,13 +121,13 @@
 
                 if (!fabricaSelected && nomeFabrica !== "") {
                     event.preventDefault();
-                    $("[data-valmsg-for='FabricaId']").text("Por favor, selecione uma fábrica da lista");
+                    $("[data-valmsg-for='FabricaId']").text(@Resource.selecioneFabricadaLista);
                     return false;
                 }
 
                 if (fabricaId === "") {
                     event.preventDefault();
-                    $("[data-valmsg-for='FabricaId']").text("A fábrica é obrigatória");
+                    $("[data-valmsg-for='FabricaId']").text(@Resource.fabricaeobrigatoria);
                     return false;
                 }
             });
@@ -160,13 +161,13 @@
 
                 if (!clienteSelected && nomeCliente !== "") {
                     event.preventDefault();
-                    $("[data-valmsg-for='ClienteId']").text("Por favor, selecione um cliente da lista");
+                    $("[data-valmsg-for='ClienteId']").text(@Resource.selecioneClientedaLista);
                     return false;
                 }
 
                 if (clienteId === "") {
                     event.preventDefault();
-                    $("[data-valmsg-for='ClienteId']").text("O cliente é obrigatório");
+                    $("[data-valmsg-for='ClienteId']").text(@Resource.clienteeobrigatorio);
                     return false;
                 }
             });

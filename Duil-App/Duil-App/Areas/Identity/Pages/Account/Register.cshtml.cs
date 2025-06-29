@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using Duil_App.Resources;
 
 namespace Duil_App.Areas.Identity.Pages.Account
 {
@@ -91,7 +92,7 @@ namespace Duil_App.Areas.Identity.Pages.Account
             /// <summary>
             ///  Email do novo utilizador
             /// </summary>
-            [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+            [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
             [EmailAddress(ErrorMessage ="Tem de escrever um {0} válido")]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -100,10 +101,10 @@ namespace Duil_App.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+            [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
             [StringLength(100, ErrorMessage = "A {0} Tem de ter {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Palavrapasse", ResourceType = typeof(Resource))]
             public string Password { get; set; }
 
             /// <summary>
@@ -111,21 +112,32 @@ namespace Duil_App.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirmar password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "ConfirmarPasse", ResourceType = typeof(Resource))]
+            [Compare("Password", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "PasswordsNaoCoincidem")]
             public string ConfirmPassword { get; set; }
 
             /// <summary>
             /// Incorporação dos dados de um utilizador 
             /// no formulario de Registo
             /// </summary>
-            [Required] public string Nome { get; set; }
-            [Required] public string Pais { get; set; }
-            [Required] public string NIF { get; set; }
+            [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
+            [Display(Name = "Nome", ResourceType = typeof(Resource))]
+
+            public string Nome { get; set; }
+
+            [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
+            [Display(Name = "Pais", ResourceType = typeof(Resource))]
+
+            public string Pais { get; set; }
+
+            [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
+            [Display(Name = "NIF", ResourceType = typeof(Resource))]
+
+            public string NIF { get; set; }
             public string? CodPostal { get; set; }
             public string? Telemovel { get; set; }
 
-            [Display(Name = "Morada")]
+            [Display(Name = "Morada", ResourceType = typeof(Resource))]
             [StringLength(50)]
             public string? Morada { get; set; }
 
@@ -149,7 +161,7 @@ namespace Duil_App.Areas.Identity.Pages.Account
 
             if(nomeEmUso)
             {
-                ModelState.AddModelError("Input.Utilizador.Nome", "Já existe um utilizador com esse nome.");
+                ModelState.AddModelError("Input.Utilizador.Nome", Resource.JaExiste);
                 return Page();
             }
 
@@ -214,11 +226,11 @@ namespace Duil_App.Areas.Identity.Pages.Account
 
                     if (resposta == 0)
                     {
-                        TempData["Mensagem"] = "S#:Email Enviado com sucesso.";
+                        TempData["Mensagem"] = "S#:" + @Resource.EmailEnviadoSuc;
                     }
                     else
                     {
-                        TempData["Mensagem"] = "E#:Ocorreu um erro com o envio do Email.";
+                        TempData["Mensagem"] = "E#:" + Resource.EmailEnviadoErr;
                     }
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
@@ -263,7 +275,7 @@ namespace Duil_App.Areas.Identity.Pages.Account
                 <head>
                     <meta charset='UTF-8' />
                     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-                    <title>Confirmação de Email</title>
+                    <title>{@Resource.ConfirmationEmail}</title>
                     <style>
                         body {{
                             font-family: Arial, sans-serif;
@@ -312,15 +324,15 @@ namespace Duil_App.Areas.Identity.Pages.Account
                 </head>
                 <body>
                     <div class='container'>
-                        <h1>Confirmação de Email</h1>
-                        <p>Olá,</p>
-                        <p>Obrigado por se registar na nossa plataforma.</p>
-                        <p>Por favor, confirme o seu endereço de email ao clicar no botão abaixo:</p>
+                        <h1>{@Resource.ConfirmationEmail}</h1>
+                        <p>{@Resource.Ola},</p>
+                        <p>{Resource.Obrugadoregisto}.</p>
+                        <p>{Resource.ConfirmeEmailAo}</p>
                         <p style='text-align: center;'>
-                            <a href='{HtmlEncoder.Default.Encode(callbackUrl)}' class='button'>Confirmar Email</a>
+                            <a href='{HtmlEncoder.Default.Encode(callbackUrl)}' class='button'>{Resource.ConfirmarEmail}</a>
                         </p>
                         <div class='footer'>
-                            &copy; {DateTime.Now.Year} Duil. Todos os direitos reservados.
+                            &copy; {DateTime.Now.Year} - Duil.
                         </div>
                     </div>
                 </body>

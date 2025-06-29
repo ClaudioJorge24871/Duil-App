@@ -13,43 +13,43 @@ namespace Duil_App.Models
         /// Nif/identificador da empresa
         /// </summary>
         [Key]
-        [Display(Name = "NIF")]
-        [Required(ErrorMessage = "O {0} é um campo obrigatório")]
+        [Display(Name = "NIF", ResourceType = typeof(Resources.Resource))]
+        [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
         public required string Nif { get; set; }
 
         /// <summary>
         /// Nome da empresa
         /// </summary>
-        [Display(Name = "Nome")]
+        [Display(Name = "Nome", ResourceType = typeof(Resources.Resource))]
         [StringLength(50)]
-        [Required(ErrorMessage = "O {0} do cliente é um campo obrigatório")]
+        [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
         public required string Nome { get; set; } 
 
         /// <summary>
         /// Morada sede da empresa
         /// </summary>
-        [Display(Name = "Morada")]
+        [Display(Name = "Morada", ResourceType = typeof(Resources.Resource))]
         [StringLength(100)]
         public string? Morada { get; set; } 
 
         /// <summary>
         /// Codigo postal da empresa
         /// </summary>
-        [Display(Name = "Código Postal")]
+        [Display(Name = "CodPostal", ResourceType = typeof(Resources.Resource))]
         public string? CodPostal { get; set; }
 
         /// <summary>
         /// País da empresa
         /// </summary>
-        [Display(Name = "País")]
+        [Display(Name = "Pais", ResourceType = typeof(Resources.Resource))]
         [StringLength(50)]
-        [Required(ErrorMessage = "O {0} é obrigatório")]
+        [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
         public required string Pais { get; set; } 
 
         /// <summary>
         /// Telemovel de contacto da empresa
         /// </summary>
-        [Display(Name = "Telemóvel")]
+        [Display(Name = "Telemovel", ResourceType = typeof(Resources.Resource))]
         public string? Telemovel { get; set; }
 
         /// <summary>

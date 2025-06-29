@@ -1,20 +1,22 @@
+
+﻿@model IEnumerable<Duil_App.Models.Clientes>
+@using Duil_App.Resources
 ﻿@model PaginatedList<Duil_App.Models.Clientes>
 
-
 @{
-    ViewData["Title"] = "Empresas Clientes";
+    ViewData["Title"] = Resource.IndexClientes;
     ViewData["BodyClass"] = "paginas-index-fundo";
 }
 
 <div class="container-fluid d-flex justify-content-center align-items-center position-relative"
      style="height: 250px; background-color: #b4bdc1;">
 
-    <h1 class="fw-light text-white">Clientes</h1>
+    <h1 class="fw-light text-white">@Resource.Clientes</h1>
 
     <a asp-action="Create"
         class="btn position-absolute fs-5 px-5 py-3 navbar-blue text-white"
         style="bottom: 0; transform: translateY(50%); right: 80px; border-radius: 10px;">
-        Adicionar Cliente
+        @Resource.Adicionar @Resource.Cliente
     </a>
     <form asp-controller="Clientes" asp-action="Index" method="get"
           class="position-absolute fs-3 px-5 py-3 d-flex align-items-center"
@@ -48,7 +50,7 @@
                     @Html.DisplayNameFor(model => model[0].Telemovel)
                 </th>
                 <th>
-                    Ações
+                    @Resource.Acoes
                 </th>
             </tr>
         </thead>
@@ -70,19 +72,19 @@
                     <td>
                         <a asp-action="Details" asp-route-id="@item.Nif"
                            class="btn btn-sm btn-outline-secondary"
-                           title="Mais Info">
+                           title=@Resource.detalhesTexto>
                             <i class="bi bi-info-circle-fill"></i>
                         </a>
                         @if (User.IsInRole("Admin"))
                         {
                             <a asp-action="Edit" asp-route-id="@item.Nif"
                                class="btn btn-sm btn-outline-primary ms-1"
-                               title="Modificar">
+                               title=@Resource.modificarTexto>
                                 <i class="bi bi-pencil-fill"></i>
                             </a>
                             <a asp-action="Delete" asp-route-id="@item.Nif"
                                class="btn btn-sm btn-outline-danger ms-1"
-                               title="Apagar">
+                               title=@Resource.Remover>
                                 <i class="bi bi-trash-fill"></i>
                             </a>
                         }

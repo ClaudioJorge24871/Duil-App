@@ -1,7 +1,8 @@
 ﻿@page
 @model ResendEmailConfirmationModel
+@using Duil_App.Resources
 @{
-    ViewData["Title"] = "Re-enviar email de confirmação";
+    ViewData["Title"] = Resource.RenviarEmail;
 }
 
 @if (TempData["Mensagem"] != null)
@@ -10,17 +11,17 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-<h3>Insira o seu email.</h3>
+<h3>@Resource.Insiraemail</h3>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="name@example.com" />
+                <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder=@Resource.EmailExemplo />
                 <label asp-for="Input.Email" class="form-label"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Re-enviar</button>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">@Resource.Reenviar</button>
         </form>
     </div>
 </div>

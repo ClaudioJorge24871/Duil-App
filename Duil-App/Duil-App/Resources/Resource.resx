@@ -1,0 +1,663 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BemVindoADuil" xml:space="preserve">
+    <value>Bem vindo à plataforma da Duil!</value>
+  </data>
+  <data name="Clientes" xml:space="preserve">
+    <value>Clientes</value>
+  </data>
+  <data name="CodPostal" xml:space="preserve">
+    <value>Código postal</value>
+  </data>
+  <data name="Encomendas" xml:space="preserve">
+    <value>Encomendas</value>
+  </data>
+  <data name="Fabricas" xml:space="preserve">
+    <value>Fábricas</value>
+  </data>
+  <data name="Morada" xml:space="preserve">
+    <value>Morada</value>
+  </data>
+  <data name="Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="OQueFazemos" xml:space="preserve">
+    <value>O que fazemos</value>
+  </data>
+  <data name="Pais" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="Pecas" xml:space="preserve">
+    <value>Peças</value>
+  </data>
+  <data name="QuemSomos" xml:space="preserve">
+    <value>Quem Somos</value>
+  </data>
+  <data name="Telemovel" xml:space="preserve">
+    <value>Telemóvel</value>
+  </data>
+  <data name="Utilizadores" xml:space="preserve">
+    <value>Utilizadores</value>
+  </data>
+  <data name="Acoes" xml:space="preserve">
+    <value>Ações</value>
+  </data>
+  <data name="obrigatorio" xml:space="preserve">
+    <value>é de preenchimento obrigatório</value>
+  </data>
+  <data name="Cliente" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="NomeCliente" xml:space="preserve">
+    <value>Nome do cliente</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Quantidade" xml:space="preserve">
+    <value>Quantidade</value>
+  </data>
+  <data name="Valor" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="OrdemDeEncomenda" xml:space="preserve">
+    <value>Ordem de encomenda</value>
+  </data>
+  <data name="Transportadora" xml:space="preserve">
+    <value>Transportadora</value>
+  </data>
+  <data name="TemACertezaQueDesejaApagar" xml:space="preserve">
+    <value>Tem a certeza que deseja apagar</value>
+  </data>
+  <data name="Remover" xml:space="preserve">
+    <value>Remover</value>
+  </data>
+  <data name="DetalhesDe" xml:space="preserve">
+    <value>Detalhes de</value>
+  </data>
+  <data name="NIF" xml:space="preserve">
+    <value>NIF</value>
+  </data>
+  <data name="MoradaDescarga" xml:space="preserve">
+    <value>Morada de descarga</value>
+  </data>
+  <data name="MoradaCarga" xml:space="preserve">
+    <value>Morada de carga</value>
+  </data>
+  <data name="GuardarAlteracoes" xml:space="preserve">
+    <value>Guardar Alterações</value>
+  </data>
+  <data name="Adicionar" xml:space="preserve">
+    <value>Adicionar</value>
+  </data>
+  <data name="Referencia" xml:space="preserve">
+    <value>Referência</value>
+  </data>
+  <data name="Designacao" xml:space="preserve">
+    <value>Designação</value>
+  </data>
+  <data name="PrecoUnit" xml:space="preserve">
+    <value>Preço unitário</value>
+  </data>
+  <data name="Fabrica" xml:space="preserve">
+    <value>Fábrica </value>
+  </data>
+  <data name="QuantidadeTotal" xml:space="preserve">
+    <value>Quantidade Total</value>
+  </data>
+  <data name="PrecoTotal" xml:space="preserve">
+    <value>Preço total (€)</value>
+  </data>
+  <data name="SelecioneEstado" xml:space="preserve">
+    <value>&lt;-- Selecione estado --&gt;</value>
+  </data>
+  <data name="Criar" xml:space="preserve">
+    <value>Criar</value>
+  </data>
+  <data name="CriarEncomenda" xml:space="preserve">
+    <value>Criar encomenda</value>
+  </data>
+  <data name="AdidionarCliente" xml:space="preserve">
+    <value>Adicionar cliente</value>
+  </data>
+  <data name="QuemSomosTexto" xml:space="preserve">
+    <value>A Duil é uma agência que atua como escritório de exportação para um grupo de fábricas portuguesas.</value>
+  </data>
+  <data name="ANossaHistoria" xml:space="preserve">
+    <value>A nossa história</value>
+  </data>
+  <data name="ANossaHistoriaTexto" xml:space="preserve">
+    <value>A Duil começou em 1972. Nasceu com o sonho de promover produtos e competências portuguesas no estrangeiro, com foco nos mercados escandinavos, mantendo a porta aberta para o resto do mundo.</value>
+  </data>
+  <data name="ANossaMissao" xml:space="preserve">
+    <value>A nossa missão</value>
+  </data>
+  <data name="ANossaMissaoTexto" xml:space="preserve">
+    <value>Criar ligações duradouras entre as nossas fábricas e os mercados internacionais.</value>
+  </data>
+  <data name="FraseDeImpacto" xml:space="preserve">
+    <value>Levamos o melhor de Portugal ao mundo.</value>
+  </data>
+  <data name="OQueFazemosTexto" xml:space="preserve">
+    <value>Promovemos produtos, apoiamos o desenvolvimento de novas ideias e acompanhamos todo o processo até ao envio.</value>
+  </data>
+  <data name="PaginaInicialViewTitle" xml:space="preserve">
+    <value>Página Inicial</value>
+  </data>
+  <data name="SubtituloFraseImpacto" xml:space="preserve">
+    <value>com qualidade, proximidade e inovação.</value>
+  </data>
+  <data name="adicionarFabrica" xml:space="preserve">
+    <value>Adicionar Fábrica</value>
+  </data>
+  <data name="adicionarFabricaViewTitle" xml:space="preserve">
+    <value>Adicionar Fábrica</value>
+  </data>
+  <data name="AdicionarPecaemEncomendas" xml:space="preserve">
+    <value>Adicionar Peça</value>
+  </data>
+  <data name="AdicionarPecaVT" xml:space="preserve">
+    <value>Adicionar Peça</value>
+  </data>
+  <data name="AdicionarrestantespeçasdoCliente" xml:space="preserve">
+    <value>Adicionar restantes peças do Cliente</value>
+  </data>
+  <data name="ApagarFabricaViewTitle" xml:space="preserve">
+    <value>Apagar Fábrica</value>
+  </data>
+  <data name="CampoObrigatorio" xml:space="preserve">
+    <value>{0} é obrigatório</value>
+  </data>
+  <data name="ClienteCreateTitle" xml:space="preserve">
+    <value>Adicionar empresa cliente</value>
+  </data>
+  <data name="ClienteCreateViewTitle" xml:space="preserve">
+    <value>Adicionar Empresa Cliente</value>
+  </data>
+  <data name="clienteeobrigatorio" xml:space="preserve">
+    <value>O cliente é obrigatório</value>
+  </data>
+  <data name="ClienteNome" xml:space="preserve">
+    <value>Nome do Cliente</value>
+  </data>
+  <data name="DetalhesdaFabricaViewTitle" xml:space="preserve">
+    <value>Detalhes da Fábrica</value>
+  </data>
+  <data name="detalhesDeAlgo" xml:space="preserve">
+    <value>Detalhes de</value>
+  </data>
+  <data name="detalhesEncomendaViewTitle" xml:space="preserve">
+    <value>Detalhes da Encomenda</value>
+  </data>
+  <data name="detalhesTexto" xml:space="preserve">
+    <value>Detalhes</value>
+  </data>
+  <data name="eDePreenchimentoObrigatorio" xml:space="preserve">
+    <value>* é de preenchimento obrigatório</value>
+  </data>
+  <data name="EmpresaTrans" xml:space="preserve">
+    <value>Empresa Transportadora</value>
+  </data>
+  <data name="EncomendaTexto" xml:space="preserve">
+    <value>Encomenda</value>
+  </data>
+  <data name="EstadoCancelada" xml:space="preserve">
+    <value>Cancelada</value>
+  </data>
+  <data name="EstadoConcretizada" xml:space="preserve">
+    <value>Concretizada</value>
+  </data>
+  <data name="EstadoConfirmada" xml:space="preserve">
+    <value>Confirmada</value>
+  </data>
+  <data name="EstadoDe" xml:space="preserve">
+    <value>O estado de </value>
+  </data>
+  <data name="EstadoPendente" xml:space="preserve">
+    <value>Pendente</value>
+  </data>
+  <data name="esteHelper" xml:space="preserve">
+    <value>este</value>
+  </data>
+  <data name="fabricaeobrigatoria" xml:space="preserve">
+    <value>A fábrica é obrigatória</value>
+  </data>
+  <data name="FabricaNome" xml:space="preserve">
+    <value>Nome da fábrica</value>
+  </data>
+  <data name="FormatosImagemPermitidos" xml:space="preserve">
+    <value>Formatos permitidos: .jpg, .jpeg, .png, .gif, .webp</value>
+  </data>
+  <data name="ImagemPeca" xml:space="preserve">
+    <value>Imagem</value>
+  </data>
+  <data name="IndexClientes" xml:space="preserve">
+    <value>Empresas Clientes</value>
+  </data>
+  <data name="modificarEncomendaViewTitle" xml:space="preserve">
+    <value>Modificar Encomenda</value>
+  </data>
+  <data name="ModificarFábricaVT" xml:space="preserve">
+    <value>Modificar Fábrica</value>
+  </data>
+  <data name="modificarTexto" xml:space="preserve">
+    <value>Modificar</value>
+  </data>
+  <data name="NomeDoCliente" xml:space="preserve">
+    <value>Nome do cliente</value>
+  </data>
+  <data name="NovaEncomenda" xml:space="preserve">
+    <value>Nova encomenda</value>
+  </data>
+  <data name="PorfavorAdicioneClienteParaPecas" xml:space="preserve">
+    <value>Por favor, selecione um cliente para ver as peças</value>
+  </data>
+  <data name="referenciaPEca" xml:space="preserve">
+    <value>Referência</value>
+  </data>
+  <data name="SelecionarPais" xml:space="preserve">
+    <value>&lt;-- Selecione um país --&gt;</value>
+  </data>
+  <data name="selecioneClientedaLista" xml:space="preserve">
+    <value>Por favor, selecione um cliente da lista</value>
+  </data>
+  <data name="selecioneFabricadaLista" xml:space="preserve">
+    <value>Por favor, selecione uma fábrica da lista</value>
+  </data>
+  <data name="SelecioneUmaPEcaPEloMenos" xml:space="preserve">
+    <value>Selecione pelo menos uma peça</value>
+  </data>
+  <data name="semInfo" xml:space="preserve">
+    <value>Sem informação</value>
+  </data>
+  <data name="TemACertezaQueDesejaApagarEncomenda" xml:space="preserve">
+    <value>Tem a certeza que deseja apagar esta encomenda?</value>
+  </data>
+  <data name="voltarTexto" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="AdicionarPeca" xml:space="preserve">
+    <value>Adicionar Peça</value>
+  </data>
+  <data name="apagarPecasVT" xml:space="preserve">
+    <value>Apagar Peça</value>
+  </data>
+  <data name="DetalhesdoUtilizador" xml:space="preserve">
+    <value>Detalhes do Utilizador</value>
+  </data>
+  <data name="DetalhesPeca" xml:space="preserve">
+    <value>Detalhes da peça ref: </value>
+  </data>
+  <data name="ImagemAtual" xml:space="preserve">
+    <value>Imagem atual</value>
+  </data>
+  <data name="ImagemdoclientePeca" xml:space="preserve">
+    <value>Imagem da Peça</value>
+  </data>
+  <data name="ImagempadraoPeca" xml:space="preserve">
+    <value>Imagem padrão</value>
+  </data>
+  <data name="ModificarPecaVT" xml:space="preserve">
+    <value>Modificar Peça</value>
+  </data>
+  <data name="Peca" xml:space="preserve">
+    <value>Peça</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Função</value>
+  </data>
+  <data name="AlterarInfodeUtilizador" xml:space="preserve">
+    <value>Alterar dados de Utilizador</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>Selecionado</value>
+  </data>
+  <data name="ClienteRole" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="FuncionarioRole" xml:space="preserve">
+    <value>Funcionário</value>
+  </data>
+  <data name="IniciarSessao" xml:space="preserve">
+    <value>Iniciar Sessão</value>
+  </data>
+  <data name="NavClientes" xml:space="preserve">
+    <value>Clientes</value>
+  </data>
+  <data name="NavCriarEncomenda" xml:space="preserve">
+    <value>Criar Encomenda</value>
+  </data>
+  <data name="NavEncomendas" xml:space="preserve">
+    <value>Encomendas</value>
+  </data>
+  <data name="NavFabricas" xml:space="preserve">
+    <value>Fábricas</value>
+  </data>
+  <data name="NavPecas" xml:space="preserve">
+    <value>Peças</value>
+  </data>
+  <data name="NavRegistoEncomendas" xml:space="preserve">
+    <value>Registo de Encomendas</value>
+  </data>
+  <data name="NavUtilizadores" xml:space="preserve">
+    <value>Utilizadores</value>
+  </data>
+  <data name="Ola" xml:space="preserve">
+    <value>Olá </value>
+  </data>
+  <data name="Perfil" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="Resgistar" xml:space="preserve">
+    <value>Registar</value>
+  </data>
+  <data name="SobreoSite" xml:space="preserve">
+    <value>Sobre o Site</value>
+  </data>
+  <data name="TerminarSessao" xml:space="preserve">
+    <value>Terminar Sessão</value>
+  </data>
+  <data name="UtilizadorRole" xml:space="preserve">
+    <value>Utilizador</value>
+  </data>
+  <data name="ConfirmarEmail" xml:space="preserve">
+    <value>Confirmar Email</value>
+  </data>
+  <data name="ConfirmarPasse" xml:space="preserve">
+    <value>Confirmar palavra-passe</value>
+  </data>
+  <data name="ConfirmarRegisto" xml:space="preserve">
+    <value>Confirmar registo</value>
+  </data>
+  <data name="ConfirmationEmail" xml:space="preserve">
+    <value>Confirmação de Email</value>
+  </data>
+  <data name="ConfirmeEmailAo" xml:space="preserve">
+    <value>Por favor, confirme o seu endereço de email ao clicar no botão abaixo:</value>
+  </data>
+  <data name="EmailEnviadoErr" xml:space="preserve">
+    <value>Ocorreu um erro com o envio do Email.</value>
+  </data>
+  <data name="EmailEnviadoSuc" xml:space="preserve">
+    <value>Email Enviado com sucesso.</value>
+  </data>
+  <data name="EmailExemplo" xml:space="preserve">
+    <value>nome@exemplo.com</value>
+  </data>
+  <data name="EsqueceuPP" xml:space="preserve">
+    <value>Esqueceu a palavra-passe?</value>
+  </data>
+  <data name="JaExiste" xml:space="preserve">
+    <value>Já existe um utilizador com esse nome.</value>
+  </data>
+  <data name="Lembrarme" xml:space="preserve">
+    <value>Lembrar-me?</value>
+  </data>
+  <data name="Obrugadoregisto" xml:space="preserve">
+    <value>Obrigado por se registar na nossa plataforma</value>
+  </data>
+  <data name="Palavrapasse" xml:space="preserve">
+    <value>Palavra-passe</value>
+  </data>
+  <data name="PasswordsNaoCoincidem" xml:space="preserve">
+    <value>As palavras-passses não coincidem</value>
+  </data>
+  <data name="ReEvniarEmailLoginPage" xml:space="preserve">
+    <value>Re-enviar confirmação de email</value>
+  </data>
+  <data name="Registarcomonovoutilizador" xml:space="preserve">
+    <value>Registar como novo utilizador</value>
+  </data>
+  <data name="RegistarSE" xml:space="preserve">
+    <value>Registar-se</value>
+  </data>
+  <data name="segundos" xml:space="preserve">
+    <value>segundos</value>
+  </data>
+  <data name="SeraRedirec" xml:space="preserve">
+    <value>Será redirecionado para a página de login em</value>
+  </data>
+  <data name="AcessoNegado" xml:space="preserve">
+    <value>Acesso Negado</value>
+  </data>
+  <data name="AcessoNegadoText" xml:space="preserve">
+    <value>Não possui permissões para aceder a esta página.</value>
+  </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="CertezaLogOut" xml:space="preserve">
+    <value>Tem a certeza que deseja terminar a sessão?</value>
+  </data>
+  <data name="ConfirmacaodePassword" xml:space="preserve">
+    <value>Confirmação de Password</value>
+  </data>
+  <data name="ConfirmarLogOut" xml:space="preserve">
+    <value>Confirmar Terminar Sessão</value>
+  </data>
+  <data name="ConfirmRegist" xml:space="preserve">
+    <value>Confirmação de Registo</value>
+  </data>
+  <data name="Contabloquead" xml:space="preserve">
+    <value>Esta conta foi bloqueada. Por favor tente mais tarde.</value>
+  </data>
+  <data name="ContaCriada" xml:space="preserve">
+    <value>A sua conta foi criada com sucesso! Por favor verifique o seu email para confirmar a sua conta.</value>
+  </data>
+  <data name="esqueceu" xml:space="preserve">
+    <value>Esqueceu a password?</value>
+  </data>
+  <data name="Insiraemail" xml:space="preserve">
+    <value>Insira o seu email.</value>
+  </data>
+  <data name="MudePW" xml:space="preserve">
+    <value>Mude a sua palavra-passe.</value>
+  </data>
+  <data name="PVentrepw" xml:space="preserve">
+    <value>Por favor insira a sua password</value>
+  </data>
+  <data name="PWCONFirm" xml:space="preserve">
+    <value>Por favor confirme a sua password</value>
+  </data>
+  <data name="REdPW" xml:space="preserve">
+    <value>Redefinir Palavra-passe</value>
+  </data>
+  <data name="RedSuc" xml:space="preserve">
+    <value>A sua palavra-passe foi redefinida com sucesso.</value>
+  </data>
+  <data name="Reenviar" xml:space="preserve">
+    <value>Re-enviar</value>
+  </data>
+  <data name="RenviarEmail" xml:space="preserve">
+    <value>Re-enviar email de confirmação</value>
+  </data>
+  <data name="SimLogOut" xml:space="preserve">
+    <value>Sim, terminar sessão</value>
+  </data>
+  <data name="VerifiqeuEmailPW" xml:space="preserve">
+    <value>Por favor verifique o seu email para restaurar a sua password.</value>
+  </data>
+  <data name="bemvindoperfil" xml:space="preserve">
+    <value>Bem-vindo ao seu perfil,</value>
+  </data>
+  <data name="Cancelada" xml:space="preserve">
+    <value>Cancelada</value>
+  </data>
+  <data name="Concretizada" xml:space="preserve">
+    <value>Concretizada</value>
+  </data>
+  <data name="Confirmada" xml:space="preserve">
+    <value>Confirmada</value>
+  </data>
+  <data name="confnewPW" xml:space="preserve">
+    <value>Confirmar Nova Palavra-passe</value>
+  </data>
+  <data name="curPW" xml:space="preserve">
+    <value>Palavra-passe Atual</value>
+  </data>
+  <data name="DadosPEssoais" xml:space="preserve">
+    <value>Dados Pessoais</value>
+  </data>
+  <data name="Dist" xml:space="preserve">
+    <value>Distribuição</value>
+  </data>
+  <data name="EncomendasConcretizadas" xml:space="preserve">
+    <value>Encomendas Concretizadas</value>
+  </data>
+  <data name="Estatisticas" xml:space="preserve">
+    <value>Estatísticas</value>
+  </data>
+  <data name="LastE" xml:space="preserve">
+    <value>Ultima Encomenda</value>
+  </data>
+  <data name="moree" xml:space="preserve">
+    <value>Peça Mais Encomendada</value>
+  </data>
+  <data name="newPW" xml:space="preserve">
+    <value>Nova Palavra-passe</value>
+  </data>
+  <data name="NoEE" xml:space="preserve">
+    <value>Não existem encomendas para comparação.</value>
+  </data>
+  <data name="NPecas" xml:space="preserve">
+    <value>Número de Peças Associadas</value>
+  </data>
+  <data name="Pendente" xml:space="preserve">
+    <value>Pendente</value>
+  </data>
+  <data name="RePW" xml:space="preserve">
+    <value>Redefinir Palavra-Passe</value>
+  </data>
+  <data name="TotalEncomendas" xml:space="preserve">
+    <value>Total de Encomendas</value>
+  </data>
+  <data name="TotalEnee" xml:space="preserve">
+    <value>Total de Peças Encomendadas</value>
+  </data>
+  <data name="upPW" xml:space="preserve">
+    <value>Atualizar Password</value>
+  </data>
+  <data name="youDP" xml:space="preserve">
+    <value>Os seus Dados Pessoais</value>
+  </data>
+</root>

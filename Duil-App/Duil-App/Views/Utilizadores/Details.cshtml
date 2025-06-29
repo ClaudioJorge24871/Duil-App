@@ -1,17 +1,18 @@
 ﻿@model Duil_App.Models.Utilizadores
+@using Duil_App.Resources
 
 @{
-    ViewData["Title"] = "Detalhes do Utilizador";
+    ViewData["Title"] = Resource.DetalhesdoUtilizador;
     var role = ViewBag.UserRole;
 }
 
 <div>
-    <a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" title="Voltar" style="color:#6B97AC"></i></a>
+    <a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" title=@Resource.voltarTexto style="color:#6B97AC"></i></a>
 </div>
 
 <div class="w-50" style="margin-left:10%; margin-top:5%">
-    <h3 style="display:inline" >Detalhes do Utilizador: @Html.DisplayFor(model => model.Nome)</h3>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" title="Modificar"><i class="ms-3 bi bi-pencil-fill"></i></a>
+    <h3 style="display:inline">@Resource.DetalhesdoUtilizador: @Html.DisplayFor(model => model.Nome)</h3>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" title=@Resource.modificarTexto><i class="ms-3 bi bi-pencil-fill"></i></a>
     <hr class="mb-5" />
     <dl class="row">
         <dt class="col-sm-4 mb-3">
@@ -30,13 +31,13 @@
             @Html.DisplayNameFor(model => model.Morada) 
         </dt>
         <dd class = "col-sm-5 mb-3">
-            @(string.IsNullOrWhiteSpace(Model.Morada) ? "Sem informação" : Model.Morada)
+            @(string.IsNullOrWhiteSpace(Model.Morada) ? Resource.semInfo : Model.Morada)
         </dd>
         <dt class = "col-sm-4 mb-3">
             @Html.DisplayNameFor(model => model.CodPostal)
         </dt>
         <dd class = "col-sm-5 mb-3">
-            @(string.IsNullOrWhiteSpace(Model.CodPostal) ? "Sem informação" : Model.CodPostal)
+            @(string.IsNullOrWhiteSpace(Model.CodPostal) ? Resource.semInfo : Model.CodPostal)
         </dd>
         <dt class = "col-sm-4 mb-3">
             @Html.DisplayNameFor(model => model.Pais)
@@ -54,10 +55,10 @@
             @Html.DisplayNameFor(model => model.Telemovel)
         </dt>
         <dd class = "col-sm-5 mb-3">
-            @(string.IsNullOrWhiteSpace(Model.Telemovel) ? "Sem informação" : Model.Telemovel)
+            @(string.IsNullOrWhiteSpace(Model.Telemovel) ? Resource.semInfo : Model.Telemovel)
         </dd>
         <dt class="col-sm-4 mb-3">
-            Role
+            @Resource.Role
         </dt>
         <dd class="col-sm-5 mb-3">
             @role

@@ -1,10 +1,11 @@
 ﻿@page
 @model AccessDeniedModel
+@using Duil_App.Resources
 @{
-    ViewData["Title"] = "Acesso Negado";
+    ViewData["Title"] = Resource.AcessoNegado;
 }
 
 <header>
     <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">Não possui permissões para aceder a esta página.</p>
+    <p class="text-danger">@Resource.AcessoNegadoText</p>
 </header>

@@ -16,45 +16,45 @@ namespace Duil_App.Models
         /// <summary>
         /// Nome do utilizador
         /// </summary>
-        [Display(Name = "Nome")]
+        [Display(Name = "Nome", ResourceType = typeof(Resources.Resource))]
         [StringLength(50)]
-        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
         public string Nome { get; set; } = "";
 
         /// <summary>
         /// Morada do utilizador
         /// </summary>
-        [Display(Name = "Morada")]
+        [Display(Name = "Morada", ResourceType = typeof(Resources.Resource))]
         [StringLength(50)]
         public string? Morada { get; set; }
 
         /// <summary>
         /// Código Postal da  morada do utilizador
         /// </summary>
-        [Display(Name = "Código Postal")]
+        [Display(Name = "CodPostal", ResourceType = typeof(Resources.Resource))]
         [StringLength(50)]
         public string? CodPostal { get; set; }
 
         /// <summary>
         /// País da morada do utilizador
         /// </summary>
-        [Display(Name = "País")]
+        [Display(Name = "Pais", ResourceType = typeof(Resources.Resource))]
         [StringLength(50)]
-        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
         public required string Pais { get; set; }
 
         /// <summary>
         /// Número de identificação fiscal do Utilizador
         /// </summary>
-        [Display(Name = "NIF")]
+        [Display(Name = "NIF", ResourceType = typeof(Resources.Resource))]
         [StringLength(9)]
-        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
         public string NIF { get; set; } = String.Empty;
 
         /// <summary>
         /// número de telemóvel do utilizador
         /// </summary>
-        [Display(Name = "Telemóvel")]
+        [Display(Name = "Telemovel", ResourceType = typeof(Resources.Resource))]
         [StringLength(18)]
         public string? Telemovel { get; set; }
 

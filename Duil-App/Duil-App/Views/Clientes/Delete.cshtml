@@ -1,17 +1,18 @@
 ﻿@model Duil_App.Models.Clientes
+@using Duil_App.Resources
 
 @{
-	ViewData["Title"] = "Apagar Empresa Cliente";
+	ViewData["Title"] = Resource.Remover + " " + Resource.Cliente;
 }
 
 
 <div>
-	<a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" title="Voltar" style="color:#6B97AC"></i></a>
+	<a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" title="@Resource.voltarTexto" style="color:#6B97AC"></i></a>
 </div>
 
 
 <div class="w-50" style="margin-left:10%; margin-top:5%">
-	<h3>Tem a certeza que deseja apagar este cliente?</h3>
+	<h3>@Resource.TemACertezaQueDesejaApagar @Resource.esteHelper @Resource.Cliente?</h3>
 	<div>
 		<hr class="mb-5" />
 		<dl class="row mt-4">
@@ -25,19 +26,19 @@
 				@Html.DisplayNameFor(model => model.Nome)
 			</dt>
 			<dd class="col-sm-5 mb-3">
-				@(string.IsNullOrWhiteSpace(Model.Nome) ? "Sem informação" : Model.Nome)
+				@(string.IsNullOrWhiteSpace(Model.Nome) ? Resource.semInfo : Model.Nome)
 			</dd>
 			<dt class="col-sm-4 mb-3">
 				@Html.DisplayNameFor(model => model.Morada)
 			</dt>
 			<dd class="col-sm-5 mb-3">
-				@(string.IsNullOrWhiteSpace(Model.Morada) ? "Sem informação" : Model.Morada)
+				@(string.IsNullOrWhiteSpace(Model.Morada) ? Resource.semInfo : Model.Morada)
 			</dd>
 			<dt class="col-sm-4 mb-3">
 				@Html.DisplayNameFor(model => model.MoradaCarga)
 			</dt>
 			<dd class="col-sm-5 mb-3">
-				@(string.IsNullOrWhiteSpace(Model.MoradaCarga) ? "Sem informação" : Model.MoradaCarga)
+				@(string.IsNullOrWhiteSpace(Model.MoradaCarga) ? Resource.semInfo : Model.MoradaCarga)
 			</dd>
 			<dt class="col-sm-4 mb-3">
 				@Html.DisplayNameFor(model => model.Pais)
@@ -49,19 +50,19 @@
 				@Html.DisplayNameFor(model => model.CodPostal)
 			</dt>
 			<dd class="col-sm-5 mb-3">
-				@(string.IsNullOrWhiteSpace(Model.CodPostal) ? "Sem informação" : Model.CodPostal)
+				@(string.IsNullOrWhiteSpace(Model.CodPostal) ? Resource.semInfo : Model.CodPostal)
 			</dd>
 			<dt class="col-sm-4 mb-3">
 				@Html.DisplayNameFor(model => model.Telemovel)
 			</dt>
 			<dd class="col-sm-5 mb-3">
-				@(string.IsNullOrWhiteSpace(Model.CodPostal) ? "Sem informação" : Model.Telemovel)
+				@(string.IsNullOrWhiteSpace(Model.CodPostal) ? Resource.semInfo : Model.Telemovel)
 			</dd>
 			<dt class="col-sm-4 mb-3">
 				@Html.DisplayNameFor(Model => Model.Email)
 			</dt>
 			<dd class="col-sm-5 mb-3">
-				@(string.IsNullOrWhiteSpace(Model.Email) ? "Sem informação" : Model.Email)
+				@(string.IsNullOrWhiteSpace(Model.Email) ? Resource.semInfo : Model.Email)
 			</dd>
 
 		</dl>
@@ -69,6 +70,6 @@
 
 	<form asp-action="Delete">
 		<input type="hidden" asp-for="Nif" />
-		<input type="submit" value="Remover" class="btn btn-danger" />
+		<input type="submit" value="@Resource.Remover" class="btn btn-danger" />
 	</form>
 </div>
