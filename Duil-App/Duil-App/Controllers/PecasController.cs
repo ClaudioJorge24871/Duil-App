@@ -27,7 +27,7 @@ namespace Duil_App.Controllers
         }
 
         // GET: Pecas
-        public async Task<IActionResult> Index(string texto)
+        public async Task<IActionResult> Index(string texto, int? pageNumber)
         {
             var pecas = _context.Pecas
                 .Include(p => p.Fabrica)
@@ -39,7 +39,8 @@ namespace Duil_App.Controllers
                 pecas = pecas.Where(s => s.Designacao.ToUpper().Contains(texto.ToUpper()));
             }
 
-            return View(await pecas.ToListAsync());
+            int pageSize = 10;
+            return View(await PaginatedList<Pecas>.CreateAsync(pecas.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Pecas/Details/5
