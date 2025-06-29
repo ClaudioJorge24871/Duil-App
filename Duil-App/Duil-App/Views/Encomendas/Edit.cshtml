@@ -91,6 +91,7 @@
 
     <script>
         $(function () {
+            // Inicializa variáveis para armazenar os dadoss das peças e as seleções do utilizador
             let pecasData = {};
             let selecoes = [];
             const hidIds = $('input[name="pecasSelecionadas"]');
@@ -101,15 +102,19 @@
                     selecoes.push({ id, quantidade: qtd });
                 });
             } else {
+                // Carrega seleções do modelo se não houver inputs hidden (ex: em caso de edição)
+
                 selecoes = @Html.Raw(Json.Serialize(Model.LinhasEncomenda.Select(l => new { id = l.PecaId.ToString(), quantidade = l.Quantidade })));
             }
             let loaded = false;
 
+            // Mostra ou esconde a secção de peças com base no cliente selecionado
             function toggleSection() {
                 const cId = $('#ClienteId').val();
                 if (cId) {
                     $('#sem-cliente').hide();
-                    if (!loaded) loadPecas(cId);
+                    if (!loaded) loadPecas(cId); // Só devee carregar uma vez
+
                 } else {
                     $('#sem-cliente').show();
                     selecoes = [];
@@ -122,17 +127,19 @@
                 $.getJSON(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`, function (data) {
                     pecasData = {};
                     data.forEach(p => pecasData[p.id] = p);
-                    renderCards();
+                    renderCards();  // Desenha os cartões após carregar os dados
                     loaded = true;
                 });
             }
 
+            // Cria os cartões das peças selecionadas e atualiza os totais
             function renderCards() {
                 const $cards = $('#pecasCards').empty();
                 selecoes.forEach(item => {
                     const p = pecasData[item.id];
                     if (!p) return;
-                    const price = parseFloat(p.preco).toFixed(2).replace('.', ',');
+                    const price = parseFloat(p.preco).toFixed(2).replace('.', ','); // Formatação do preço com pontos o preço
+                    // Adiciona cartão da peça
                     $cards.append(`
                                 <div class="col-md-4">
                                     <div class="card shadow-sm">
