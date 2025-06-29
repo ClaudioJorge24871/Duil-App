@@ -1,4 +1,4 @@
-@model IEnumerable<Duil_App.Models.Pecas>
+@model PaginatedList<Duil_App.Models.Pecas>
 @using Duil_App.Resources
 
 @{
@@ -23,19 +23,19 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Referencia)
+                    @Html.DisplayNameFor(model => model[0].Referencia)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Designacao)
+                    @Html.DisplayNameFor(model => model[0].Designacao)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PrecoUnit)
+                    @Html.DisplayNameFor(model => model[0].PrecoUnit)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Fabrica)
+                    @Html.DisplayNameFor(model => model[0].Fabrica)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Cliente)
+                    @Html.DisplayNameFor(model => model[0].Cliente)
                 </th>
                 <th>
                     @Resource.Acoes
@@ -82,3 +82,26 @@
             }
         </tbody>
     </table>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <div class="d-flex justify-content-center gap-2 mt-4">
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(Model.PageIndex - 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-secondary @prevDisabled">
+            Anterior
+        </a>
+
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(Model.PageIndex + 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-secondary @nextDisabled">
+            Seguinte
+        </a>
+    </div>

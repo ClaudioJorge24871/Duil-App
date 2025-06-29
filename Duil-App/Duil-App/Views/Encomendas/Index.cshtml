@@ -1,4 +1,4 @@
-@model IEnumerable<Duil_App.Models.Encomendas>
+@model PaginatedList<Duil_App.Models.Encomendas>
 @using Duil_App.Resources
 
 @{
@@ -32,22 +32,22 @@
                     @Resource.OrdemDeEncomenda
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ClienteId)
+                    @Html.DisplayNameFor(model => model[0].ClienteId)
                 </th>
                 <th>
                     @Resource.NomeDoCliente
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Data)
+                    @Html.DisplayNameFor(model => model[0].Data)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.QuantidadeTotal)
+                    @Html.DisplayNameFor(model => model[0].QuantidadeTotal)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TotalPrecoUnit)
+                    @Html.DisplayNameFor(model => model[0].TotalPrecoUnit)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Estado)
+                    @Html.DisplayNameFor(model => model[0].Estado)
                 </th>
 
                 <th>
@@ -115,3 +115,27 @@
             }
         }, 3000); // 3 segundos
     </script>
+
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <div class="d-flex justify-content-center gap-2 mt-4">
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(Model.PageIndex - 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-secondary @prevDisabled">
+            Anterior
+        </a>
+
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(Model.PageIndex + 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-secondary @nextDisabled">
+            Seguinte
+        </a>
+    </div>

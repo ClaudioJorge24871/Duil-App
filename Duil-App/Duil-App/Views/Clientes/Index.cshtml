@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Duil_App.Models.Clientes>
+﻿@model PaginatedList<Duil_App.Models.Clientes>
 @using Duil_App.Resources
 
 @{
@@ -24,16 +24,16 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Nif)
+                    @Html.DisplayNameFor(model => model[0].Nif)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Nome)
+                    @Html.DisplayNameFor(model => model[0].Nome)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Pais)
+                    @Html.DisplayNameFor(model => model[0].Pais)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Telemovel)
+                    @Html.DisplayNameFor(model => model[0].Telemovel)
                 </th>
                 <th>
                     @Resource.Acoes
@@ -82,4 +82,28 @@
     </table>
 
 
+</div>
+
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div class="d-flex justify-content-center gap-2 mt-4">
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-secondary @prevDisabled">
+        Anterior
+    </a>
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-secondary @nextDisabled">
+        Seguinte
+    </a>
 </div>
