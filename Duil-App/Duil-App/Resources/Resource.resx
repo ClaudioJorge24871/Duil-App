@@ -696,4 +696,7 @@
   <data name="telemovelnao" xml:space="preserve">
     <value>O telémovel introduzido não corresponde com o País guardado.</value>
   </data>
+  <data name="policy" xml:space="preserve">
+    <value>Termos/Referências/Sobre</value>
+  </data>
 </root>
