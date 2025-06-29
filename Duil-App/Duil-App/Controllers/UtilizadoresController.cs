@@ -28,7 +28,7 @@ namespace Duil_App.Controllers
         }
 
         // GET: Utilizadores
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string texto)
         {
 
             var adminUsers = await _userManager.GetUsersInRoleAsync("Admin");
@@ -36,7 +36,13 @@ namespace Duil_App.Controllers
 
             var allUsers = await _context.Utilizadores.ToListAsync();
 
-            var noAdmins = allUsers.Where(u => !adminIds.Contains(u.Id)).ToList();
+            var noAdmins = allUsers.Where(u => !adminIds.Contains(u.Id)).AsQueryable();
+
+            if (!String.IsNullOrEmpty(texto))
+            {
+                noAdmins = noAdmins.Where(t =>
+                    t.Email!.ToUpper().Contains(texto.ToUpper()));
+            }
 
             return View(noAdmins);
         }
