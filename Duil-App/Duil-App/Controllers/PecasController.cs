@@ -11,6 +11,8 @@ using Duil_App.Models;
 using System.Configuration;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyModel.Resolution;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Duil_App.Controllers
 {
@@ -25,14 +27,19 @@ namespace Duil_App.Controllers
         }
 
         // GET: Pecas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string texto)
         {
-            var pecas = await _context.Pecas
+            var pecas = _context.Pecas
                 .Include(p => p.Fabrica)
                 .Include(p => p.Cliente)
-                .ToListAsync();
+                .AsQueryable();
 
-            return View(pecas);
+            if (!string.IsNullOrEmpty(texto))
+            {
+                pecas = pecas.Where(s => s.Designacao.ToUpper().Contains(texto.ToUpper()));
+            }
+
+            return View(await pecas.ToListAsync());
         }
 
         // GET: Pecas/Details/5
