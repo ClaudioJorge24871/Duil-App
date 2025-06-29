@@ -7,25 +7,29 @@ using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow.ValueContentAnalysis;
 using System.Runtime.Intrinsics.X86;
 using Microsoft.Identity.Client;
 
-namespace Duil_App.Controllers {
+namespace Duil_App.Controllers
+{
 
-   [Authorize(Roles = "Admin")]
-   public class UtilizadoresController: Controller {
+    [Authorize(Roles = "Admin")]
+    public class UtilizadoresController : Controller
+    {
 
-      /// <summary>
-      /// Referência à Base de Dados do projeto
-      /// </summary>
-      private readonly Data.ApplicationDbContext _context;
-      private readonly UserManager<Utilizadores> _userManager;
+        /// <summary>
+        /// Referência à Base de Dados do projeto
+        /// </summary>
+        private readonly Data.ApplicationDbContext _context;
+        private readonly UserManager<Utilizadores> _userManager;
 
 
-        public UtilizadoresController(UserManager<Utilizadores> userManager, Data.ApplicationDbContext context) {
-         _context = context;
-         _userManager = userManager;
-      }
+        public UtilizadoresController(UserManager<Utilizadores> userManager, Data.ApplicationDbContext context)
+        {
+            _context = context;
+            _userManager = userManager;
+        }
 
-      // GET: Utilizadores
-      public async Task<IActionResult> Index() {
+        // GET: Utilizadores
+        public async Task<IActionResult> Index()
+        {
 
             var adminUsers = await _userManager.GetUsersInRoleAsync("Admin");
             var adminIds = adminUsers.Select(u => u.Id).ToHashSet();
@@ -37,54 +41,26 @@ namespace Duil_App.Controllers {
             return View(noAdmins);
         }
 
-      // GET: Utilizadores/Details/5
-      public async Task<IActionResult> Details(string? id) {
-         if (id == null) {
-            return NotFound();
-         }
-
-         var utilizador = await _context.Utilizadores
-             .FirstOrDefaultAsync(m => m.Id == id);
-         if (utilizador == null) {
-            return NotFound();
-         }
-
-        var role = await _userManager.GetRolesAsync(utilizador);
-            ViewBag.UserRole = role[0];
-
-         return View(utilizador);
-      }
-
-      // GET: Utilizadores/Create
-      public IActionResult Create() {
-         return View();
-      }
-
-      // POST: Utilizadores/Create
-      // To protect from overposting attacks, enable the specific properties you want to bind to.
-      // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-      [HttpPost]
-      [ValidateAntiForgeryToken]
-      public async Task<IActionResult> Create([Bind("Nome,Morada,CodPostal,Pais,NIF,Telemovel")] Utilizadores utilizador) {
-
-            bool nomeEmUso = _context.Users.Any(user => user.Nome == utilizador.Nome);
-
-            if (nomeEmUso)
+        // GET: Utilizadores/Details/5
+        public async Task<IActionResult> Details(string? id)
+        {
+            if (id == null)
             {
-                ModelState.AddModelError("Nome", "Já existe um utilizador com esse nome.");
-                return View(utilizador);
+                return NotFound();
             }
 
-            if (ModelState.IsValid) {
-            utilizador.CodPostal = utilizador.CodPostal?.ToUpper();
+            var utilizador = await _context.Utilizadores
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (utilizador == null)
+            {
+                return NotFound();
+            }
 
-            _context.Add(utilizador);
+            var role = await _userManager.GetRolesAsync(utilizador);
+            ViewBag.UserRole = role[0];
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-         }
-         return View(utilizador);
-      }
+            return View(utilizador);
+        }
 
         // GET: Utilizadores/Edit/5
         public async Task<IActionResult> Edit(string id)
@@ -191,8 +167,9 @@ namespace Duil_App.Controllers {
         }
 
 
-      private bool UtilizadoresExists(string id) {
-         return _context.Utilizadores.Any(e => e.Id == id);
-      }
-   }
+        private bool UtilizadoresExists(string id)
+        {
+            return _context.Utilizadores.Any(e => e.Id == id);
+        }
+    }
 }
