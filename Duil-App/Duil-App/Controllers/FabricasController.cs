@@ -22,9 +22,24 @@ namespace Duil_App.Controllers
         }
 
         // GET: Fabricas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string texto, int? pageNumber)
         {
-            return View(await _context.Fabricas.ToListAsync());
+            if (_context.Fabricas == null)
+            {
+                return Problem("Fabricas é um valor null.");
+            }
+
+            var fabricas = from c in _context.Fabricas
+                           select c;
+
+            if (!String.IsNullOrEmpty(texto))
+            {
+                fabricas = fabricas.Where(s => s.Nome!.ToUpper().Contains(texto.ToUpper()));
+            }
+
+            var pageSize = 10;
+            return View(await PaginatedList<Fabricas>.CreateAsync(fabricas.AsNoTracking(), pageNumber ?? 1, pageSize));
+
         }
 
         // GET: Fabricas

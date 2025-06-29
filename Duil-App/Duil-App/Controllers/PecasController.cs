@@ -11,6 +11,8 @@ using Duil_App.Models;
 using System.Configuration;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyModel.Resolution;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Duil_App.Controllers
 {
@@ -25,14 +27,20 @@ namespace Duil_App.Controllers
         }
 
         // GET: Pecas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string texto, int? pageNumber)
         {
-            var pecas = await _context.Pecas
+            var pecas = _context.Pecas
                 .Include(p => p.Fabrica)
                 .Include(p => p.Cliente)
-                .ToListAsync();
+                .AsQueryable();
 
-            return View(pecas);
+            if (!string.IsNullOrEmpty(texto))
+            {
+                pecas = pecas.Where(s => s.Designacao.ToUpper().Contains(texto.ToUpper()));
+            }
+
+            int pageSize = 10;
+            return View(await PaginatedList<Pecas>.CreateAsync(pecas.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Pecas/Details/5
@@ -307,10 +315,21 @@ namespace Duil_App.Controllers
             var peca = await _context.Pecas.FindAsync(id);
             if (peca != null)
             {
+                // Se a Peça tiver encomendas associadas a elas, não deve poder apagar
+                bool temEncomendas = await _context.LinhasEncomendas
+            .AnyAsync(le => le.PecaId == id);
+
+                if (temEncomendas)
+                {
+                    // Mostra uma mensagem de erro
+                    TempData["ErrorMessage"] = "Não foi possível remover esta peça. Motivo: Existem encomendas associadas à mesma.";
+                    return RedirectToAction(nameof(Index));
+                }
+
                 _context.Pecas.Remove(peca);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -318,7 +337,6 @@ namespace Duil_App.Controllers
         {
             return _context.Pecas.Any(e => e.Id == id);
         }
-
 
 
     }

@@ -18,7 +18,7 @@ using Duil_App.Resources;
 
 namespace Duil_App.Controllers
 {
-    
+
     public class EncomendasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +26,7 @@ namespace Duil_App.Controllers
         private readonly IHubContext<RealTimeHub> _hubcontext;
 
         public EncomendasController(
-                ApplicationDbContext context, 
+                ApplicationDbContext context,
                 UserManager<Utilizadores> userManager,
                 IHubContext<RealTimeHub> hubContext
             )
@@ -36,15 +36,30 @@ namespace Duil_App.Controllers
             _hubcontext = hubContext;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(String texto, int? pageNumber)
         {
-            if (User.IsInRole("Cliente")){ 
+            if (User.IsInRole("Cliente"))
+            {
                 await GetClientesEncomendas();
             }
 
-            return View(await _context.Encomendas
-                .Include(e => e.Cliente)
-                .ToListAsync());
+            if (_context.Encomendas == null)
+            {
+                return Problem("Encomendas é um valor null.");
+            }
+
+            var encomendas = _context.Encomendas
+              .Include(e => e.Cliente)
+              .AsQueryable();
+
+            if (!String.IsNullOrEmpty(texto))
+            {
+                encomendas = encomendas.Where(t =>
+                    t.Cliente.Nome.ToUpper().Contains(texto.ToUpper()));
+            }
+
+            var pageSize = 10;
+            return View(await PaginatedList<Encomendas>.CreateAsync(encomendas.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -113,7 +128,7 @@ namespace Duil_App.Controllers
 
                     if (User.IsInRole("Cliente")) // Se for CLiente apenas pode criar encomendas com as suas Pecas
                     {
-                        
+
                         var userId = _userManager.GetUserId(User);
                         var user = await _userManager.GetUserAsync(User);
                         var nif = user.NIF;
@@ -320,7 +335,8 @@ namespace Duil_App.Controllers
 
             var pecas = await _context.Pecas
                 .Where(p => p.ClienteId == clienteId)
-                .Select(p => new {
+                .Select(p => new
+                {
                     id = p.Id,
                     nome = p.Designacao,
                     preco = p.PrecoUnit.ToString(CultureInfo.InvariantCulture),

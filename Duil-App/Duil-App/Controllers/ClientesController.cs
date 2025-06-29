@@ -9,6 +9,7 @@ using Duil_App.Data;
 using Duil_App.Models;
 using Microsoft.AspNetCore.Authorization;
 using Duil_App.Code;
+using Duil_App;
 
 namespace Duil_App.Controllers
 {
@@ -28,9 +29,24 @@ namespace Duil_App.Controllers
 
         // GET: Clientes
         [Authorize(Roles = "Admin, Funcionario")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string texto, int? pageNumber)
         {
-            return View(await _context.Clientes.ToListAsync());
+            if (_context.Clientes == null)
+            {
+                return Problem("Clientes é um valor null.");
+            }
+
+            var clientes = from c in _context.Clientes
+                           select c;
+
+            if (!String.IsNullOrEmpty(texto))
+            {
+                clientes = clientes.Where(s => s.Nome!.ToUpper().Contains(texto.ToUpper()));
+            }
+
+            int pageSize = 10;
+            return View(await PaginatedList<Clientes>.CreateAsync(clientes.AsNoTracking(), pageNumber ?? 1, pageSize));
+
         }
 
         // GET: Clientes
@@ -39,7 +55,8 @@ namespace Duil_App.Controllers
         {
             var resultados = _context.Clientes
                 .Where(c => c.Nome.Contains(term))
-                .Select(c => new {
+                .Select(c => new
+                {
                     label = c.Nome,
                     value = c.Nif
                 })
@@ -105,7 +122,7 @@ namespace Duil_App.Controllers
 
             ViewBag.Pais = ObterPaises();
             return View(cliente);
-            
+
         }
 
         [Authorize(Roles = "Admin")]
