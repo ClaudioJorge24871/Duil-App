@@ -151,6 +151,24 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adicionar empresa cliente.
+        /// </summary>
+        public static string ClienteCreateTitle {
+            get {
+                return ResourceManager.GetString("ClienteCreateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adicionar Empresa Cliente.
+        /// </summary>
+        public static string ClienteCreateViewTitle {
+            get {
+                return ResourceManager.GetString("ClienteCreateViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clientes.
         /// </summary>
         public static string Clientes {
@@ -214,6 +232,33 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detalhes de.
+        /// </summary>
+        public static string detalhesDeAlgo {
+            get {
+                return ResourceManager.GetString("detalhesDeAlgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to detalhesTexto.
+        /// </summary>
+        public static string detalhesTexto {
+            get {
+                return ResourceManager.GetString("detalhesTexto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to é de preenchimento obrigatório.
+        /// </summary>
+        public static string eDePreenchimentoObrigatorio {
+            get {
+                return ResourceManager.GetString("eDePreenchimentoObrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Encomendas.
         /// </summary>
         public static string Encomendas {
@@ -228,6 +273,15 @@ namespace Duil_App.Resources {
         public static string Estado {
             get {
                 return ResourceManager.GetString("Estado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to este.
+        /// </summary>
+        public static string esteHelper {
+            get {
+                return ResourceManager.GetString("esteHelper", resourceCulture);
             }
         }
         
@@ -264,6 +318,24 @@ namespace Duil_App.Resources {
         public static string GuardarAlteracoes {
             get {
                 return ResourceManager.GetString("GuardarAlteracoes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empresas Clientes.
+        /// </summary>
+        public static string IndexClientes {
+            get {
+                return ResourceManager.GetString("IndexClientes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modificar.
+        /// </summary>
+        public static string modificarTexto {
+            get {
+                return ResourceManager.GetString("modificarTexto", resourceCulture);
             }
         }
         
@@ -405,9 +477,9 @@ namespace Duil_App.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Quantidade.
         /// </summary>
-        public static string Qauntidade {
+        public static string Quantidade {
             get {
-                return ResourceManager.GetString("Qauntidade", resourceCulture);
+                return ResourceManager.GetString("Quantidade", resourceCulture);
             }
         }
         
@@ -457,11 +529,29 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecione um país.
+        /// </summary>
+        public static string SelecionarPais {
+            get {
+                return ResourceManager.GetString("SelecionarPais", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione estado.
         /// </summary>
         public static string SelecioneEstado {
             get {
                 return ResourceManager.GetString("SelecioneEstado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sem informação.
+        /// </summary>
+        public static string semInfo {
+            get {
+                return ResourceManager.GetString("semInfo", resourceCulture);
             }
         }
         
@@ -516,6 +606,15 @@ namespace Duil_App.Resources {
         public static string Valor {
             get {
                 return ResourceManager.GetString("Valor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltar.
+        /// </summary>
+        public static string voltarTexto {
+            get {
+                return ResourceManager.GetString("voltarTexto", resourceCulture);
             }
         }
     }

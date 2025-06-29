@@ -171,7 +171,7 @@
   <data name="Data" xml:space="preserve">
     <value>Date</value>
   </data>
-  <data name="Qauntidade" xml:space="preserve">
+  <data name="Quantidade" xml:space="preserve">
     <value>Quantity</value>
   </data>
   <data name="Valor" xml:space="preserve">
@@ -269,5 +269,38 @@
   </data>
   <data name="SubtituloFraseImpacto" xml:space="preserve">
     <value>with quality, proximity and inovation</value>
+  </data>
+  <data name="ClienteCreateTitle" xml:space="preserve">
+    <value>Add a Client</value>
+  </data>
+  <data name="ClienteCreateViewTitle" xml:space="preserve">
+    <value>Add a Client</value>
+  </data>
+  <data name="detalhesDeAlgo" xml:space="preserve">
+    <value>Details of</value>
+  </data>
+  <data name="detalhesTexto" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="eDePreenchimentoObrigatorio" xml:space="preserve">
+    <value>is required </value>
+  </data>
+  <data name="esteHelper" xml:space="preserve">
+    <value>this</value>
+  </data>
+  <data name="IndexClientes" xml:space="preserve">
+    <value>Clients</value>
+  </data>
+  <data name="modificarTexto" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="SelecionarPais" xml:space="preserve">
+    <value>Select a Country</value>
+  </data>
+  <data name="semInfo" xml:space="preserve">
+    <value>No info</value>
+  </data>
+  <data name="voltarTexto" xml:space="preserve">
+    <value>Return</value>
   </data>
 </root>
