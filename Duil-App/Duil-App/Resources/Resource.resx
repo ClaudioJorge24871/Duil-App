@@ -660,4 +660,10 @@
   <data name="youDP" xml:space="preserve">
     <value>Os seus Dados Pessoais</value>
   </data>
+  <data name="encomendaSuc" xml:space="preserve">
+    <value>Encomenda criada com sucesso!</value>
+  </data>
+  <data name="Fechar" xml:space="preserve">
+    <value>Fechar</value>
+  </data>
 </root>

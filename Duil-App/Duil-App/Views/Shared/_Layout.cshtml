@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@using Duil_App.Resources
 <html lang="pt-pt">
 <head>
     <meta charset="utf-8" />
@@ -83,32 +83,32 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link mx-2 @(currentController == "Utilizadores" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Utilizadores" asp-action="Index">Utilizadores</a>
+                                <a class="nav-link mx-2 @(currentController == "Utilizadores" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Utilizadores" asp-action="Index">@Resource.Utilizadores</a>
                             </li>
                         }
                         @if (User.IsInRole("Admin") || User.IsInRole("Funcionario"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link mx-2 @(currentController == "Encomendas" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Encomendas" asp-action="Index">Encomendas</a>
+                                <a class="nav-link mx-2 @(currentController == "Encomendas" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Encomendas" asp-action="Index">@Resource.NavEncomendas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-2 @(currentController == "Fabricas" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Fabricas" asp-action="Index">Fábricas</a>
+                                <a class="nav-link mx-2 @(currentController == "Fabricas" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Fabricas" asp-action="Index">@Resource.NavFabricas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-2 @(currentController == "Pecas" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Pecas" asp-action="Index">Peças</a>
+                                <a class="nav-link mx-2 @(currentController == "Pecas" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Pecas" asp-action="Index">@Resource.NavPecas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-2 @(currentController == "Clientes" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                                <a class="nav-link mx-2 @(currentController == "Clientes" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Clientes" asp-action="Index">@Resource.NavClientes</a>
                             </li>
                         }
 
                         @if (User.IsInRole("Cliente"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link mx-2 @(currentController == "Encomendas" & currentAction=="Create" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Encomendas" asp-action="Create">Criar Encomenda</a>
+                                <a class="nav-link mx-2 @(currentController == "Encomendas" & currentAction=="Create" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Encomendas" asp-action="Create">@Resource.NavCriarEncomenda</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-2 @(currentController == "Encomendas" & currentAction=="Index" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Encomendas" asp-action="Index">Registo de Encomendas</a>
+                                <a class="nav-link mx-2 @(currentController == "Encomendas" & currentAction=="Index" ? "bg-white texto-cor-azul rounded px-3" : "text-white")" asp-area="" asp-controller="Encomendas" asp-action="Index">@Resource.NavRegistoEncomendas</a>
                             </li>
                         }
                     </ul>
@@ -128,17 +128,17 @@
         <div id="toastSuccess" class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <strong class="me-auto">Nova Encomenda Criada ✅ </strong>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Fechar"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label=@Resource.Fechar></button>
             </div>
             <div class="toast-body" id="toastSuccessBody">
-                Encomenda criada com sucesso!
+                @Resource.encomendaSuc
             </div>
         </div>
     </div>
 
     <footer class="border-top footer text-muted mb-3 w-100" style="position: absolute; bottom: 0;">
         <div class="container">
-            &copy; 2025 - Duil - <a asp-area="" asp-controller="Home" asp-action="Privacy">Sobre o Site</a>
+            &copy; 2025 - Duil - <a asp-area="" asp-controller="Home" asp-action="Privacy">@Resource.SobreoSite</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -170,7 +170,7 @@
                             <div>
                                 ${message.replace(/\n/g, '<br>')}
                             </div>
-                            <button class="btn btn-sm btn-outline-success ms-3" title="Ver detalhes" onclick="window.location.href='/Encomendas/Details/${encomendaId}'">
+                            <button class="btn btn-sm btn-outline-success ms-3" title=@Resource.detalhesTexto onclick="window.location.href='/Encomendas/Details/${encomendaId}'">
                                 <i class="bi bi-eye" style="font-size: 1.3rem;"></i>
                             </button>
                         </div>

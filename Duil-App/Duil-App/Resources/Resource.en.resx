@@ -660,4 +660,10 @@
   <data name="DadosPEssoais" xml:space="preserve">
     <value>Persona Data</value>
   </data>
+  <data name="encomendaSuc" xml:space="preserve">
+    <value>The order was created sucessfully!</value>
+  </data>
+  <data name="Fechar" xml:space="preserve">
+    <value>Close</value>
+  </data>
 </root>

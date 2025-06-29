@@ -655,6 +655,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Encomenda criada com sucesso!.
+        /// </summary>
+        public static string encomendaSuc {
+            get {
+                return ResourceManager.GetString("encomendaSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Encomenda.
         /// </summary>
         public static string EncomendaTexto {
@@ -786,6 +795,15 @@ namespace Duil_App.Resources {
         public static string Fabricas {
             get {
                 return ResourceManager.GetString("Fabricas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fechar.
+        /// </summary>
+        public static string Fechar {
+            get {
+                return ResourceManager.GetString("Fechar", resourceCulture);
             }
         }
         
