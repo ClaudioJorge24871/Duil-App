@@ -117,10 +117,133 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BemVindoADuil" xml:space="preserve">
+    <value>Bem vindo à plataforma da Duil!</value>
+  </data>
+  <data name="Clientes" xml:space="preserve">
+    <value>Clientes</value>
+  </data>
+  <data name="CodPostal" xml:space="preserve">
+    <value>Código postal</value>
+  </data>
+  <data name="Encomendas" xml:space="preserve">
+    <value>Encomendas</value>
+  </data>
+  <data name="Fábricas" xml:space="preserve">
+    <value>Fábricas</value>
+  </data>
+  <data name="Morada" xml:space="preserve">
+    <value>Morada</value>
+  </data>
+  <data name="Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
   <data name="OQueFazemos" xml:space="preserve">
     <value>O que fazemos</value>
   </data>
+  <data name="Pais" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="Pecas" xml:space="preserve">
+    <value>Peças</value>
+  </data>
   <data name="QuemSomos" xml:space="preserve">
     <value>Quem Somos</value>
+  </data>
+  <data name="Telemovel" xml:space="preserve">
+    <value>Telemóvel</value>
+  </data>
+  <data name="Utilizadores" xml:space="preserve">
+    <value>Utilizadores</value>
+  </data>
+  <data name="Acoes" xml:space="preserve">
+    <value>Ações</value>
+  </data>
+  <data name="obrigatorio" xml:space="preserve">
+    <value>é de preenchimento obrigatório</value>
+  </data>
+  <data name="Cliente" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="NomeCliente" xml:space="preserve">
+    <value>Nome do cliente</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Qauntidade" xml:space="preserve">
+    <value>Quantidade</value>
+  </data>
+  <data name="Valor" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="OrdemDeEncomenda" xml:space="preserve">
+    <value>Ordem de encomenda</value>
+  </data>
+  <data name="Transportadora" xml:space="preserve">
+    <value>Transportadora</value>
+  </data>
+  <data name="TemACertezaQueDesejaApagar" xml:space="preserve">
+    <value>Tem a certeza que deseja apagar</value>
+  </data>
+  <data name="Remover" xml:space="preserve">
+    <value>Remover</value>
+  </data>
+  <data name="DetalhesDe" xml:space="preserve">
+    <value>Detalhes de</value>
+  </data>
+  <data name="NIF" xml:space="preserve">
+    <value>NIF</value>
+  </data>
+  <data name="MoradaDescarga" xml:space="preserve">
+    <value>Morada de descarga</value>
+  </data>
+  <data name="MoradaCarga" xml:space="preserve">
+    <value>Morada de carga</value>
+  </data>
+  <data name="GuardarAlteracoes" xml:space="preserve">
+    <value>Guardar Alterações</value>
+  </data>
+  <data name="Adicionar" xml:space="preserve">
+    <value>Adicionar</value>
+  </data>
+  <data name="Referencia" xml:space="preserve">
+    <value>Referência</value>
+  </data>
+  <data name="Designacao" xml:space="preserve">
+    <value>Designação</value>
+  </data>
+  <data name="PrecoUnit" xml:space="preserve">
+    <value>Preço unitário</value>
+  </data>
+  <data name="Fabrica" xml:space="preserve">
+    <value>Fábrica </value>
+  </data>
+  <data name="QuantidadeTotal" xml:space="preserve">
+    <value>Quantidade Total</value>
+  </data>
+  <data name="PrecoTotal" xml:space="preserve">
+    <value>Preço total</value>
+  </data>
+  <data name="SelecioneEstado" xml:space="preserve">
+    <value>Selecione estado</value>
+  </data>
+  <data name="Criar" xml:space="preserve">
+    <value>Criar</value>
+  </data>
+  <data name="AdicionarFabrica" xml:space="preserve">
+    <value>Adicionar fábrica</value>
+  </data>
+  <data name="CriarEncomenda" xml:space="preserve">
+    <value>Criar encomenda</value>
+  </data>
+  <data name="AdidionarCliente" xml:space="preserve">
+    <value>Adicionar cliente</value>
+  </data>
+  <data name="QuemSomosTexto" xml:space="preserve">
+    <value>A Duil é uma agência que atua como escritório de exportação para um grupo de fábricas portuguesas.</value>
   </data>
 </root>
