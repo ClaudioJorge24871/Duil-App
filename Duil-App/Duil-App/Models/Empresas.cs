@@ -14,7 +14,7 @@ namespace Duil_App.Models
         /// </summary>
         [Key]
         [Display(Name = "NIF", ResourceType = typeof(Resources.Resource))]
-        [Required(ErrorMessage = "O {0} é um campo obrigatório")]
+        [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
         public required string Nif { get; set; }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Nome", ResourceType = typeof(Resources.Resource))]
         [StringLength(50)]
-        [Required(ErrorMessage = "O {0} do cliente é um campo obrigatório")]
+        [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
         public required string Nome { get; set; } 
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Duil_App.Models
         /// </summary>
         [Display(Name = "Pais", ResourceType = typeof(Resources.Resource))]
         [StringLength(50)]
-        [Required(ErrorMessage = "O {0} é obrigatório")]
+        [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
         public required string Pais { get; set; } 
 
         /// <summary>

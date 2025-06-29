@@ -129,7 +129,7 @@
   <data name="Encomendas" xml:space="preserve">
     <value>Encomendas</value>
   </data>
-  <data name="Fábricas" xml:space="preserve">
+  <data name="Fabricas" xml:space="preserve">
     <value>Fábricas</value>
   </data>
   <data name="Morada" xml:space="preserve">
@@ -226,16 +226,13 @@
     <value>Quantidade Total</value>
   </data>
   <data name="PrecoTotal" xml:space="preserve">
-    <value>Preço total</value>
+    <value>Preço total (€)</value>
   </data>
   <data name="SelecioneEstado" xml:space="preserve">
-    <value>Selecione estado</value>
+    <value>&lt;-- Selecione estado --&gt;</value>
   </data>
   <data name="Criar" xml:space="preserve">
     <value>Criar</value>
-  </data>
-  <data name="AdicionarFabrica" xml:space="preserve">
-    <value>Adicionar fábrica</value>
   </data>
   <data name="CriarEncomenda" xml:space="preserve">
     <value>Criar encomenda</value>
@@ -270,37 +267,178 @@
   <data name="SubtituloFraseImpacto" xml:space="preserve">
     <value>com qualidade, proximidade e inovação.</value>
   </data>
+  <data name="adicionarFabrica" xml:space="preserve">
+    <value>Adicionar Fábrica</value>
+  </data>
+  <data name="adicionarFabricaViewTitle" xml:space="preserve">
+    <value>Adicionar Fábrica</value>
+  </data>
+  <data name="AdicionarPecaemEncomendas" xml:space="preserve">
+    <value>Adicionar Peça</value>
+  </data>
+  <data name="AdicionarPecaVT" xml:space="preserve">
+    <value>Adicionar Peça</value>
+  </data>
+  <data name="AdicionarrestantespeçasdoCliente" xml:space="preserve">
+    <value>Adicionar restantes peças do Cliente</value>
+  </data>
+  <data name="ApagarFabricaViewTitle" xml:space="preserve">
+    <value>Apagar Fábrica</value>
+  </data>
+  <data name="CampoObrigatorio" xml:space="preserve">
+    <value>{0} é obrigatório</value>
+  </data>
   <data name="ClienteCreateTitle" xml:space="preserve">
     <value>Adicionar empresa cliente</value>
   </data>
   <data name="ClienteCreateViewTitle" xml:space="preserve">
     <value>Adicionar Empresa Cliente</value>
   </data>
+  <data name="clienteeobrigatorio" xml:space="preserve">
+    <value>O cliente é obrigatório</value>
+  </data>
+  <data name="ClienteNome" xml:space="preserve">
+    <value>Nome do Cliente</value>
+  </data>
+  <data name="DetalhesdaFabricaViewTitle" xml:space="preserve">
+    <value>Detalhes da Fábrica</value>
+  </data>
   <data name="detalhesDeAlgo" xml:space="preserve">
     <value>Detalhes de</value>
   </data>
+  <data name="detalhesEncomendaViewTitle" xml:space="preserve">
+    <value>Detalhes da Encomenda</value>
+  </data>
   <data name="detalhesTexto" xml:space="preserve">
-    <value>detalhesTexto</value>
+    <value>Detalhes</value>
   </data>
   <data name="eDePreenchimentoObrigatorio" xml:space="preserve">
-    <value>é de preenchimento obrigatório</value>
+    <value>* é de preenchimento obrigatório</value>
+  </data>
+  <data name="EmpresaTrans" xml:space="preserve">
+    <value>Empresa Transportadora</value>
+  </data>
+  <data name="EncomendaTexto" xml:space="preserve">
+    <value>Encomenda</value>
+  </data>
+  <data name="EstadoCancelada" xml:space="preserve">
+    <value>Cancelada</value>
+  </data>
+  <data name="EstadoConcretizada" xml:space="preserve">
+    <value>Concretizada</value>
+  </data>
+  <data name="EstadoConfirmada" xml:space="preserve">
+    <value>Confirmada</value>
+  </data>
+  <data name="EstadoDe" xml:space="preserve">
+    <value>O estado de </value>
+  </data>
+  <data name="EstadoPendente" xml:space="preserve">
+    <value>Pendente</value>
   </data>
   <data name="esteHelper" xml:space="preserve">
     <value>este</value>
   </data>
+  <data name="fabricaeobrigatoria" xml:space="preserve">
+    <value>A fábrica é obrigatória</value>
+  </data>
+  <data name="FabricaNome" xml:space="preserve">
+    <value>Nome da fábrica</value>
+  </data>
+  <data name="FormatosImagemPermitidos" xml:space="preserve">
+    <value>Formatos permitidos: .jpg, .jpeg, .png, .gif, .webp</value>
+  </data>
+  <data name="ImagemPeca" xml:space="preserve">
+    <value>Imagem</value>
+  </data>
   <data name="IndexClientes" xml:space="preserve">
     <value>Empresas Clientes</value>
+  </data>
+  <data name="modificarEncomendaViewTitle" xml:space="preserve">
+    <value>Modificar Encomenda</value>
+  </data>
+  <data name="ModificarFábricaVT" xml:space="preserve">
+    <value>Modificar Fábrica</value>
   </data>
   <data name="modificarTexto" xml:space="preserve">
     <value>Modificar</value>
   </data>
+  <data name="NomeDoCliente" xml:space="preserve">
+    <value>Nome do cliente</value>
+  </data>
+  <data name="NovaEncomenda" xml:space="preserve">
+    <value>Nova encomenda</value>
+  </data>
+  <data name="PorfavorAdicioneClienteParaPecas" xml:space="preserve">
+    <value>Por favor, selecione um cliente para ver as peças</value>
+  </data>
+  <data name="referenciaPEca" xml:space="preserve">
+    <value>Referência</value>
+  </data>
   <data name="SelecionarPais" xml:space="preserve">
-    <value>Selecione um país</value>
+    <value>&lt;-- Selecione um país --&gt;</value>
+  </data>
+  <data name="selecioneClientedaLista" xml:space="preserve">
+    <value>Por favor, selecione um cliente da lista</value>
+  </data>
+  <data name="selecioneFabricadaLista" xml:space="preserve">
+    <value>Por favor, selecione uma fábrica da lista</value>
+  </data>
+  <data name="SelecioneUmaPEcaPEloMenos" xml:space="preserve">
+    <value>Selecione pelo menos uma peça</value>
   </data>
   <data name="semInfo" xml:space="preserve">
     <value>Sem informação</value>
   </data>
+  <data name="TemACertezaQueDesejaApagarEncomenda" xml:space="preserve">
+    <value>Tem a certeza que deseja apagar esta encomenda?</value>
+  </data>
   <data name="voltarTexto" xml:space="preserve">
     <value>Voltar</value>
+  </data>
+  <data name="AdicionarPeca" xml:space="preserve">
+    <value>Adicionar Peça</value>
+  </data>
+  <data name="apagarPecasVT" xml:space="preserve">
+    <value>Apagar Peça</value>
+  </data>
+  <data name="DetalhesdoUtilizador" xml:space="preserve">
+    <value>Detalhes do Utilizador</value>
+  </data>
+  <data name="DetalhesPeca" xml:space="preserve">
+    <value>Detalhes da peça ref: </value>
+  </data>
+  <data name="ImagemAtual" xml:space="preserve">
+    <value>Imagem atual</value>
+  </data>
+  <data name="ImagemdoclientePeca" xml:space="preserve">
+    <value>Imagem da Peça</value>
+  </data>
+  <data name="ImagempadraoPeca" xml:space="preserve">
+    <value>Imagem padrão</value>
+  </data>
+  <data name="ModificarPecaVT" xml:space="preserve">
+    <value>Modificar Peça</value>
+  </data>
+  <data name="Peca" xml:space="preserve">
+    <value>Peça</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Função</value>
+  </data>
+  <data name="AlterarInfodeUtilizador" xml:space="preserve">
+    <value>Alterar dados de Utilizador</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>Selecionado</value>
+  </data>
+  <data name="ClienteRole" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="FuncionarioRole" xml:space="preserve">
+    <value>Funcionário</value>
+  </data>
+  <data name="UtilizadorRole" xml:space="preserve">
+    <value>Utilizador</value>
   </data>
 </root>

@@ -1,16 +1,17 @@
 ﻿@model Duil_App.Models.Pecas
+@using Duil_App.Resources
 
 @{
-	ViewData["Title"] = "Apagar Peça";
+	ViewData["Title"] = Resource.apagarPecasVT;
 	var fabricaNome = ViewData["FabricaNome"] as string;
 }
 
 <div>
-	<a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" tilte="Voltar" style="color:#6B97AC"></i></a>
+	<a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" tilte=@Resource.voltarTexto style="color:#6B97AC"></i></a>
 </div>
 
 <div class="w-50" style="margin-left:10%; margin-top:5%">
-	<h3>Tem a certeza que deseja apagar esta peça?</h3>
+	<h3>@Resource.TemACertezaQueDesejaApagar @Resource.Peca</h3>
 	<div>
 		<hr class="mb-5" />
 		<div class="row">
@@ -51,11 +52,11 @@
 			<div class="col-sm-3 ms-0">
 				@if (!string.IsNullOrEmpty(Model.Imagem))
 				{
-					<img src="@Url.Content($"~/images/{Model.Imagem}")" class="img-fluid" style="max-width: 300px;" alt="Imagem do cliente" />
+					<img src="@Url.Content($"~/images/{Model.Imagem}")" class="img-fluid" style="max-width: 300px;" alt=@Resource.ImagemdoclientePeca />
 				}
 				else
 				{
-					<img src="@Url.Content("~/images/Default_Image.jpg")" class="img-fluid" style="max-width: 300px;" alt="Imagem padrão" />
+					<img src="@Url.Content("~/images/Default_Image.jpg")" class="img-fluid" style="max-width: 300px;" alt=@Resource.ImagempadraoPeca />
 				}
 			</div>
 		</div>
@@ -63,6 +64,6 @@
 
 	<form asp-action="Delete">
 		<input type="hidden" asp-for="Referencia" />
-		<input type="submit" value="Remover" class="btn btn-danger" /> 
+		<input type="submit" value=@Resource.Remover class="btn btn-danger" /> 
 	</form>
 </div>

@@ -79,11 +79,56 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adicionar fábrica.
+        ///   Looks up a localized string similar to Adicionar Fábrica.
         /// </summary>
-        public static string AdicionarFabrica {
+        public static string adicionarFabrica {
             get {
-                return ResourceManager.GetString("AdicionarFabrica", resourceCulture);
+                return ResourceManager.GetString("adicionarFabrica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adicionar Fábrica.
+        /// </summary>
+        public static string adicionarFabricaViewTitle {
+            get {
+                return ResourceManager.GetString("adicionarFabricaViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adicionar Peça.
+        /// </summary>
+        public static string AdicionarPeca {
+            get {
+                return ResourceManager.GetString("AdicionarPeca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adicionar Peça.
+        /// </summary>
+        public static string AdicionarPecaemEncomendas {
+            get {
+                return ResourceManager.GetString("AdicionarPecaemEncomendas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adicionar Peça.
+        /// </summary>
+        public static string AdicionarPecaVT {
+            get {
+                return ResourceManager.GetString("AdicionarPecaVT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adicionar restantes peças do Cliente.
+        /// </summary>
+        public static string AdicionarrestantespeçasdoCliente {
+            get {
+                return ResourceManager.GetString("AdicionarrestantespeçasdoCliente", resourceCulture);
             }
         }
         
@@ -93,6 +138,15 @@ namespace Duil_App.Resources {
         public static string AdidionarCliente {
             get {
                 return ResourceManager.GetString("AdidionarCliente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alterar dados de Utilizador.
+        /// </summary>
+        public static string AlterarInfodeUtilizador {
+            get {
+                return ResourceManager.GetString("AlterarInfodeUtilizador", resourceCulture);
             }
         }
         
@@ -133,11 +187,38 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apagar Fábrica.
+        /// </summary>
+        public static string ApagarFabricaViewTitle {
+            get {
+                return ResourceManager.GetString("ApagarFabricaViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apagar Peça.
+        /// </summary>
+        public static string apagarPecasVT {
+            get {
+                return ResourceManager.GetString("apagarPecasVT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bem vindo à plataforma da Duil!.
         /// </summary>
         public static string BemVindoADuil {
             get {
                 return ResourceManager.GetString("BemVindoADuil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} é obrigatório.
+        /// </summary>
+        public static string CampoObrigatorio {
+            get {
+                return ResourceManager.GetString("CampoObrigatorio", resourceCulture);
             }
         }
         
@@ -165,6 +246,33 @@ namespace Duil_App.Resources {
         public static string ClienteCreateViewTitle {
             get {
                 return ResourceManager.GetString("ClienteCreateViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O cliente é obrigatório.
+        /// </summary>
+        public static string clienteeobrigatorio {
+            get {
+                return ResourceManager.GetString("clienteeobrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome do Cliente.
+        /// </summary>
+        public static string ClienteNome {
+            get {
+                return ResourceManager.GetString("ClienteNome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cliente.
+        /// </summary>
+        public static string ClienteRole {
+            get {
+                return ResourceManager.GetString("ClienteRole", resourceCulture);
             }
         }
         
@@ -223,6 +331,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detalhes da Fábrica.
+        /// </summary>
+        public static string DetalhesdaFabricaViewTitle {
+            get {
+                return ResourceManager.GetString("DetalhesdaFabricaViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detalhes de.
         /// </summary>
         public static string DetalhesDe {
@@ -241,7 +358,34 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to detalhesTexto.
+        ///   Looks up a localized string similar to Detalhes do Utilizador.
+        /// </summary>
+        public static string DetalhesdoUtilizador {
+            get {
+                return ResourceManager.GetString("DetalhesdoUtilizador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalhes da Encomenda.
+        /// </summary>
+        public static string detalhesEncomendaViewTitle {
+            get {
+                return ResourceManager.GetString("detalhesEncomendaViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalhes da peça ref: .
+        /// </summary>
+        public static string DetalhesPeca {
+            get {
+                return ResourceManager.GetString("DetalhesPeca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalhes.
         /// </summary>
         public static string detalhesTexto {
             get {
@@ -250,11 +394,20 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to é de preenchimento obrigatório.
+        ///   Looks up a localized string similar to * é de preenchimento obrigatório.
         /// </summary>
         public static string eDePreenchimentoObrigatorio {
             get {
                 return ResourceManager.GetString("eDePreenchimentoObrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empresa Transportadora.
+        /// </summary>
+        public static string EmpresaTrans {
+            get {
+                return ResourceManager.GetString("EmpresaTrans", resourceCulture);
             }
         }
         
@@ -268,11 +421,65 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Encomenda.
+        /// </summary>
+        public static string EncomendaTexto {
+            get {
+                return ResourceManager.GetString("EncomendaTexto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estado.
         /// </summary>
         public static string Estado {
             get {
                 return ResourceManager.GetString("Estado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelada.
+        /// </summary>
+        public static string EstadoCancelada {
+            get {
+                return ResourceManager.GetString("EstadoCancelada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Concretizada.
+        /// </summary>
+        public static string EstadoConcretizada {
+            get {
+                return ResourceManager.GetString("EstadoConcretizada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmada.
+        /// </summary>
+        public static string EstadoConfirmada {
+            get {
+                return ResourceManager.GetString("EstadoConfirmada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O estado de .
+        /// </summary>
+        public static string EstadoDe {
+            get {
+                return ResourceManager.GetString("EstadoDe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pendente.
+        /// </summary>
+        public static string EstadoPendente {
+            get {
+                return ResourceManager.GetString("EstadoPendente", resourceCulture);
             }
         }
         
@@ -295,11 +502,38 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A fábrica é obrigatória.
+        /// </summary>
+        public static string fabricaeobrigatoria {
+            get {
+                return ResourceManager.GetString("fabricaeobrigatoria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome da fábrica.
+        /// </summary>
+        public static string FabricaNome {
+            get {
+                return ResourceManager.GetString("FabricaNome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fábricas.
         /// </summary>
-        public static string Fábricas {
+        public static string Fabricas {
             get {
-                return ResourceManager.GetString("Fábricas", resourceCulture);
+                return ResourceManager.GetString("Fabricas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formatos permitidos: .jpg, .jpeg, .png, .gif, .webp.
+        /// </summary>
+        public static string FormatosImagemPermitidos {
+            get {
+                return ResourceManager.GetString("FormatosImagemPermitidos", resourceCulture);
             }
         }
         
@@ -313,6 +547,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Funcionário.
+        /// </summary>
+        public static string FuncionarioRole {
+            get {
+                return ResourceManager.GetString("FuncionarioRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guardar Alterações.
         /// </summary>
         public static string GuardarAlteracoes {
@@ -322,11 +565,74 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Imagem atual.
+        /// </summary>
+        public static string ImagemAtual {
+            get {
+                return ResourceManager.GetString("ImagemAtual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imagem da Peça.
+        /// </summary>
+        public static string ImagemdoclientePeca {
+            get {
+                return ResourceManager.GetString("ImagemdoclientePeca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imagem padrão.
+        /// </summary>
+        public static string ImagempadraoPeca {
+            get {
+                return ResourceManager.GetString("ImagempadraoPeca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imagem.
+        /// </summary>
+        public static string ImagemPeca {
+            get {
+                return ResourceManager.GetString("ImagemPeca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Empresas Clientes.
         /// </summary>
         public static string IndexClientes {
             get {
                 return ResourceManager.GetString("IndexClientes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modificar Encomenda.
+        /// </summary>
+        public static string modificarEncomendaViewTitle {
+            get {
+                return ResourceManager.GetString("modificarEncomendaViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modificar Fábrica.
+        /// </summary>
+        public static string ModificarFábricaVT {
+            get {
+                return ResourceManager.GetString("ModificarFábricaVT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modificar Peça.
+        /// </summary>
+        public static string ModificarPecaVT {
+            get {
+                return ResourceManager.GetString("ModificarPecaVT", resourceCulture);
             }
         }
         
@@ -394,6 +700,24 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome do cliente.
+        /// </summary>
+        public static string NomeDoCliente {
+            get {
+                return ResourceManager.GetString("NomeDoCliente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nova encomenda.
+        /// </summary>
+        public static string NovaEncomenda {
+            get {
+                return ResourceManager.GetString("NovaEncomenda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to é de preenchimento obrigatório.
         /// </summary>
         public static string obrigatorio {
@@ -448,6 +772,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Peça.
+        /// </summary>
+        public static string Peca {
+            get {
+                return ResourceManager.GetString("Peca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Peças.
         /// </summary>
         public static string Pecas {
@@ -457,7 +790,16 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preço total.
+        ///   Looks up a localized string similar to Por favor, selecione um cliente para ver as peças.
+        /// </summary>
+        public static string PorfavorAdicioneClienteParaPecas {
+            get {
+                return ResourceManager.GetString("PorfavorAdicioneClienteParaPecas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preço total (€).
         /// </summary>
         public static string PrecoTotal {
             get {
@@ -520,6 +862,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Referência.
+        /// </summary>
+        public static string referenciaPEca {
+            get {
+                return ResourceManager.GetString("referenciaPEca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remover.
         /// </summary>
         public static string Remover {
@@ -529,7 +880,16 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selecione um país.
+        ///   Looks up a localized string similar to Função.
+        /// </summary>
+        public static string Role {
+            get {
+                return ResourceManager.GetString("Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;-- Selecione um país --&gt;.
         /// </summary>
         public static string SelecionarPais {
             get {
@@ -538,11 +898,47 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selecione estado.
+        ///   Looks up a localized string similar to Por favor, selecione um cliente da lista.
+        /// </summary>
+        public static string selecioneClientedaLista {
+            get {
+                return ResourceManager.GetString("selecioneClientedaLista", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;-- Selecione estado --&gt;.
         /// </summary>
         public static string SelecioneEstado {
             get {
                 return ResourceManager.GetString("SelecioneEstado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Por favor, selecione uma fábrica da lista.
+        /// </summary>
+        public static string selecioneFabricadaLista {
+            get {
+                return ResourceManager.GetString("selecioneFabricadaLista", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecione pelo menos uma peça.
+        /// </summary>
+        public static string SelecioneUmaPEcaPEloMenos {
+            get {
+                return ResourceManager.GetString("SelecioneUmaPEcaPEloMenos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecionado.
+        /// </summary>
+        public static string Selected {
+            get {
+                return ResourceManager.GetString("Selected", resourceCulture);
             }
         }
         
@@ -583,6 +979,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tem a certeza que deseja apagar esta encomenda?.
+        /// </summary>
+        public static string TemACertezaQueDesejaApagarEncomenda {
+            get {
+                return ResourceManager.GetString("TemACertezaQueDesejaApagarEncomenda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transportadora.
         /// </summary>
         public static string Transportadora {
@@ -597,6 +1002,15 @@ namespace Duil_App.Resources {
         public static string Utilizadores {
             get {
                 return ResourceManager.GetString("Utilizadores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utilizador.
+        /// </summary>
+        public static string UtilizadorRole {
+            get {
+                return ResourceManager.GetString("UtilizadorRole", resourceCulture);
             }
         }
         

@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Identity;
 using Duil_App.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting.Internal;
+using Duil_App.Code;
+using Duil_App.Resources;
 
 namespace Duil_App.Controllers
 {
@@ -53,7 +55,9 @@ namespace Duil_App.Controllers
                 .Include(e => e.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            return encomendas == null ? NotFound() : View(encomendas);
+			ViewBag.estadoEncomenda = EstadosTraduzidosHelper.GetUmEstadoTraduzido(encomendas.Estado.ToString());
+
+			return encomendas == null ? NotFound() : View(encomendas);
         }
 
         /// <summary>
@@ -213,7 +217,7 @@ namespace Duil_App.Controllers
 
             if (encomenda == null) return NotFound();
 
-            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)), encomenda.Estado);
+            ViewData["Estado"] = EstadosTraduzidosHelper.GetEstadosTraduzidos();
             return View(encomenda);
         }
 
@@ -280,6 +284,8 @@ namespace Duil_App.Controllers
                 .Include(e => e.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
+            ViewBag.estadoEncomenda = EstadosTraduzidosHelper.GetUmEstadoTraduzido(encomenda.Estado.ToString());
+
             return encomenda == null ? NotFound() : View(encomenda);
         }
 
@@ -340,5 +346,7 @@ namespace Duil_App.Controllers
 
             return View(encomendas);
         }
+
+        
     }
 }

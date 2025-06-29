@@ -1,20 +1,20 @@
 ﻿@model Duil_App.Models.Encomendas
+@using Duil_App.Resources
 
 @using Duil_App.Models
 
 @{
-    ViewData["Title"] = "Modificar Encomenda";
+    ViewData["Title"] = Resource.modificarEncomendaViewTitle;
     var clienteId = Model.ClienteId;
-    ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)), Model.Estado);
 }
 
 <div>
-    <a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" style="color:#6B97AC"></i></a>
+    <a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" title=@Resource.voltarTexto style="color:#6B97AC"></i></a>
 </div>
 
 <div class="d-flex justify-content-center mt-5 min-vh-100">
     <div class="container mt-5" style="width:80%">
-        <h3 class="mb-2 grey-text">Editar Encomenda @Html.DisplayFor(m => m.Id)</h3>
+        <h3 class="mb-2 grey-text">@Resource.modificarEncomendaViewTitle @Html.DisplayFor(m => m.Id)</h3>
         <hr />
         <form asp-action="Edit" id="encomendaForm">
             @Html.AntiForgeryToken()
@@ -22,7 +22,7 @@
 
             <div class="row mt-3">
                 <div class="col-md-6 mb-3">
-                    <input asp-for="IdLadoCliente" class="form-control" placeholder="Ordem de Encomenda" />
+                    <input asp-for="IdLadoCliente" class="form-control" placeholder=@Resource.OrdemDeEncomenda />
                     <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -33,23 +33,23 @@
 
             <div class="row mb-3">
                 <div class="col-md-6 mb-3">
-                    <input asp-for="Transportadora" class="form-control" placeholder="Transportadora" />
+                    <input asp-for="Transportadora" class="form-control" placeholder=@Resource.EmpresaTrans/>
                     <span asp-validation-for="Transportadora" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <input type="hidden" asp-for="ClienteId" id="ClienteId" value="@clienteId" />
-                    <input type="text" id="cliente-nome" class="form-control" placeholder="Nome do cliente" autocomplete="off" value="@Model.Cliente?.Nome" readonly />
+                    <input type="text" id="cliente-nome" class="form-control" placeholder=@Resource.NomeDoCliente autocomplete="off" value="@Model.Cliente?.Nome" readonly />
                     <span asp-validation-for="ClienteId" class="text-danger"></span>
                 </div>
             </div>
 
             <div id="pecasSection">
                 <div id="sem-cliente" class="text-center mt-4" @(string.IsNullOrEmpty(clienteId) ? "" : "style=\"display:none;\"")>
-                    <h5 class="text-muted">Por favor, adicione um cliente para ver as peças</h5>
+                    <h5 class="text-muted">@Resource.PorfavorAdicioneClienteParaPecas</h5>
                 </div>
                 <div id="pecasCards" class="row g-3"></div>
                 <div class="mt-2">
-                    <button type="button" id="addRestantesPecasBtn" class="btn btn-secondary btn-sm" style="display:none;">Adicionar restantes peças do Cliente</button>
+                    <button type="button" id="addRestantesPecasBtn" class="btn btn-secondary btn-sm" style="display:none;">@Resource.AdicionarrestantespeçasdoCliente</button>
                 </div>
             </div>
 
@@ -57,9 +57,9 @@
 
             <div class="row mt-3">
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Estado" class="form-label">Estado</label>
+                    <label asp-for="Estado" class="form-label">@Resource.Estado</label>
                     <select asp-for="Estado" asp-items="ViewBag.Estado" class="form-control">
-                        <option value="">-- Selecione Estado --</option>
+                        <option value="">@Resource.SelecioneEstado</option>
                     </select>
                     <span asp-validation-for="Estado" class="text-danger"></span>
                 </div>
@@ -67,17 +67,17 @@
 
             <div class="row mt-3">
                 <div class="col-md-6 mb-3">
-                    <input type="text" id="QuantidadeTotal_Visivel" class="form-control" placeholder="Quantidade Total" readonly />
+                    <input type="text" id="QuantidadeTotal_Visivel" class="form-control" placeholder=@Resource.QuantidadeTotal readonly />
                     <input type="hidden" asp-for="QuantidadeTotal" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <input type="text" id="TotalPrecoUnit_Visivel" class="form-control" placeholder="Preço Total (€)" readonly />
+                    <input type="text" id="TotalPrecoUnit_Visivel" class="form-control" placeholder=@Resource.PrecoTotal readonly />
                     <input type="hidden" asp-for="TotalPrecoUnit" />
                 </div>
             </div>
 
             <div class="form-group mb-3">
-                <input type="submit" value="Guardar Alterações" class="btn btn-custom mt-2" />
+                <input type="submit" value=@Resource.GuardarAlteracoes class="btn btn-custom mt-2" />
             </div>
         </form>
     </div>
@@ -142,7 +142,7 @@
                                             <p class="card-text small">Preço unit.: ${price} €</p>
                                             <div class="input-group input-group-sm mb-2">
                                                 <input type="number" class="form-control peca-qty" value="${item.quantidade}" min="1" />
-                                                <button class="btn btn-danger btn-sm remove-card">Remover</button>
+                                                <button class="btn btn-danger btn-sm remove-card">@Resource.Remover</button>
                                             </div>
                                         </div>
                                     </div>

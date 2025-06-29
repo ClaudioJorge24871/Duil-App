@@ -1,7 +1,8 @@
 ﻿@model Duil_App.Models.Fabricas
+@using Duil_App.Resources
 
 @{
-    ViewData["Title"] = "Modificar Fábrica";
+    ViewData["Title"] = Resource.ModificarFábricaVT;
 }
 
 <div>
@@ -10,7 +11,7 @@
 
 <div class="d-flex justify-content-center mt-5 min-vh-100">
     <div class="container mt-5" style="width:80%">
-        <h3 class="mb-2 grey-text">Editar informações de @Html.DisplayFor(Model => Model.Nome)</h3>
+        <h3 class="mb-2 grey-text">@Resource.ModificarFábricaVT: @Html.DisplayFor(Model => Model.Nome)</h3>
         <hr />
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -19,7 +20,7 @@
                     <input asp-for="Nif" class="form-control mb-3" readonly />
 
                     <div class="form-group mb-3">
-                        <input asp-for="Nome" class="form-control" placeholder="Nome *" />
+                        <input asp-for="Nome" class="form-control" placeholder="@Resource.Nome *" />
                         <span asp-validation-for="Nome" class="text-danger"></span>
                     </div>
 
@@ -29,33 +30,33 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <input asp-for="Telemovel" class="form-control" placeholder="Telemóvel" />
+                        <input asp-for="Telemovel" class="form-control" placeholder=@Resource.Telemovel />
                         <span asp-validation-for="Telemovel" class="text-danger"></span>
                     </div>
 
                     <div class="form-group mb-3">
-                        <input type="submit" value="Guardar Alterações" class="btn btn-custom mt-3" />
+                        <input type="submit" value=@Resource.GuardarAlteracoes class="btn btn-custom mt-3" />
                     </div>
                 </div>
 
                 <div class="col-md-5 ms-2">
                     <div class="form-group mb-3">
-                        <input asp-for="Morada" class="form-control" placeholder="Morada" />
+                        <input asp-for="Morada" class="form-control" placeholder=@Resource.Morada />
                         <span asp-validation-for="Morada" class="text-danger"></span>
                     </div>
 
                     <div class="form-group mb-3">
-                        <input asp-for="CodPostal" class="form-control" placeholder="Código postal" />
+                        <input asp-for="CodPostal" class="form-control" placeholder=@Resource.CodPostal />
                         <span asp-validation-for="CodPostal" class="text-danger"></span>
                     </div>
 
                     <div class="form-group mb-3">
-                        <input asp-for="MoradaDescarga" class="form-control" placeholder="Morada de descarga" />
+                        <input asp-for="MoradaDescarga" class="form-control" placeholder=@Resource.MoradaDescarga />
                         <span asp-validation-for="MoradaDescarga" class="text-danger"></span>
                     </div>
 
                     <input asp-for="Pais" class="form-control" readonly />
-                    <p class="text-danger mt-4">* é de preenchimento obrigatório</p>
+                    <p class="text-danger mt-4">@Resource.eDePreenchimentoObrigatorio</p>
                 </div>
             </div>
         </form>

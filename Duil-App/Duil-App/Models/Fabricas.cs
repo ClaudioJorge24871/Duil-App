@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Duil_App.Resources;
 
 namespace Duil_App.Models
 {
@@ -11,7 +12,7 @@ namespace Duil_App.Models
         /// <summary>
         /// Morada de descarga da fábrica
         /// </summary>
-        [Display(Name = "Morada de Descarga")]
+        [Display(Name = "MoradaDescarga", ResourceType = typeof(Resource))]
         [StringLength(100)]
         public string? MoradaDescarga { get; set; } 
 

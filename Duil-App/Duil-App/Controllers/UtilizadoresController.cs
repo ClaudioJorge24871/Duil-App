@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow.ValueContentAnalysis;
 using System.Runtime.Intrinsics.X86;
 using Microsoft.Identity.Client;
+using Duil_App.Resources;
 
 namespace Duil_App.Controllers
 {
@@ -57,7 +58,28 @@ namespace Duil_App.Controllers
             }
 
             var role = await _userManager.GetRolesAsync(utilizador);
-            ViewBag.UserRole = role[0];
+            switch (role[0])
+            {
+                case "Utilizador":
+                case "User":
+                    ViewBag.UserRole = Resource.UtilizadorRole;
+                    break;
+
+                case "Funcionario":
+                case "Employee":
+                    ViewBag.UserRole = Resource.FuncionarioRole;
+                    break;
+
+                case "Cliente":
+                case "Client":
+                    ViewBag.UserRole = Resource.ClienteRole;
+                    break;
+
+                default:
+                    ViewBag.UserRole = role[0];
+                    break;
+            }
+                
 
             return View(utilizador);
         }
@@ -75,7 +97,7 @@ namespace Duil_App.Controllers
             var userManager = HttpContext.RequestServices.GetRequiredService<UserManager<Utilizadores>>();
             var roles = await userManager.GetRolesAsync(utilizador);
 
-            ViewBag.AllRoles = new List<string> { "Admin", "Cliente", "Funcionario", "Utilizador" };
+            ViewBag.AllRoles = new List<string> { "Admin", Resource.ClienteRole, Resource.FuncionarioRole, Resource.UtilizadorRole};
             ViewBag.UserCurrentRole = roles.FirstOrDefault();
 
             return View(utilizador);
@@ -159,7 +181,6 @@ namespace Duil_App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
             ViewBag.AllRoles = new List<string> { "Admin", "Cliente", "Funcionario", "Utilizador" };
             ViewBag.UserCurrentRole = SelectedRole;
 

@@ -1,15 +1,17 @@
 ﻿@model Duil_App.Models.Encomendas
+@using Duil_App.Resources
 
 @{
-    ViewData["Title"] = "Apagar Encomenda";
+	ViewData["Title"] = Resource.Remover + " " + Resource.EncomendaTexto;
+	var estadoEncomenda = ViewBag.estadoEncomenda;
 }
 
 <div>
-    <a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" title="Voltar" style="color:#6B97AC"></i></a>
+    <a asp-action="Index"><i class="bi bi-arrow-left fs-3 ms-3" title=@Resource.voltarTexto style="color:#6B97AC"></i></a>
 </div>
 
 <div class="w-50" style="margin-left:10%; margin-top:5%">
-<h3>Tem a certeza que deseja apagar esta encomenda?</h3>
+<h3>@Resource.TemACertezaQueDesejaApagarEncomenda</h3>
 <div>
 		<hr class="mb-5" />
 		<dl class="row mt-4">
@@ -58,7 +60,7 @@
 					@Html.DisplayNameFor(model => model.Estado)
 			</dt>
 			<dd class="col-sm-5 mb-3">
-					@Html.DisplayFor(model => model.Estado)
+					@estadoEncomenda
 			</dd>
 		</dl>
 	</div>
@@ -66,6 +68,6 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Remover" class="btn btn-danger" />
+        <input type="submit" value=@Resource.Remover class="btn btn-danger" />
     </form>
 </div>
