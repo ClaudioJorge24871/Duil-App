@@ -61,6 +61,24 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Acesso Negado.
+        /// </summary>
+        public static string AcessoNegado {
+            get {
+                return ResourceManager.GetString("AcessoNegado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não possui permissões para aceder a esta página..
+        /// </summary>
+        public static string AcessoNegadoText {
+            get {
+                return ResourceManager.GetString("AcessoNegadoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ações.
         /// </summary>
         public static string Acoes {
@@ -214,11 +232,47 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bem-vindo ao seu perfil,.
+        /// </summary>
+        public static string bemvindoperfil {
+            get {
+                return ResourceManager.GetString("bemvindoperfil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} é obrigatório.
         /// </summary>
         public static string CampoObrigatorio {
             get {
                 return ResourceManager.GetString("CampoObrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelada.
+        /// </summary>
+        public static string Cancelada {
+            get {
+                return ResourceManager.GetString("Cancelada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelar.
+        /// </summary>
+        public static string Cancelar {
+            get {
+                return ResourceManager.GetString("Cancelar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tem a certeza que deseja terminar a sessão?.
+        /// </summary>
+        public static string CertezaLogOut {
+            get {
+                return ResourceManager.GetString("CertezaLogOut", resourceCulture);
             }
         }
         
@@ -295,6 +349,123 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Concretizada.
+        /// </summary>
+        public static string Concretizada {
+            get {
+                return ResourceManager.GetString("Concretizada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmação de Password.
+        /// </summary>
+        public static string ConfirmacaodePassword {
+            get {
+                return ResourceManager.GetString("ConfirmacaodePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmada.
+        /// </summary>
+        public static string Confirmada {
+            get {
+                return ResourceManager.GetString("Confirmada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar Email.
+        /// </summary>
+        public static string ConfirmarEmail {
+            get {
+                return ResourceManager.GetString("ConfirmarEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar Terminar Sessão.
+        /// </summary>
+        public static string ConfirmarLogOut {
+            get {
+                return ResourceManager.GetString("ConfirmarLogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar palavra-passe.
+        /// </summary>
+        public static string ConfirmarPasse {
+            get {
+                return ResourceManager.GetString("ConfirmarPasse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar registo.
+        /// </summary>
+        public static string ConfirmarRegisto {
+            get {
+                return ResourceManager.GetString("ConfirmarRegisto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmação de Email.
+        /// </summary>
+        public static string ConfirmationEmail {
+            get {
+                return ResourceManager.GetString("ConfirmationEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Por favor, confirme o seu endereço de email ao clicar no botão abaixo:.
+        /// </summary>
+        public static string ConfirmeEmailAo {
+            get {
+                return ResourceManager.GetString("ConfirmeEmailAo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmação de Registo.
+        /// </summary>
+        public static string ConfirmRegist {
+            get {
+                return ResourceManager.GetString("ConfirmRegist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar Nova Palavra-passe.
+        /// </summary>
+        public static string confnewPW {
+            get {
+                return ResourceManager.GetString("confnewPW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esta conta foi bloqueada. Por favor tente mais tarde..
+        /// </summary>
+        public static string Contabloquead {
+            get {
+                return ResourceManager.GetString("Contabloquead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A sua conta foi criada com sucesso! Por favor verifique o seu email para confirmar a sua conta..
+        /// </summary>
+        public static string ContaCriada {
+            get {
+                return ResourceManager.GetString("ContaCriada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Criar.
         /// </summary>
         public static string Criar {
@@ -309,6 +480,24 @@ namespace Duil_App.Resources {
         public static string CriarEncomenda {
             get {
                 return ResourceManager.GetString("CriarEncomenda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palavra-passe Atual.
+        /// </summary>
+        public static string curPW {
+            get {
+                return ResourceManager.GetString("curPW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dados Pessoais.
+        /// </summary>
+        public static string DadosPEssoais {
+            get {
+                return ResourceManager.GetString("DadosPEssoais", resourceCulture);
             }
         }
         
@@ -394,11 +583,47 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Distribuição.
+        /// </summary>
+        public static string Dist {
+            get {
+                return ResourceManager.GetString("Dist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to * é de preenchimento obrigatório.
         /// </summary>
         public static string eDePreenchimentoObrigatorio {
             get {
                 return ResourceManager.GetString("eDePreenchimentoObrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ocorreu um erro com o envio do Email..
+        /// </summary>
+        public static string EmailEnviadoErr {
+            get {
+                return ResourceManager.GetString("EmailEnviadoErr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Enviado com sucesso..
+        /// </summary>
+        public static string EmailEnviadoSuc {
+            get {
+                return ResourceManager.GetString("EmailEnviadoSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nome@exemplo.com.
+        /// </summary>
+        public static string EmailExemplo {
+            get {
+                return ResourceManager.GetString("EmailExemplo", resourceCulture);
             }
         }
         
@@ -421,11 +646,38 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Encomendas Concretizadas.
+        /// </summary>
+        public static string EncomendasConcretizadas {
+            get {
+                return ResourceManager.GetString("EncomendasConcretizadas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Encomenda.
         /// </summary>
         public static string EncomendaTexto {
             get {
                 return ResourceManager.GetString("EncomendaTexto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esqueceu a password?.
+        /// </summary>
+        public static string esqueceu {
+            get {
+                return ResourceManager.GetString("esqueceu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esqueceu a palavra-passe?.
+        /// </summary>
+        public static string EsqueceuPP {
+            get {
+                return ResourceManager.GetString("EsqueceuPP", resourceCulture);
             }
         }
         
@@ -480,6 +732,15 @@ namespace Duil_App.Resources {
         public static string EstadoPendente {
             get {
                 return ResourceManager.GetString("EstadoPendente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estatísticas.
+        /// </summary>
+        public static string Estatisticas {
+            get {
+                return ResourceManager.GetString("Estatisticas", resourceCulture);
             }
         }
         
@@ -619,6 +880,42 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insira o seu email..
+        /// </summary>
+        public static string Insiraemail {
+            get {
+                return ResourceManager.GetString("Insiraemail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Já existe um utilizador com esse nome..
+        /// </summary>
+        public static string JaExiste {
+            get {
+                return ResourceManager.GetString("JaExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ultima Encomenda.
+        /// </summary>
+        public static string LastE {
+            get {
+                return ResourceManager.GetString("LastE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lembrar-me?.
+        /// </summary>
+        public static string Lembrarme {
+            get {
+                return ResourceManager.GetString("Lembrarme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modificar Encomenda.
         /// </summary>
         public static string modificarEncomendaViewTitle {
@@ -678,6 +975,24 @@ namespace Duil_App.Resources {
         public static string MoradaDescarga {
             get {
                 return ResourceManager.GetString("MoradaDescarga", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peça Mais Encomendada.
+        /// </summary>
+        public static string moree {
+            get {
+                return ResourceManager.GetString("moree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mude a sua palavra-passe..
+        /// </summary>
+        public static string MudePW {
+            get {
+                return ResourceManager.GetString("MudePW", resourceCulture);
             }
         }
         
@@ -745,11 +1060,29 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nova Palavra-passe.
+        /// </summary>
+        public static string newPW {
+            get {
+                return ResourceManager.GetString("newPW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NIF.
         /// </summary>
         public static string NIF {
             get {
                 return ResourceManager.GetString("NIF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não existem encomendas para comparação..
+        /// </summary>
+        public static string NoEE {
+            get {
+                return ResourceManager.GetString("NoEE", resourceCulture);
             }
         }
         
@@ -790,11 +1123,29 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Número de Peças Associadas.
+        /// </summary>
+        public static string NPecas {
+            get {
+                return ResourceManager.GetString("NPecas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to é de preenchimento obrigatório.
         /// </summary>
         public static string obrigatorio {
             get {
                 return ResourceManager.GetString("obrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Obrigado por se registar na nossa plataforma.
+        /// </summary>
+        public static string Obrugadoregisto {
+            get {
+                return ResourceManager.GetString("Obrugadoregisto", resourceCulture);
             }
         }
         
@@ -853,6 +1204,24 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palavra-passe.
+        /// </summary>
+        public static string Palavrapasse {
+            get {
+                return ResourceManager.GetString("Palavrapasse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As palavras-passses não coincidem.
+        /// </summary>
+        public static string PasswordsNaoCoincidem {
+            get {
+                return ResourceManager.GetString("PasswordsNaoCoincidem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Peça.
         /// </summary>
         public static string Peca {
@@ -867,6 +1236,15 @@ namespace Duil_App.Resources {
         public static string Pecas {
             get {
                 return ResourceManager.GetString("Pecas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pendente.
+        /// </summary>
+        public static string Pendente {
+            get {
+                return ResourceManager.GetString("Pendente", resourceCulture);
             }
         }
         
@@ -907,6 +1285,24 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Por favor insira a sua password.
+        /// </summary>
+        public static string PVentrepw {
+            get {
+                return ResourceManager.GetString("PVentrepw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Por favor confirme a sua password.
+        /// </summary>
+        public static string PWCONFirm {
+            get {
+                return ResourceManager.GetString("PWCONFirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantidade.
         /// </summary>
         public static string Quantidade {
@@ -943,6 +1339,42 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Redefinir Palavra-passe.
+        /// </summary>
+        public static string REdPW {
+            get {
+                return ResourceManager.GetString("REdPW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A sua palavra-passe foi redefinida com sucesso..
+        /// </summary>
+        public static string RedSuc {
+            get {
+                return ResourceManager.GetString("RedSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-enviar.
+        /// </summary>
+        public static string Reenviar {
+            get {
+                return ResourceManager.GetString("Reenviar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-enviar confirmação de email.
+        /// </summary>
+        public static string ReEvniarEmailLoginPage {
+            get {
+                return ResourceManager.GetString("ReEvniarEmailLoginPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Referência.
         /// </summary>
         public static string Referencia {
@@ -961,11 +1393,47 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registar como novo utilizador.
+        /// </summary>
+        public static string Registarcomonovoutilizador {
+            get {
+                return ResourceManager.GetString("Registarcomonovoutilizador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registar-se.
+        /// </summary>
+        public static string RegistarSE {
+            get {
+                return ResourceManager.GetString("RegistarSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remover.
         /// </summary>
         public static string Remover {
             get {
                 return ResourceManager.GetString("Remover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-enviar email de confirmação.
+        /// </summary>
+        public static string RenviarEmail {
+            get {
+                return ResourceManager.GetString("RenviarEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redefinir Palavra-Passe.
+        /// </summary>
+        public static string RePW {
+            get {
+                return ResourceManager.GetString("RePW", resourceCulture);
             }
         }
         
@@ -984,6 +1452,15 @@ namespace Duil_App.Resources {
         public static string Role {
             get {
                 return ResourceManager.GetString("Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to segundos.
+        /// </summary>
+        public static string segundos {
+            get {
+                return ResourceManager.GetString("segundos", resourceCulture);
             }
         }
         
@@ -1051,6 +1528,24 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Será redirecionado para a página de login em.
+        /// </summary>
+        public static string SeraRedirec {
+            get {
+                return ResourceManager.GetString("SeraRedirec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sim, terminar sessão.
+        /// </summary>
+        public static string SimLogOut {
+            get {
+                return ResourceManager.GetString("SimLogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sobre o Site.
         /// </summary>
         public static string SobreoSite {
@@ -1105,11 +1600,38 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total de Encomendas.
+        /// </summary>
+        public static string TotalEncomendas {
+            get {
+                return ResourceManager.GetString("TotalEncomendas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total de Peças Encomendadas.
+        /// </summary>
+        public static string TotalEnee {
+            get {
+                return ResourceManager.GetString("TotalEnee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transportadora.
         /// </summary>
         public static string Transportadora {
             get {
                 return ResourceManager.GetString("Transportadora", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atualizar Password.
+        /// </summary>
+        public static string upPW {
+            get {
+                return ResourceManager.GetString("upPW", resourceCulture);
             }
         }
         
@@ -1141,11 +1663,29 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Por favor verifique o seu email para restaurar a sua password..
+        /// </summary>
+        public static string VerifiqeuEmailPW {
+            get {
+                return ResourceManager.GetString("VerifiqeuEmailPW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voltar.
         /// </summary>
         public static string voltarTexto {
             get {
                 return ResourceManager.GetString("voltarTexto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Os seus Dados Pessoais.
+        /// </summary>
+        public static string youDP {
+            get {
+                return ResourceManager.GetString("youDP", resourceCulture);
             }
         }
     }

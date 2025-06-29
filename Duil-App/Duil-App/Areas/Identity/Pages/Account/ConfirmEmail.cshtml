@@ -1,18 +1,23 @@
 ﻿@page
 @model ConfirmEmailModel
+@using Duil_App.Resources
+
 @{
-    ViewData["Title"] = "Confirmar Email";
+    ViewData["Title"] = Resource.ConfirmarEmail;
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="card shadow-sm p-4 rounded-4 text-center" style="max-width: 500px; width: 100%;">
+        <h2 class="mb-3 text-primary texto-cor-pink">@ViewData["Title"]</h2>
 
-<br />
-<p class="text-center text-muted mt-3">
-    Será redirecionado para a página de login em <span id="counter">3</span> segundos...
-</p>
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<!--Contador decrescente de Redirecionamento-->
+        <p class="text-muted mt-4 mb-0">
+            @Resource.SeraRedirec <span id="counter" class="fw-bold text-dark">3</span> @Resource.segundos...
+        </p>
+    </div>
+</div>
+
 @section Scripts {
     <script>
         let counter = 3;
@@ -26,4 +31,3 @@
         }, 1000);
     </script>
 }
-

@@ -1,8 +1,9 @@
 ﻿@page
 @model LoginModel
+@using Duil_App.Resources
 
 @{
-    ViewData["Title"] = "Iniciar sessão";
+    ViewData["Title"] = Resource.IniciarSessao;
 }
 
 <style>
@@ -37,13 +38,13 @@
                 <hr style="border: 2px solid #D6A187" />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3 mt-5">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="@Resource.EmailExemplo" />
                     <label asp-for="Input.Email" class="form-label">Email</label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Palavra-passe</label>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder=@Resource.Palavrapasse />
+                    <label asp-for="Input.Password" class="form-label">@Resource.Palavrapasse</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="checkbox mb-3">
@@ -53,18 +54,18 @@
                     </label>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg text-white" style="background-color:#D6A187">Iniciar sessão</button>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg text-white" style="background-color:#D6A187">@Resource.IniciarSessao</button>
                 </div>
                 <br />
                 <div>
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Esqueceu a palavra-passe?</a>
+                        <a id="forgot-password" asp-page="./ForgotPassword">@Resource.EsqueceuPP</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registar como novo utilizador</a>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@Resource.Registarcomonovoutilizador</a>
                     </p>
                     <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Re-enviar confirmação de email</a>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">@Resource.ReEvniarEmailLoginPage</a>
                     </p>
                 </div>
             </form>

@@ -480,4 +480,184 @@
   <data name="UtilizadorRole" xml:space="preserve">
     <value>Utilizador</value>
   </data>
+  <data name="ConfirmarEmail" xml:space="preserve">
+    <value>Confirmar Email</value>
+  </data>
+  <data name="ConfirmarPasse" xml:space="preserve">
+    <value>Confirmar palavra-passe</value>
+  </data>
+  <data name="ConfirmarRegisto" xml:space="preserve">
+    <value>Confirmar registo</value>
+  </data>
+  <data name="ConfirmationEmail" xml:space="preserve">
+    <value>Confirmação de Email</value>
+  </data>
+  <data name="ConfirmeEmailAo" xml:space="preserve">
+    <value>Por favor, confirme o seu endereço de email ao clicar no botão abaixo:</value>
+  </data>
+  <data name="EmailEnviadoErr" xml:space="preserve">
+    <value>Ocorreu um erro com o envio do Email.</value>
+  </data>
+  <data name="EmailEnviadoSuc" xml:space="preserve">
+    <value>Email Enviado com sucesso.</value>
+  </data>
+  <data name="EmailExemplo" xml:space="preserve">
+    <value>nome@exemplo.com</value>
+  </data>
+  <data name="EsqueceuPP" xml:space="preserve">
+    <value>Esqueceu a palavra-passe?</value>
+  </data>
+  <data name="JaExiste" xml:space="preserve">
+    <value>Já existe um utilizador com esse nome.</value>
+  </data>
+  <data name="Lembrarme" xml:space="preserve">
+    <value>Lembrar-me?</value>
+  </data>
+  <data name="Obrugadoregisto" xml:space="preserve">
+    <value>Obrigado por se registar na nossa plataforma</value>
+  </data>
+  <data name="Palavrapasse" xml:space="preserve">
+    <value>Palavra-passe</value>
+  </data>
+  <data name="PasswordsNaoCoincidem" xml:space="preserve">
+    <value>As palavras-passses não coincidem</value>
+  </data>
+  <data name="ReEvniarEmailLoginPage" xml:space="preserve">
+    <value>Re-enviar confirmação de email</value>
+  </data>
+  <data name="Registarcomonovoutilizador" xml:space="preserve">
+    <value>Registar como novo utilizador</value>
+  </data>
+  <data name="RegistarSE" xml:space="preserve">
+    <value>Registar-se</value>
+  </data>
+  <data name="segundos" xml:space="preserve">
+    <value>segundos</value>
+  </data>
+  <data name="SeraRedirec" xml:space="preserve">
+    <value>Será redirecionado para a página de login em</value>
+  </data>
+  <data name="AcessoNegado" xml:space="preserve">
+    <value>Acesso Negado</value>
+  </data>
+  <data name="AcessoNegadoText" xml:space="preserve">
+    <value>Não possui permissões para aceder a esta página.</value>
+  </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="CertezaLogOut" xml:space="preserve">
+    <value>Tem a certeza que deseja terminar a sessão?</value>
+  </data>
+  <data name="ConfirmacaodePassword" xml:space="preserve">
+    <value>Confirmação de Password</value>
+  </data>
+  <data name="ConfirmarLogOut" xml:space="preserve">
+    <value>Confirmar Terminar Sessão</value>
+  </data>
+  <data name="ConfirmRegist" xml:space="preserve">
+    <value>Confirmação de Registo</value>
+  </data>
+  <data name="Contabloquead" xml:space="preserve">
+    <value>Esta conta foi bloqueada. Por favor tente mais tarde.</value>
+  </data>
+  <data name="ContaCriada" xml:space="preserve">
+    <value>A sua conta foi criada com sucesso! Por favor verifique o seu email para confirmar a sua conta.</value>
+  </data>
+  <data name="esqueceu" xml:space="preserve">
+    <value>Esqueceu a password?</value>
+  </data>
+  <data name="Insiraemail" xml:space="preserve">
+    <value>Insira o seu email.</value>
+  </data>
+  <data name="MudePW" xml:space="preserve">
+    <value>Mude a sua palavra-passe.</value>
+  </data>
+  <data name="PVentrepw" xml:space="preserve">
+    <value>Por favor insira a sua password</value>
+  </data>
+  <data name="PWCONFirm" xml:space="preserve">
+    <value>Por favor confirme a sua password</value>
+  </data>
+  <data name="REdPW" xml:space="preserve">
+    <value>Redefinir Palavra-passe</value>
+  </data>
+  <data name="RedSuc" xml:space="preserve">
+    <value>A sua palavra-passe foi redefinida com sucesso.</value>
+  </data>
+  <data name="Reenviar" xml:space="preserve">
+    <value>Re-enviar</value>
+  </data>
+  <data name="RenviarEmail" xml:space="preserve">
+    <value>Re-enviar email de confirmação</value>
+  </data>
+  <data name="SimLogOut" xml:space="preserve">
+    <value>Sim, terminar sessão</value>
+  </data>
+  <data name="VerifiqeuEmailPW" xml:space="preserve">
+    <value>Por favor verifique o seu email para restaurar a sua password.</value>
+  </data>
+  <data name="bemvindoperfil" xml:space="preserve">
+    <value>Bem-vindo ao seu perfil,</value>
+  </data>
+  <data name="Cancelada" xml:space="preserve">
+    <value>Cancelada</value>
+  </data>
+  <data name="Concretizada" xml:space="preserve">
+    <value>Concretizada</value>
+  </data>
+  <data name="Confirmada" xml:space="preserve">
+    <value>Confirmada</value>
+  </data>
+  <data name="confnewPW" xml:space="preserve">
+    <value>Confirmar Nova Palavra-passe</value>
+  </data>
+  <data name="curPW" xml:space="preserve">
+    <value>Palavra-passe Atual</value>
+  </data>
+  <data name="DadosPEssoais" xml:space="preserve">
+    <value>Dados Pessoais</value>
+  </data>
+  <data name="Dist" xml:space="preserve">
+    <value>Distribuição</value>
+  </data>
+  <data name="EncomendasConcretizadas" xml:space="preserve">
+    <value>Encomendas Concretizadas</value>
+  </data>
+  <data name="Estatisticas" xml:space="preserve">
+    <value>Estatísticas</value>
+  </data>
+  <data name="LastE" xml:space="preserve">
+    <value>Ultima Encomenda</value>
+  </data>
+  <data name="moree" xml:space="preserve">
+    <value>Peça Mais Encomendada</value>
+  </data>
+  <data name="newPW" xml:space="preserve">
+    <value>Nova Palavra-passe</value>
+  </data>
+  <data name="NoEE" xml:space="preserve">
+    <value>Não existem encomendas para comparação.</value>
+  </data>
+  <data name="NPecas" xml:space="preserve">
+    <value>Número de Peças Associadas</value>
+  </data>
+  <data name="Pendente" xml:space="preserve">
+    <value>Pendente</value>
+  </data>
+  <data name="RePW" xml:space="preserve">
+    <value>Redefinir Palavra-Passe</value>
+  </data>
+  <data name="TotalEncomendas" xml:space="preserve">
+    <value>Total de Encomendas</value>
+  </data>
+  <data name="TotalEnee" xml:space="preserve">
+    <value>Total de Peças Encomendadas</value>
+  </data>
+  <data name="upPW" xml:space="preserve">
+    <value>Atualizar Password</value>
+  </data>
+  <data name="youDP" xml:space="preserve">
+    <value>Os seus Dados Pessoais</value>
+  </data>
 </root>

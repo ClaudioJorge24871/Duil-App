@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Duil_App.Models;
 using Microsoft.AspNetCore.Authorization;
+using Duil_App.Resources;
 
 namespace Duil_App.Areas.Identity.Pages.Account
 {
@@ -55,7 +56,7 @@ namespace Duil_App.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
             [EmailAddress]
             public string Email { get; set; }
 
@@ -63,7 +64,7 @@ namespace Duil_App.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
@@ -71,7 +72,7 @@ namespace Duil_App.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Display(Name = "Lembrar-me?")]
+            [Display(Name = "Lembrarme", ResourceType = typeof(Resource))]
             public bool RememberMe { get; set; }
         }
 

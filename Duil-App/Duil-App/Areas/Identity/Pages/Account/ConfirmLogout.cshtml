@@ -1,7 +1,8 @@
 ﻿@page
 @model ConfirmLogoutModel
+@using Duil_App.Resources
 @{
-    ViewData["Title"] = "Confirmar Terminar Sessão";
+    ViewData["Title"] = Resource.ConfirmarLogOut;
     ViewData["HideNavbar"] = true;
 }
 
@@ -17,11 +18,11 @@
 <div class="d-flex justify-content-center align-items-center min-vh-100">
     <div class="text-center">
         <h2>Terminar Sessão</h2>
-        <p>Tem a certeza que deseja terminar a sessão?</p>
+        <p>@Resource.CertezaLogOut</p>
 
         <form method="post">
-            <button type="submit" class="btn btn-danger m-2">Sim, terminar sessão</button>
-            <a asp-page="/Index" class="btn btn-secondary m-2">Cancelar</a>
+            <button type="submit" class="btn btn-danger m-2">@Resource.SimLogOut</button>
+            <a asp-page="/Index" class="btn btn-secondary m-2">@Resource.Cancelar</a>
         </form>
     </div>
 </div>

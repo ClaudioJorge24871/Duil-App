@@ -1,10 +1,11 @@
 ﻿@page
 @model LockoutModel
+@using Duil_App.Resources
 @{
-    ViewData["Title"] = "Conta Bloqueada";
+    ViewData["Title"] = Resource.Contabloquead;
 }
 
 <header>
     <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">Esta conta foi bloqueada. Por favor tente mais tarde.</p>
+    <p class="text-danger">@Resource.Contabloquead</p>
 </header>

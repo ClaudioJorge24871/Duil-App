@@ -1,7 +1,8 @@
 ﻿@page
 @model IndexModel
+@using Duil_App.Resources
 @{
-    ViewData["Title"] = "Dados Pessoais";
+    ViewData["Title"] = Resource.DadosPEssoais;
     ViewData["ActivePage"] = ManageNavPages.Index;
     ViewData["BodyClass"] = "paginas-index-fundo";
 }
@@ -10,7 +11,7 @@
     <partial name="_StatusMessage" for="StatusMessage" />
 
     <div class="mb-4">
-        <h3 style="display:inline">Os seus dados pessoais</h3>
+        <h3 style="display:inline">@Resource.youDP</h3>
         <i class="ms-3 bi bi-person-lines-fill text-secondary"></i>
         <hr class="mt-2 mb-4" />
     </div>
@@ -22,26 +23,26 @@
                 <input asp-for="Email" class="form-control" disabled />
             </div>
             <div class="col-md-6">
-                <label asp-for="Input.Nome" class="form-label fw-semibold">Nome</label>
+                <label asp-for="Input.Nome" class="form-label fw-semibold">@Resource.Nome</label>
                 <input asp-for="Input.Nome" class="form-control" />
                 <span asp-validation-for="Input.Nome" class="text-danger"></span>
             </div>
             <div class="col-md-6">
-                <label asp-for="Pais" class="form-label fw-semibold">País</label>
+                <label asp-for="Pais" class="form-label fw-semibold">@Resource.Pais</label>
                 <input asp-for="Pais" class="form-control" disabled />
             </div>
             <div class="col-md-6">
-                <label asp-for="Input.Morada" class="form-label fw-semibold">Morada</label>
+                <label asp-for="Input.Morada" class="form-label fw-semibold">@Resource.Morada</label>
                 <input asp-for="Input.Morada" class="form-control" />
                 <span asp-validation-for="Input.Morada" class="text-danger"></span>
             </div>
             <div class="col-md-6">
-                <label asp-for="Input.CodPostal" class="form-label fw-semibold">Código Postal</label>
+                <label asp-for="Input.CodPostal" class="form-label fw-semibold">@Resource.CodPostal</label>
                 <input asp-for="Input.CodPostal" class="form-control" />
                 <span asp-validation-for="Input.CodPostal" class="text-danger"></span>
             </div>
             <div class="col-md-6">
-                <label asp-for="Input.Telemovel" class="form-label fw-semibold">Telemóvel</label>
+                <label asp-for="Input.Telemovel" class="form-label fw-semibold">@Resource.Telemovel</label>
                 <input asp-for="Input.Telemovel" class="form-control" />
                 <span asp-validation-for="Input.Telemovel" class="text-danger"></span>
             </div>
@@ -49,7 +50,7 @@
 
         <div class="mt-4 text-end">
             <button id="update-profile-button" type="submit" class="btn px-4 py-2 navbar-blue text-white rounded-3">
-                Confirmar alterações
+                @Resource.GuardarAlteracoes
             </button>
         </div>
     </form>

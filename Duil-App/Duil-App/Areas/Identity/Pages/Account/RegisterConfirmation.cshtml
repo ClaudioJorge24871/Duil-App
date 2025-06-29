@@ -1,13 +1,15 @@
 ﻿@page
 @model RegisterConfirmationModel
+@using Duil_App.Resources
+<link rel="stylesheet" href="~/css/site.css" />
+
 @{
-    ViewData["Title"] = "Confirmação de Registo";
+    ViewData["Title"] = Resource.ConfirmRegist;
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-<p>
-    A sua conta foi criada com sucesso! Por favor verifique o seu email para confirmar a sua conta. 
-</p>
-}
-
+<div class="d-flex justify-content-center align-items-center flex-column text-center mt-5">
+    <h1 class="texto-cor-pink">@ViewData["Title"]</h1>
+    <p class="mt-3 fs-5 text-muted">
+        @Resource.ContaCriada
+    </p>
+</div>

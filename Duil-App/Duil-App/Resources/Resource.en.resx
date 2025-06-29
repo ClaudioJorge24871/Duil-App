@@ -435,14 +435,83 @@
   <data name="Selected" xml:space="preserve">
     <value>Selected</value>
   </data>
+  <data name="AcessoNegado" xml:space="preserve">
+    <value>Access Denied</value>
+  </data>
+  <data name="AcessoNegadoText" xml:space="preserve">
+    <value>You dont have permission to enter this page</value>
+  </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CertezaLogOut" xml:space="preserve">
+    <value>Are you sure you want to leave?</value>
+  </data>
   <data name="ClienteRole" xml:space="preserve">
     <value>Client</value>
+  </data>
+  <data name="ConfirmacaodePassword" xml:space="preserve">
+    <value>Password confirmation</value>
+  </data>
+  <data name="ConfirmarEmail" xml:space="preserve">
+    <value>Confirm Email</value>
+  </data>
+  <data name="ConfirmarLogOut" xml:space="preserve">
+    <value>Confirm Log Out</value>
+  </data>
+  <data name="ConfirmarPasse" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="ConfirmarRegisto" xml:space="preserve">
+    <value>Confirm registration</value>
+  </data>
+  <data name="ConfirmationEmail" xml:space="preserve">
+    <value>Email confirmation</value>
+  </data>
+  <data name="ConfirmeEmailAo" xml:space="preserve">
+    <value>Please, confirm you email by clicking on the button bellow.</value>
+  </data>
+  <data name="ConfirmRegist" xml:space="preserve">
+    <value>Registration confirm</value>
+  </data>
+  <data name="Contabloquead" xml:space="preserve">
+    <value>Blocked Accout. Please try again later.</value>
+  </data>
+  <data name="ContaCriada" xml:space="preserve">
+    <value>You account was created successfully. Please check you email to confirm it.</value>
+  </data>
+  <data name="EmailEnviadoErr" xml:space="preserve">
+    <value>An error occurred while trying to send the confimation email.</value>
+  </data>
+  <data name="EmailEnviadoSuc" xml:space="preserve">
+    <value>The confirmation email was successfully sent</value>
+  </data>
+  <data name="EmailExemplo" xml:space="preserve">
+    <value>name@example.com</value>
+  </data>
+  <data name="esqueceu" xml:space="preserve">
+    <value>Forgot password?</value>
+  </data>
+  <data name="EsqueceuPP" xml:space="preserve">
+    <value>Forgot password?</value>
   </data>
   <data name="FuncionarioRole" xml:space="preserve">
     <value>Employee</value>
   </data>
   <data name="IniciarSessao" xml:space="preserve">
     <value>Log In</value>
+  </data>
+  <data name="Insiraemail" xml:space="preserve">
+    <value>Insert you email.</value>
+  </data>
+  <data name="JaExiste" xml:space="preserve">
+    <value>There is already a user with that name.</value>
+  </data>
+  <data name="Lembrarme" xml:space="preserve">
+    <value>Remember me?</value>
+  </data>
+  <data name="MudePW" xml:space="preserve">
+    <value>Change your password.</value>
   </data>
   <data name="NavClientes" xml:space="preserve">
     <value>Clients</value>
@@ -465,14 +534,56 @@
   <data name="NavUtilizadores" xml:space="preserve">
     <value>Users</value>
   </data>
+  <data name="Obrugadoregisto" xml:space="preserve">
+    <value>Thanks for registering</value>
+  </data>
   <data name="Ola" xml:space="preserve">
     <value>Hi </value>
+  </data>
+  <data name="Palavrapasse" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordsNaoCoincidem" xml:space="preserve">
+    <value>The password and confirmation password do not match.</value>
   </data>
   <data name="Perfil" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="PVentrepw" xml:space="preserve">
+    <value>Please enter your password.</value>
+  </data>
+  <data name="PWCONFirm" xml:space="preserve">
+    <value>Please confirm your password.</value>
+  </data>
+  <data name="REdPW" xml:space="preserve">
+    <value>Reset password</value>
+  </data>
+  <data name="RedSuc" xml:space="preserve">
+    <value>Your password was sucessfully updated</value>
+  </data>
+  <data name="Reenviar" xml:space="preserve">
+    <value>Re-send</value>
+  </data>
+  <data name="ReEvniarEmailLoginPage" xml:space="preserve">
+    <value>Re-send email confirmation</value>
+  </data>
+  <data name="Registarcomonovoutilizador" xml:space="preserve">
+    <value>Resgister as a new user</value>
+  </data>
+  <data name="RegistarSE" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
   <data name="Resgistar" xml:space="preserve">
     <value>Sign Up</value>
+  </data>
+  <data name="segundos" xml:space="preserve">
+    <value>seconds</value>
+  </data>
+  <data name="SeraRedirec" xml:space="preserve">
+    <value>You will be redirected to the Login page in </value>
+  </data>
+  <data name="SimLogOut" xml:space="preserve">
+    <value>Yes, end session</value>
   </data>
   <data name="SobreoSite" xml:space="preserve">
     <value>About</value>
@@ -482,5 +593,68 @@
   </data>
   <data name="UtilizadorRole" xml:space="preserve">
     <value>User</value>
+  </data>
+  <data name="VerifiqeuEmailPW" xml:space="preserve">
+    <value>Please check you email to restore your password</value>
+  </data>
+  <data name="bemvindoperfil" xml:space="preserve">
+    <value>Welcome to your profile,</value>
+  </data>
+  <data name="Cancelada" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="Concretizada" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="Confirmada" xml:space="preserve">
+    <value>Confirmed</value>
+  </data>
+  <data name="confnewPW" xml:space="preserve">
+    <value>Confirm New Password</value>
+  </data>
+  <data name="curPW" xml:space="preserve">
+    <value>Current Password</value>
+  </data>
+  <data name="Dist" xml:space="preserve">
+    <value>Distribution</value>
+  </data>
+  <data name="EncomendasConcretizadas" xml:space="preserve">
+    <value>Completed Orders</value>
+  </data>
+  <data name="Estatisticas" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="LastE" xml:space="preserve">
+    <value>Last Order</value>
+  </data>
+  <data name="moree" xml:space="preserve">
+    <value>Product more ordered</value>
+  </data>
+  <data name="newPW" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="NoEE" xml:space="preserve">
+    <value>There are no orders for comparison.</value>
+  </data>
+  <data name="NPecas" xml:space="preserve">
+    <value>Number of associated products</value>
+  </data>
+  <data name="Pendente" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="RePW" xml:space="preserve">
+    <value>Reset passsword</value>
+  </data>
+  <data name="TotalEncomendas" xml:space="preserve">
+    <value>Total Orders</value>
+  </data>
+  <data name="TotalEnee" xml:space="preserve">
+    <value>Total orders requested</value>
+  </data>
+  <data name="upPW" xml:space="preserve">
+    <value>Updated Password</value>
+  </data>
+  <data name="youDP" xml:space="preserve">
+    <value>Your Pesonal Data</value>
   </data>
 </root>

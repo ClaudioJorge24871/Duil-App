@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Duil_App.Models
+@using Duil_App.Resources
 @inject UserManager<Utilizadores> UserManager
 
 @{
@@ -7,7 +8,7 @@
         ? parentLayout.ToString()
         : "/Areas/Identity/Pages/_Layout.cshtml";
 
-    ViewData["Title"] = "Perfil";
+    ViewData["Title"] = Resource.Perfil;
     ViewData["BodyClass"] = "paginas-index-fundo";
 
     var user = UserManager.GetUserAsync(User).Result;
@@ -15,7 +16,7 @@
 
 <div class="container-fluid d-flex justify-content-center align-items-center position-relative"
      style="height: 250px; background-color: #b4bdc1;">
-    <h1 class="fw-light text-white">Bem-vindo ao seu perfil, <strong>@user.Nome!</strong></h1>
+    <h1 class="fw-light text-white">@Resource.bemvindoperfil <strong>@user.Nome!</strong></h1>
 </div>
 
 <div class="container p-5 mt-4">
