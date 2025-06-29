@@ -2,9 +2,20 @@
 @inject SignInManager<Utilizadores> SignInManager
 @{
 }
-<ul class="nav nav-pills flex-column">
-    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Dados Pessoais</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Redifinir Palavra-Passe</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.UserStatisticsNavClass(ViewContext)" id="statistics" asp-page="./Statistics">Estatísticas</a></li>
-
+<ul class="nav flex-column paginas-index-fundo p-3 rounded-3">
+    <li class="nav-item mb-2">
+        <a class="nav-link d-flex align-items-center gap-2 fw-semibold  @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">
+            <i class="bi bi-person-fill"></i> Dados Pessoais
+        </a>
+    </li>
+    <li class="nav-item mb-2">
+        <a class="nav-link d-flex align-items-center gap-2 fw-semibold @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">
+            <i class="bi bi-shield-lock-fill"></i> Redefinir Palavra-Passe
+        </a>
+    </li>
+    <li class="nav-item mb-2">
+        <a class="nav-link d-flex align-items-center gap-2 fw-semibold @ManageNavPages.UserStatisticsNavClass(ViewContext)" id="statistics" asp-page="./Statistics">
+            <i class="bi bi-bar-chart-line-fill"></i> Estatísticas
+        </a>
+    </li>
 </ul>

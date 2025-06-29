@@ -1,60 +1,84 @@
 ﻿@page
 @model Duil_App.Areas.Identity.Pages.Account.Manage.StatisticsModel
 @{
-    ViewData["Title"] = "Estatísicas";
+    ViewData["Title"] = "Estatísticas";
     ViewData["ActivePage"] = ManageNavPages.Statistics;
+    ViewData["BodyClass"] = "paginas-index-fundo";
 }
 
-<h3>@ViewData["Title"]</h3>
-
-<div class="row">
-    <div class="col-md-9">
-        <div class="d-flex">
-            <ul class="list-group flex-grow-1 me-3">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-bag-fill me-2 text-primary"></i> Total de Encomendas</span>
-                    <strong>@Model.TotalEncomendas</strong>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-check-circle-fill me-2 text-success"></i> Encomendas Concretizadas</span>
-                    <strong>@Model.EncomendasConcretizadas</strong>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-gear-fill me-2 text-warning"></i> Número de Peças Associadas</span>
-                    <strong>@Model.NumeroPecas</strong>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-calendar-check-fill me-2 text-info"></i> Última Encomenda</span>
-                    <strong>
-                        @(Model.DataUltimaEncomenda.HasValue
-                            ? Model.DataUltimaEncomenda.Value.ToString("dd/MM/yyyy")
-                            : "N/A")
-                    </strong>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-award-fill me-2 text-secondary"></i> Peça Mais Encomendada</span>
-                    <strong>@(!string.IsNullOrEmpty(Model.PecaMaisEncomendada) ? Model.PecaMaisEncomendada : "N/A")</strong>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-boxes me-2 text-dark"></i> Total de Peças Encomendadas</span>
-                    <strong>@Model.TotalQuantidadePecas</strong>
-                </li>
-            </ul>
-
-            <div class="d-flex flex-column align-items-center ms-3">
-                <h5 class="mb-3">Distribuição</h5>
-                <canvas id="encomendasPieChart" style="width:200px; height:200px;"></canvas>
-            </div>
-        </div>
+<div class="container pt-3 px-5">
+    <div class="mb-4">
+        <h3 style="display:inline">@ViewData["Title"]</h3>
+        <i class="ms-3 bi bi-bar-chart-fill text-secondary"></i>
+        <hr class="mt-2 mb-4" />
     </div>
 
-    <div class="col-md-2 mt-4">
-        <ul class="list-inline">
-            <li class="list-inline-item"><span class="legend-box bg-warning"></span> Pendente</li>
-            <li class="list-inline-item"><span class="legend-box bg-primary"></span> Confirmada</li>
-            <li class="list-inline-item"><span class="legend-box bg-success"></span> Concretizada</li>
-            <li class="list-inline-item"><span class="legend-box bg-danger"></span> Cancelada</li>
-        </ul>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="d-flex">
+                <ul class="list-group flex-grow-1 me-3 shadow-sm">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-bag-fill me-2 text-primary"></i> Total de Encomendas</span>
+                        <strong>@Model.TotalEncomendas</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-check-circle-fill me-2 text-success"></i> Encomendas Concretizadas</span>
+                        <strong>@Model.EncomendasConcretizadas</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-gear-fill me-2 text-warning"></i> Número de Peças Associadas</span>
+                        <strong>@Model.NumeroPecas</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-calendar-check-fill me-2 text-info"></i> Última Encomenda</span>
+                        <strong>
+                            @(Model.DataUltimaEncomenda.HasValue
+                                ? Model.DataUltimaEncomenda.Value.ToString("dd/MM/yyyy")
+                                : "N/A")
+                        </strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-award-fill me-2 text-secondary"></i> Peça Mais Encomendada</span>
+                        <strong>@(!string.IsNullOrEmpty(Model.PecaMaisEncomendada) ? Model.PecaMaisEncomendada : "N/A")</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-boxes me-2 text-dark"></i> Total de Peças Encomendadas</span>
+                        <strong>@Model.TotalQuantidadePecas</strong>
+                    </li>
+                </ul>
+
+                <div class="d-flex flex-column align-items-center ms-5">
+                    <h5 class="mb-3">Distribuição</h5>
+
+                    @if (Model.TotalEncomendas == 0)
+                    {
+                        <p class="text-muted">Não existem encomendas para comparação.</p>
+                    }
+                    else
+                    {
+                        <canvas id="encomendasPieChart" style="width:200px; height:200px;"></canvas>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-2 mt-4">
+            <ul style="list-style:none; padding-left:0;">
+                <li style="display:flex; align-items:center; margin-bottom:0.25rem;">
+                    <span class="legend-box bg-warning"></span> Pendente
+                </li>
+                <li style="display:flex; align-items:center; margin-bottom:0.25rem;">
+                    <span class="legend-box bg-primary"></span> Confirmada
+                </li>
+                <li style="display:flex; align-items:center; margin-bottom:0.25rem;">
+                    <span class="legend-box bg-success"></span> Concretizada
+                </li>
+                <li style="display:flex; align-items:center;">
+                    <span class="legend-box bg-danger"></span> Cancelada
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -74,7 +98,7 @@
     <script>
         const ctx = document.getElementById('encomendasPieChart').getContext('2d');
         const encomendasPieChart = new Chart(ctx, {
-            type: 'pie',
+            type: 'doughnut', // gráfico de donut
             data: {
                 labels: ['Pendente', 'Confirmada', 'Concretizada', 'Cancelada'],
                 datasets: [{
@@ -86,22 +110,23 @@
         @Model.NumCancelada
                             ],
                     backgroundColor: [
-                        'rgba(255, 193, 7, 0.7)',
-                        'rgba(13, 110, 253, 0.7)',
-                        'rgba(40, 167, 69, 0.7)',
-                        'rgba(220, 53, 69, 0.7)'
+                        'rgba(255, 223, 128, 0.7)',    // amarelo suave
+                        'rgba(100, 149, 237, 0.7)',    // azul claro (cornflower blue)
+                        'rgba(144, 238, 144, 0.7)',    // verde claro (light green)
+                        'rgba(255, 182, 193, 0.7)'     // rosa claro (light pink)
                     ],
                     borderColor: [
-                        'rgba(255, 193, 7, 1)',
-                        'rgba(13, 110, 253, 1)',
-                        'rgba(40, 167, 69, 1)',
-                        'rgba(220, 53, 69, 1)'
+                        'rgba(255, 223, 128, 1)',
+                        'rgba(100, 149, 237, 1)',
+                        'rgba(144, 238, 144, 1)',
+                        'rgba(255, 182, 193, 1)'
                     ],
                     borderWidth: 1
                 }]
             },
             options: {
                 responsive: true,
+                cutout: '50%',
                 plugins: {
                     legend: { display: false },
                     tooltip: {
@@ -119,3 +144,27 @@
         });
     </script>
 }
+
+<style>
+    .legend-box {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border-radius: 3px;
+        margin-right: 5px;
+    }
+    .bg-warning {
+        background-color: rgba(255, 223, 128, 1) !important;
+    }
+    .bg-primary {
+        background-color: rgba(100, 149, 237, 1) !important;
+    }
+    .bg-success {
+        background-color: rgba(144, 238, 144, 1) !important;
+    }
+    .bg-danger {
+        background-color: rgba(255, 182, 193, 1) !important;
+    }
+</style>
+
+

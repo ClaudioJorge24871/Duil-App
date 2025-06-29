@@ -1,22 +1,29 @@
-﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
-    {
-        Layout = parentLayout.ToString();
-    }
-    else
-    {
-        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
-    }
+﻿@using Microsoft.AspNetCore.Identity
+@using Duil_App.Models
+@inject UserManager<Utilizadores> UserManager
+
+@{
+    Layout = ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null
+        ? parentLayout.ToString()
+        : "/Areas/Identity/Pages/_Layout.cshtml";
+
+    ViewData["Title"] = "Perfil";
+    ViewData["BodyClass"] = "paginas-index-fundo";
+
+    var user = UserManager.GetUserAsync(User).Result;
 }
 
-<h1>Bem-vindo ao seu perfil</h1>
+<div class="container-fluid d-flex justify-content-center align-items-center position-relative"
+     style="height: 250px; background-color: #b4bdc1;">
+    <h1 class="fw-light text-white">Bem-vindo ao seu perfil, <strong>@user.Nome!</strong></h1>
+</div>
 
-<div>
-    <hr />
+<div class="container p-5 mt-4">
     <div class="row">
         <div class="col-md-3">
             <partial name="_ManageNav" />
         </div>
+
         <div class="col-md-9">
             @RenderBody()
         </div>

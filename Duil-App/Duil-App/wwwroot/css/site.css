@@ -1,11 +1,11 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -13,12 +13,12 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .navbar-pink {
@@ -27,6 +27,23 @@ body {
 
 .navbar-blue {
     background-color: #6B97AC;
+}
+
+.nav-link {
+    color: #495057;
+    border-left: 4px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: rgba(107, 151, 172, 0.1);
+    color: #365f85;
+}
+
+.nav-link.active {
+    color: #6B97AC !important;
+    border-left-color: #3b5b73;
+    font-weight: 700;
 }
 
 .texto-cor-azul {
@@ -53,9 +70,9 @@ tbody td {
 .btn-custom {
     background-color: #6B97AC !important;
     border-color: #6B97AC !important;
-    width:100%;
+    width: 100%;
     color: white !important;
-    font-size: 1.25rem; 
+    font-size: 1.25rem;
 }
 
 select:focus,
