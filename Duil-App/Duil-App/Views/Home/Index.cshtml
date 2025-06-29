@@ -1,7 +1,7 @@
 ﻿@using Duil_App.Resources
 
 @{
-	ViewData["Title"] = "Página Inicial";
+	ViewData["Title"] = Resource.PaginaInicialViewTitle;
 }
 
 <div class="position-relative mb-5" style="height: 35vw; overflow: hidden;">
@@ -27,7 +27,7 @@
 	</strong>
 </div>
 
-<p class="fs-5 ps-5 mt-5 text-center">A Duil é uma agência que atua como escritório de exportação para um grupo de fábricas portuguesas.</p>
+<p class="fs-5 ps-5 mt-5 text-center">@Resource.QuemSomosTexto</p>
 
 
 <div class="container-fluid py-5 mt-3">
@@ -37,8 +37,8 @@
 		<div class="col-md-1">
 		</div>
 		<div class="col-md-6">
-			<strong><p class=" fs-2 mb-5 grey-text">O que fazemos</p></strong>
-			<p class=" fs-5">Promovemos produtos, apoiamos o desenvolvimento de novas ideias e acompanhamos todo o processo até ao envio.</p>
+			<strong><p class=" fs-2 mb-5 grey-text">@Resource.OQueFazemos</p></strong>
+			<p class=" fs-5">@Resource.OQueFazemosTexto</p>
 		</div>
 		<div class="col-md-1">
 		</div>
@@ -60,8 +60,8 @@
 
 		<!-- Texto à direita -->
 		<div class="col-md-6 text-end">
-			<strong><p class="fs-2 grey-text s">A nossa missão</p></strong>
-			<p class="fs-5">Criar ligações duradouras entre as nossas fábricas e os mercados internacionais.</p>
+			<strong><p class="fs-2 grey-text s">@Resource.ANossaMissao</p></strong>
+			<p class="fs-5">@Resource.ANossaMissaoTexto</p>
 		</div>
 	</div>
 
@@ -69,9 +69,9 @@
 	<div class="row align-items-center mb-5" style="background-color:#E1BC8F66">
 		<!-- Texto à esquerda -->
 		<div class="col-md-5 offset-md-1">
-			<strong><p class="fs-2 grey-text">A nossa história</p></strong>
+			<strong><p class="fs-2 grey-text">@Resource.ANossaHistoria</p></strong>
 			<p class="fs-5">
-				A Duil começou em 1972. Nasceu com o sonho de promover produtos e competências portuguesas no estrangeiro, com foco nos mercados escandinavos, mantendo a porta aberta para o resto do mundo.
+				@Resource.ANossaHistoriaTexto
 			</p>
 		</div>
 		<div class="col-md-1">
@@ -85,8 +85,8 @@
 
 	<!-- Frase de impacto -->
 	<div class="text-center  p-5 rounded">
-		<h3 class="fw-bold">Levamos o melhor de Portugal ao mundo</h3>
-		<p class="lead">com <strong>qualidade</strong>, <strong>proximidade</strong> e <strong>inovação.</strong></p>
+		<h3 class="fw-bold">@Resource.FraseDeImpacto</h3>
+		<p class="lead">@Resource.SubtituloFraseImpacto</p>
 	</div>
 
 </div>

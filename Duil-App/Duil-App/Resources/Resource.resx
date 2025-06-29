@@ -246,4 +246,28 @@
   <data name="QuemSomosTexto" xml:space="preserve">
     <value>A Duil é uma agência que atua como escritório de exportação para um grupo de fábricas portuguesas.</value>
   </data>
+  <data name="ANossaHistoria" xml:space="preserve">
+    <value>A nossa história</value>
+  </data>
+  <data name="ANossaHistoriaTexto" xml:space="preserve">
+    <value>A Duil começou em 1972. Nasceu com o sonho de promover produtos e competências portuguesas no estrangeiro, com foco nos mercados escandinavos, mantendo a porta aberta para o resto do mundo.</value>
+  </data>
+  <data name="ANossaMissao" xml:space="preserve">
+    <value>A nossa missão</value>
+  </data>
+  <data name="ANossaMissaoTexto" xml:space="preserve">
+    <value>Criar ligações duradouras entre as nossas fábricas e os mercados internacionais.</value>
+  </data>
+  <data name="FraseDeImpacto" xml:space="preserve">
+    <value>Levamos o melhor de Portugal ao mundo.</value>
+  </data>
+  <data name="OQueFazemosTexto" xml:space="preserve">
+    <value>Promovemos produtos, apoiamos o desenvolvimento de novas ideias e acompanhamos todo o processo até ao envio.</value>
+  </data>
+  <data name="PaginaInicialViewTitle" xml:space="preserve">
+    <value>Página Inicial</value>
+  </data>
+  <data name="SubtituloFraseImpacto" xml:space="preserve">
+    <value>com qualidade, proximidade e inovação.</value>
+  </data>
 </root>
