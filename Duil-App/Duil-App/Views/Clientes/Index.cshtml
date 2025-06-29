@@ -1,7 +1,5 @@
-
 ﻿@model IEnumerable<Duil_App.Models.Clientes>
 @using Duil_App.Resources
-﻿@model PaginatedList<Duil_App.Models.Clientes>
 
 @{
     ViewData["Title"] = Resource.IndexClientes;
@@ -14,23 +12,11 @@
     <h1 class="fw-light text-white">@Resource.Clientes</h1>
 
     <a asp-action="Create"
-        class="btn position-absolute fs-5 px-5 py-3 navbar-blue text-white"
-        style="bottom: 0; transform: translateY(50%); right: 80px; border-radius: 10px;">
+       class="btn position-absolute fs-5 px-5 py-3 navbar-blue text-white"
+       style="bottom: 0; transform: translateY(50%); right: 80px; border-radius: 10px;">
         @Resource.Adicionar @Resource.Cliente
     </a>
-    <form asp-controller="Clientes" asp-action="Index" method="get"
-          class="position-absolute fs-3 px-5 py-3 d-flex align-items-center"
-          style="bottom: 0; transform: translateY(50%); left: 100px; border-radius: 10px;">
-        <input type="text" name="texto"
-               value="@Context.Request.Query["texto"]"
-               placeholder="Pesquisa por nome"
-               class="form-control"
-               style="min-width: 300px;" />
 
-        <button type="submit" class="btn btn-light">
-            <i class="bi bi-search"></i> 
-        </button>
-    </form>
 </div>
 
 <div class="container p-5 mt-4">
@@ -38,24 +24,25 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].Nif)
+                    @Html.DisplayNameFor(model => model.Nif)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].Nome)
+                    @Html.DisplayNameFor(model => model.Nome)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].Pais)
+                    @Html.DisplayNameFor(model => model.Pais)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].Telemovel)
+                    @Html.DisplayNameFor(model => model.Telemovel)
                 </th>
                 <th>
                     @Resource.Acoes
                 </th>
             </tr>
         </thead>
-        <tbody>  
-                @foreach (var item in Model) {
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Nif)
@@ -90,30 +77,9 @@
                         }
                     </td>
                 </tr>
-                }
-            </tbody>
-        </table>
-</div>
+            }
+        </tbody>
+    </table>
 
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
 
-<div class="d-flex justify-content-center gap-2 mt-4">
-    <a asp-action="Index"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-secondary @prevDisabled">
-        Anterior
-    </a>
-
-    <a asp-action="Index"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-secondary @nextDisabled">
-        Seguinte
-    </a>
 </div>
