@@ -22,9 +22,22 @@ namespace Duil_App.Controllers
         }
 
         // GET: Fabricas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string texto)
         {
-            return View(await _context.Fabricas.ToListAsync());
+            if (_context.Fabricas == null)
+            {
+                return Problem("Fabricas é um valor null.");
+            }
+
+            var fabricas = from c in _context.Fabricas
+                           select c;
+
+            if (!String.IsNullOrEmpty(texto))
+            {
+                fabricas = fabricas.Where(s => s.Nome!.ToUpper().Contains(texto.ToUpper()));
+            }
+
+            return View(await fabricas.ToListAsync());
         }
 
         // GET: Fabricas
