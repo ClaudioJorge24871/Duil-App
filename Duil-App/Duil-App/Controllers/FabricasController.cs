@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Duil_App.Controllers
 {
+    // Apenas acessível a Admin e Funcionário
     [Authorize(Roles = "Admin,Funcionario")]
     public class FabricasController : Controller
     {
@@ -21,7 +22,7 @@ namespace Duil_App.Controllers
             _context = context;
         }
 
-        // GET: Fabricas
+        // Listagem de fábricas
         public async Task<IActionResult> Index(string texto, int? pageNumber)
         {
             if (_context.Fabricas == null)
@@ -32,17 +33,20 @@ namespace Duil_App.Controllers
             var fabricas = from c in _context.Fabricas
                            select c;
 
+            // Aplicar filtro se houver texto de pesquisa
             if (!String.IsNullOrEmpty(texto))
             {
                 fabricas = fabricas.Where(s => s.Nome!.ToUpper().Contains(texto.ToUpper()));
             }
+
+            // Paginação com 10 resultados
 
             var pageSize = 10;
             return View(await PaginatedList<Fabricas>.CreateAsync(fabricas.AsNoTracking(), pageNumber ?? 1, pageSize));
 
         }
 
-        // GET: Fabricas
+        // Retorna sugestões de nomes de fábricas para autocomplete
         [HttpGet]
         public IActionResult Search(string term)
         {
@@ -58,7 +62,7 @@ namespace Duil_App.Controllers
             return Json(resultados);
         }
 
-        // GET: Fabricas/Details/5
+        // Detalhes de um cliente especifico
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -76,7 +80,7 @@ namespace Duil_App.Controllers
             return View(fabrica);
         }
 
-        // GET: Fabricas/Create
+        // Criação de fábricas
         public IActionResult Create()
         {
             return View();
@@ -89,7 +93,7 @@ namespace Duil_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MoradaDescarga,Nif,Nome,Morada,CodPostal,Pais,Telemovel,Email")] Fabricas fabrica)
         {
-
+            // Validação de nif
             if (_context.Clientes.Any(c => c.Nif == fabrica.Nif))
             {
                 ModelState.AddModelError("Nif", "Já existe uma fábrica ou cliente com este NIF.");
@@ -112,7 +116,7 @@ namespace Duil_App.Controllers
             return View(fabrica);
         }
 
-        // GET: Fabricas/Edit/5
+        // Formulário de edição de uma fábrica
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -128,9 +132,7 @@ namespace Duil_App.Controllers
             return View(fabrica);
         }
 
-        // POST: Fabricas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Submissão do formulario de edição
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("MoradaDescarga,Nif,Nome,Morada,CodPostal,Pais,Telemovel,Email")] Fabricas fabrica)
@@ -163,7 +165,7 @@ namespace Duil_App.Controllers
             return View(fabrica);
         }
 
-        // GET: Fabricas/Delete/5
+        // Confirmação da eliminação de uma fábrica
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -181,7 +183,7 @@ namespace Duil_App.Controllers
             return View(fabrica);
         }
 
-        // POST: Fabricas/Delete/5
+        // Eliminação efetiva de uma fábrica
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

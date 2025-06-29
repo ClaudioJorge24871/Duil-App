@@ -36,6 +36,7 @@ namespace Duil_App.Controllers
             _hubcontext = hubContext;
         }
 
+        // Listagem de encomendas
         public async Task<IActionResult> Index(String texto, int? pageNumber)
         {
             if (User.IsInRole("Cliente"))
@@ -48,20 +49,24 @@ namespace Duil_App.Controllers
                 return Problem("Encomendas é um valor null.");
             }
 
+            // Incluir informação dos clientes
             var encomendas = _context.Encomendas
               .Include(e => e.Cliente)
               .AsQueryable();
 
+            // Aplicar filtro se houver texto de pesquisa
             if (!String.IsNullOrEmpty(texto))
             {
                 encomendas = encomendas.Where(t =>
                     t.Cliente.Nome.ToUpper().Contains(texto.ToUpper()));
             }
 
+            // Paginação com 10 resultados
             var pageSize = 10;
             return View(await PaginatedList<Encomendas>.CreateAsync(encomendas.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
+        // Detalhes de uma encomenda especifico
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
@@ -126,7 +131,8 @@ namespace Duil_App.Controllers
                 {
                     List<Pecas> pecas = new();
 
-                    if (User.IsInRole("Cliente")) // Se for CLiente apenas pode criar encomendas com as suas Pecas
+                    // Se for CLiente apenas pode criar encomendas com as suas Pecas
+                    if (User.IsInRole("Cliente")) 
                     {
 
                         var userId = _userManager.GetUserId(User);
@@ -157,7 +163,7 @@ namespace Duil_App.Controllers
                 }
             }
 
-            // Server-side validation
+            // Validação server side
             if (encomenda.TotalPrecoUnit < 0.01m)
             {
                 ModelState.AddModelError("TotalPrecoUnit", "O valor total deve ser maior que zero");
@@ -186,11 +192,11 @@ namespace Duil_App.Controllers
                     }
                     TempData["SuccessMessage"] = "Encomenda criada com sucesso!";
 
-                    // Quando a encomenda é criada, obtemos os seus dados e enviamos a notificação
+                    // Obter dados da encomenda quando criada
                     var cliente = await _context.Clientes.FindAsync(encomenda.ClienteId);
                     var nomeCliente = cliente.Nome ?? "Cliente Desconhecido";
 
-                    //Notificar os Funcionarios com o Signal R
+                    // Notificar os Funcionarios com o Signal R
                     await _hubcontext.Clients.Group("Funcionarios").SendAsync("ReceberNotificacao", new
                     {
                         idEncomenda = encomenda.Id,
@@ -209,7 +215,7 @@ namespace Duil_App.Controllers
             }
             else
             {
-                // Add error logging for debugging
+                // Adicionado error para debuging
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
                 foreach (var error in errors)
                 {
@@ -220,6 +226,7 @@ namespace Duil_App.Controllers
             return View(encomenda);
         }
 
+        // Formulário de edição de uma encomenda
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -236,11 +243,12 @@ namespace Duil_App.Controllers
             return View(encomenda);
         }
 
+        // Submissão do formulario de edição
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
         [Bind("Id,IdLadoCliente,Data,Transportadora,Estado,ClienteId,TotalPrecoUnit,QuantidadeTotal")] Encomendas encomenda,
-        //Lista de ids das peças
+        // Lista de ids das peças
         List<int> pecasSelecionadas,
         List<int> quantidades)
         {
@@ -291,6 +299,8 @@ namespace Duil_App.Controllers
             return View(encomenda);
         }
 
+
+        // Confirmação da eliminação de um cliente
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -304,6 +314,7 @@ namespace Duil_App.Controllers
             return encomenda == null ? NotFound() : View(encomenda);
         }
 
+        // Eliminação efetiva de um cliente
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
