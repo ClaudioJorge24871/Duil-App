@@ -28,15 +28,15 @@ namespace Duil_App.Controllers
         }
 
         // GET: Utilizadores
-        public async Task<IActionResult> Index(string texto)
+        public async Task<IActionResult> Index(string texto, int? pageNumber)
         {
 
             var adminUsers = await _userManager.GetUsersInRoleAsync("Admin");
             var adminIds = adminUsers.Select(u => u.Id).ToHashSet();
 
-            var allUsers = await _context.Utilizadores.ToListAsync();
+            var noAdmins = _context.Utilizadores.Where(u => !adminIds.Contains(u.Id)).AsQueryable();
 
-            var noAdmins = allUsers.Where(u => !adminIds.Contains(u.Id)).AsQueryable();
+
 
             if (!String.IsNullOrEmpty(texto))
             {
@@ -44,7 +44,9 @@ namespace Duil_App.Controllers
                     t.Email!.ToUpper().Contains(texto.ToUpper()));
             }
 
-            return View(noAdmins);
+            var pageSize = 10;
+            return View(await PaginatedList<Utilizadores>.CreateAsync(noAdmins.AsNoTracking(), pageNumber ?? 1, pageSize));
+
         }
 
         // GET: Utilizadores/Details/5

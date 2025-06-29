@@ -22,7 +22,7 @@ namespace Duil_App.Controllers
         }
 
         // GET: Fabricas
-        public async Task<IActionResult> Index(string texto)
+        public async Task<IActionResult> Index(string texto, int? pageNumber)
         {
             if (_context.Fabricas == null)
             {
@@ -37,7 +37,9 @@ namespace Duil_App.Controllers
                 fabricas = fabricas.Where(s => s.Nome!.ToUpper().Contains(texto.ToUpper()));
             }
 
-            return View(await fabricas.ToListAsync());
+            var pageSize = 10;
+            return View(await PaginatedList<Fabricas>.CreateAsync(fabricas.AsNoTracking(), pageNumber ?? 1, pageSize));
+
         }
 
         // GET: Fabricas

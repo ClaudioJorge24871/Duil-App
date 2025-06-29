@@ -9,6 +9,7 @@ using Duil_App.Data;
 using Duil_App.Models;
 using Microsoft.AspNetCore.Authorization;
 using Duil_App.Code;
+using Duil_App;
 
 namespace Duil_App.Controllers
 {
@@ -28,7 +29,7 @@ namespace Duil_App.Controllers
 
         // GET: Clientes
         [Authorize(Roles = "Admin, Funcionario")]
-        public async Task<IActionResult> Index(string texto)
+        public async Task<IActionResult> Index(string texto, int? pageNumber)
         {
             if (_context.Clientes == null)
             {
@@ -43,7 +44,9 @@ namespace Duil_App.Controllers
                 clientes = clientes.Where(s => s.Nome!.ToUpper().Contains(texto.ToUpper()));
             }
 
-            return View(await clientes.ToListAsync());
+            int pageSize = 10;
+            return View(await PaginatedList<Clientes>.CreateAsync(clientes.AsNoTracking(), pageNumber ?? 1, pageSize));
+
         }
 
         // GET: Clientes

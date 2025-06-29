@@ -34,7 +34,7 @@ namespace Duil_App.Controllers
             _hubcontext = hubContext;
         }
 
-        public async Task<IActionResult> Index(String texto)
+        public async Task<IActionResult> Index(String texto, int? pageNumber)
         {
             if (User.IsInRole("Cliente"))
             {
@@ -55,8 +55,9 @@ namespace Duil_App.Controllers
                 encomendas = encomendas.Where(t =>
                     t.Cliente.Nome.ToUpper().Contains(texto.ToUpper()));
             }
-    
-            return View(await encomendas.ToListAsync());
+
+            var pageSize = 10;
+            return View(await PaginatedList<Encomendas>.CreateAsync(encomendas.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         public async Task<IActionResult> Details(int? id)
