@@ -441,6 +441,45 @@
   <data name="FuncionarioRole" xml:space="preserve">
     <value>Employee</value>
   </data>
+  <data name="IniciarSessao" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="NavClientes" xml:space="preserve">
+    <value>Clients</value>
+  </data>
+  <data name="NavCriarEncomenda" xml:space="preserve">
+    <value>Create Order</value>
+  </data>
+  <data name="NavEncomendas" xml:space="preserve">
+    <value>Orders</value>
+  </data>
+  <data name="NavFabricas" xml:space="preserve">
+    <value>Manufacturers</value>
+  </data>
+  <data name="NavPecas" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="NavRegistoEncomendas" xml:space="preserve">
+    <value>Order Records</value>
+  </data>
+  <data name="NavUtilizadores" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Ola" xml:space="preserve">
+    <value>Hi </value>
+  </data>
+  <data name="Perfil" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Resgistar" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="SobreoSite" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="TerminarSessao" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
   <data name="UtilizadorRole" xml:space="preserve">
     <value>User</value>
   </data>

@@ -610,6 +610,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Iniciar Sessão.
+        /// </summary>
+        public static string IniciarSessao {
+            get {
+                return ResourceManager.GetString("IniciarSessao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modificar Encomenda.
         /// </summary>
         public static string modificarEncomendaViewTitle {
@@ -673,6 +682,69 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clientes.
+        /// </summary>
+        public static string NavClientes {
+            get {
+                return ResourceManager.GetString("NavClientes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Criar Encomenda.
+        /// </summary>
+        public static string NavCriarEncomenda {
+            get {
+                return ResourceManager.GetString("NavCriarEncomenda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encomendas.
+        /// </summary>
+        public static string NavEncomendas {
+            get {
+                return ResourceManager.GetString("NavEncomendas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fábricas.
+        /// </summary>
+        public static string NavFabricas {
+            get {
+                return ResourceManager.GetString("NavFabricas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peças.
+        /// </summary>
+        public static string NavPecas {
+            get {
+                return ResourceManager.GetString("NavPecas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registo de Encomendas.
+        /// </summary>
+        public static string NavRegistoEncomendas {
+            get {
+                return ResourceManager.GetString("NavRegistoEncomendas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utilizadores.
+        /// </summary>
+        public static string NavUtilizadores {
+            get {
+                return ResourceManager.GetString("NavUtilizadores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NIF.
         /// </summary>
         public static string NIF {
@@ -723,6 +795,15 @@ namespace Duil_App.Resources {
         public static string obrigatorio {
             get {
                 return ResourceManager.GetString("obrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Olá .
+        /// </summary>
+        public static string Ola {
+            get {
+                return ResourceManager.GetString("Ola", resourceCulture);
             }
         }
         
@@ -786,6 +867,15 @@ namespace Duil_App.Resources {
         public static string Pecas {
             get {
                 return ResourceManager.GetString("Pecas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perfil.
+        /// </summary>
+        public static string Perfil {
+            get {
+                return ResourceManager.GetString("Perfil", resourceCulture);
             }
         }
         
@@ -880,6 +970,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registar.
+        /// </summary>
+        public static string Resgistar {
+            get {
+                return ResourceManager.GetString("Resgistar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Função.
         /// </summary>
         public static string Role {
@@ -952,6 +1051,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sobre o Site.
+        /// </summary>
+        public static string SobreoSite {
+            get {
+                return ResourceManager.GetString("SobreoSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to com qualidade, proximidade e inovação..
         /// </summary>
         public static string SubtituloFraseImpacto {
@@ -984,6 +1092,15 @@ namespace Duil_App.Resources {
         public static string TemACertezaQueDesejaApagarEncomenda {
             get {
                 return ResourceManager.GetString("TemACertezaQueDesejaApagarEncomenda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminar Sessão.
+        /// </summary>
+        public static string TerminarSessao {
+            get {
+                return ResourceManager.GetString("TerminarSessao", resourceCulture);
             }
         }
         

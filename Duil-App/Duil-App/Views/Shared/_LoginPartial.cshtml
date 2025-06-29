@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<Utilizadores> SignInManager
 @inject UserManager<Utilizadores> UserManager
+@using Duil_App.Resources
 
 @{
     Utilizadores curUser = null;
@@ -57,13 +58,13 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-white me-3" asp-area="Identity" asp-page="/Account/Manage/Index" title="Perfil">
-                <i class="bi bi-person me-1"></i> Olá @curUser.Nome!
+            <a class="nav-link text-white me-3" asp-area="Identity" asp-page="/Account/Manage/Index" title=@Resource.Perfil>
+                <i class="bi bi-person me-1"></i> @Resource.Ola @curUser.Nome!
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-white me-3" asp-area="Identity" asp-page="/Account/ConfirmLogout">
-                <i class="bi bi-box-arrow-right me-1"></i> Terminar Sessão
+                <i class="bi bi-box-arrow-right me-1"></i> @Resource.TerminarSessao
             </a>
         </li>
     }
@@ -71,12 +72,12 @@
     {
         <li class="nav-item">
             <a class="nav-link text-white me-3" asp-area="Identity" asp-page="/Account/Register">
-                <i class="bi bi-person-plus me-1"></i> Registar-se
+                <i class="bi bi-person-plus me-1"></i> @Resource.Resgistar
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">
-                <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sessão
+                <i class="bi bi-box-arrow-in-right me-1"></i> @Resource.IniciarSessao
             </a>
         </li>
     }
