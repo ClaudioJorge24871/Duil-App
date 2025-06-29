@@ -34,6 +34,7 @@ namespace Duil_App.Controllers
         }
 
 		[HttpPost]
+        [AllowAnonymous]
 		public IActionResult SetLanguage(string culture)
 		{
 			Response.Cookies.Append(

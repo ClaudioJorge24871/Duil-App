@@ -25,7 +25,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options => {
     options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "pt-PT");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedUICultures;
-    options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
+    options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider()); // cookies de linguagem
 });
 
 builder.Services.AddSingleton(typeof(Ferramentas));
