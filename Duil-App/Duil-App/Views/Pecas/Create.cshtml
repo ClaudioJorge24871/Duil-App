@@ -1,6 +1,5 @@
 ﻿@model Duil_App.Models.Pecas
 @using Duil_App.Resources
-
 @{
     ViewData["Title"] = Resource.AdicionarPecaVT;
 }
@@ -32,7 +31,7 @@
                                class="form-control"
                                type="text"
                                inputmode="decimal"
-                               placeholder=@Resource.PrecoUnit *
+                               placeholder="@Resource.PrecoUnit *"
                                oninput="this.value = this.value.replace(/\,/g, '.').replace(/(\..*)\./g, '$1')" />
                         <span asp-validation-for="PrecoUnit" class="text-danger"></span>
                     </div>
@@ -59,7 +58,7 @@
                                accept=".jpg,.jpeg,.png,.webp"
                                aria-describedby="fileHelp" />
                         <small id="fileHelp" class="form-text text-muted">
-                            @Resource.FormatosImagemPermitidos
+                            Formatos permitidos: .jpg, .jpeg, .png, .gif, .webp
                         </small>
                         <span asp-validation-for="Imagem" class="text-danger"></span>
                     </div>
@@ -121,13 +120,13 @@
 
                 if (!fabricaSelected && nomeFabrica !== "") {
                     event.preventDefault();
-                    $("[data-valmsg-for='FabricaId']").text(@Resource.selecioneFabricadaLista);
+                    $("[data-valmsg-for='FabricaId']").text(Resource.selecioneFabricadaLista);
                     return false;
                 }
 
                 if (fabricaId === "") {
                     event.preventDefault();
-                    $("[data-valmsg-for='FabricaId']").text(@Resource.fabricaeobrigatoria);
+                    $("[data-valmsg-for='FabricaId']").text(Resource.fabricaeobrigatoria);
                     return false;
                 }
             });
@@ -161,17 +160,16 @@
 
                 if (!clienteSelected && nomeCliente !== "") {
                     event.preventDefault();
-                    $("[data-valmsg-for='ClienteId']").text(@Resource.selecioneClientedaLista);
+                    $("[data-valmsg-for='ClienteId']").text(Resource.selecioneClientedaLista);
                     return false;
                 }
 
                 if (clienteId === "") {
                     event.preventDefault();
-                    $("[data-valmsg-for='ClienteId']").text(@Resource.clienteeobrigatorio);
+                    $("[data-valmsg-for='ClienteId']").text(Resource.clienteeobrigatorio);
                     return false;
                 }
             });
         });
     </script>
 }
-
