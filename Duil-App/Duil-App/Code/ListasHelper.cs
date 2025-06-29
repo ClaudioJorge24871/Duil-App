@@ -16,12 +16,12 @@ namespace Duil_App.Code
         {
             return new List<SelectListItem>
             {
-                new SelectListItem { Value = "Dinamarca", Text = "Dinamarca" },
-                new SelectListItem { Value = "EUA", Text = "Estados Unidos da América" },
-                new SelectListItem { Value = "França", Text = "França" },
-                new SelectListItem { Value = "Holanda", Text = "Holanda" },
-                new SelectListItem { Value = "Inglaterra", Text = "Inglaterra" },
-                new SelectListItem { Value = "Suecia", Text = "Suécia"},
+                new SelectListItem { Value = "Dinamarca", Text = Resources.Resource.Dinamarca },
+                new SelectListItem { Value = "EUA", Text = Resources.Resource.EstadosUnidosdaAmerica },
+                new SelectListItem { Value = "França", Text = Resources.Resource.Franca },
+                new SelectListItem { Value = "Holanda", Text = Resources.Resource.Holanda },
+                new SelectListItem { Value = "Inglaterra", Text = Resources.Resource.Inglaterra },
+                new SelectListItem { Value = "Suecia", Text = Resources.Resource.Suecia},
             };
         }
     }

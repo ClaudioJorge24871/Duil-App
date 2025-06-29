@@ -583,6 +583,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dinamarca.
+        /// </summary>
+        public static string Dinamarca {
+            get {
+                return ResourceManager.GetString("Dinamarca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Distribuição.
         /// </summary>
         public static string Dist {
@@ -754,6 +763,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estados Unidos da América.
+        /// </summary>
+        public static string EstadosUnidosdaAmerica {
+            get {
+                return ResourceManager.GetString("EstadosUnidosdaAmerica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estatísticas.
         /// </summary>
         public static string Estatisticas {
@@ -826,6 +844,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to França.
+        /// </summary>
+        public static string Franca {
+            get {
+                return ResourceManager.GetString("Franca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Levamos o melhor de Portugal ao mundo..
         /// </summary>
         public static string FraseDeImpacto {
@@ -849,6 +876,15 @@ namespace Duil_App.Resources {
         public static string GuardarAlteracoes {
             get {
                 return ResourceManager.GetString("GuardarAlteracoes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Holanda.
+        /// </summary>
+        public static string Holanda {
+            get {
+                return ResourceManager.GetString("Holanda", resourceCulture);
             }
         }
         
@@ -894,6 +930,15 @@ namespace Duil_App.Resources {
         public static string IndexClientes {
             get {
                 return ResourceManager.GetString("IndexClientes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inglaterra.
+        /// </summary>
+        public static string Inglaterra {
+            get {
+                return ResourceManager.GetString("Inglaterra", resourceCulture);
             }
         }
         
@@ -1605,6 +1650,15 @@ namespace Duil_App.Resources {
         public static string SubtituloFraseImpacto {
             get {
                 return ResourceManager.GetString("SubtituloFraseImpacto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suécia.
+        /// </summary>
+        public static string Suecia {
+            get {
+                return ResourceManager.GetString("Suecia", resourceCulture);
             }
         }
         

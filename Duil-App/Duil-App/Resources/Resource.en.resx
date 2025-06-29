@@ -672,8 +672,26 @@
   <data name="PWATual" xml:space="preserve">
     <value>Current Password</value>
   </data>
+  <data name="Dinamarca" xml:space="preserve">
+    <value>Denmark</value>
+  </data>
   <data name="errotelm" xml:space="preserve">
     <value>There was an error trying to save the phone number</value>
+  </data>
+  <data name="EstadosUnidosdaAmerica" xml:space="preserve">
+    <value>USA</value>
+  </data>
+  <data name="Franca" xml:space="preserve">
+    <value>France</value>
+  </data>
+  <data name="Holanda" xml:space="preserve">
+    <value>Netherlands</value>
+  </data>
+  <data name="Inglaterra" xml:space="preserve">
+    <value>England</value>
+  </data>
+  <data name="Suecia" xml:space="preserve">
+    <value>Sweden</value>
   </data>
   <data name="telemovelnao" xml:space="preserve">
     <value>The inserted phone dont correpond to the saved Country</value>

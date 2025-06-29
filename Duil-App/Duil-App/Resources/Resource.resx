@@ -672,8 +672,26 @@
   <data name="PWATual" xml:space="preserve">
     <value>Palavra-passe atual</value>
   </data>
+  <data name="Dinamarca" xml:space="preserve">
+    <value>Dinamarca</value>
+  </data>
   <data name="errotelm" xml:space="preserve">
     <value>Ocorreu um erro ao alterar o número de telemóvel.</value>
+  </data>
+  <data name="EstadosUnidosdaAmerica" xml:space="preserve">
+    <value>Estados Unidos da América</value>
+  </data>
+  <data name="Franca" xml:space="preserve">
+    <value>França</value>
+  </data>
+  <data name="Holanda" xml:space="preserve">
+    <value>Holanda</value>
+  </data>
+  <data name="Inglaterra" xml:space="preserve">
+    <value>Inglaterra</value>
+  </data>
+  <data name="Suecia" xml:space="preserve">
+    <value>Suécia</value>
   </data>
   <data name="telemovelnao" xml:space="preserve">
     <value>O telémovel introduzido não corresponde com o País guardado.</value>
