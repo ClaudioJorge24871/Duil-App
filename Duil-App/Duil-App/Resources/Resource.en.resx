@@ -657,4 +657,7 @@
   <data name="youDP" xml:space="preserve">
     <value>Your Pesonal Data</value>
   </data>
+  <data name="DadosPEssoais" xml:space="preserve">
+    <value>Persona Data</value>
+  </data>
 </root>
