@@ -2,112 +2,114 @@
 @using Duil_App.Resources
 
 @{
-    ViewData["Title"] = Resource.Utilizadores;
-    ViewData["BodyClass"] = "paginas-index-fundo";
+	ViewData["Title"] = Resource.Utilizadores;
+	ViewData["BodyClass"] = "paginas-index-fundo";
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 
 <div class="container-fluid d-flex justify-content-center align-items-center position-relative"
-     style="height: 250px; background-color: #b4bdc1;">
+	 style="height: 250px; background-color: #b4bdc1;">
 
-    <h1 class="fw-light text-white">@Resource.Utilizadores</h1>
+	<h1 class="fw-light text-white">@Resource.Utilizadores</h1>
 
 </div>
 
 <div class="container p-5 mt-4">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].Nome)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].Morada)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].CodPostal)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].Pais)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].NIF)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].Telemovel)
-                </th>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model[0].Email)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model[0].Nome)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model[0].Morada)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model[0].CodPostal)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model[0].Pais)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model[0].NIF)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model[0].Telemovel)
+				</th>
 
-                <th>
-                    @Resource.Acoes
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Morada)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CodPostal)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Pais)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NIF)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Telemovel)
-                    </td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.Id"
-                           class="btn btn-sm btn-outline-secondary"
-                           title=@Resource.detalhesTexto>
-                            <i class="bi bi-info-circle-fill"></i>
-                        </a>
+				<th>
+					@Resource.Acoes
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Email)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Nome)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Morada)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.CodPostal)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Pais)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.NIF)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Telemovel)
+					</td>
+					<td>
+						<a asp-action="Details" asp-route-id="@item.Id"
+						   class="btn btn-sm btn-outline-secondary"
+						   title=@Resource.detalhesTexto>
+							<i class="bi bi-info-circle-fill"></i>
+						</a>
 
-                        <a asp-action="Edit" asp-route-id="@item.Id"
-                           class="btn btn-sm btn-outline-primary ms-1"
-                           title=@Resource.modificarTexto>
-                            <i class="bi bi-pencil-fill"></i>
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+						<a asp-action="Edit" asp-route-id="@item.Id"
+						   class="btn btn-sm btn-outline-primary ms-1"
+						   title=@Resource.modificarTexto>
+							<i class="bi bi-pencil-fill"></i>
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
 
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-    }
 
-    <div class="d-flex justify-content-center gap-2 mt-4">
-        <a asp-action="Index"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
-           asp-route-pageNumber="@(Model.PageIndex - 1)"
-           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           class="btn btn-secondary @prevDisabled">
-            Anterior
-        </a>
+@{
+	var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+	var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
 
-        <a asp-action="Index"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
-           asp-route-pageNumber="@(Model.PageIndex + 1)"
-           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           class="btn btn-secondary @nextDisabled">
-            Seguinte
-        </a>
-    </div>
+<div class="d-flex justify-content-center gap-2 mt-4">
+	<a asp-action="Index"
+	   asp-route-sortOrder="@ViewData["CurrentSort"]"
+	   asp-route-pageNumber="@(Model.PageIndex - 1)"
+	   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+	   class="btn btn-secondary @prevDisabled">
+		Anterior
+	</a>
+
+	<a asp-action="Index"
+	   asp-route-sortOrder="@ViewData["CurrentSort"]"
+	   asp-route-pageNumber="@(Model.PageIndex + 1)"
+	   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+	   class="btn btn-secondary @nextDisabled">
+		Seguinte
+	</a>
+</div>

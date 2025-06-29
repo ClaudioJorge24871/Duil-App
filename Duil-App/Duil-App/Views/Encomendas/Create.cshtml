@@ -119,6 +119,7 @@
             let pecasData = {};
             let loaded = false;
 
+            // Controlo da visibilidade de secções e o carregamento de peças consoante a seleção de um cliente
             function toggleSection() {
                 const cId = $('#ClienteId').val();
                 if (cId) {
@@ -131,6 +132,7 @@
                 }
             }
 
+            // Carrega peças
             function loadPecas(clienteId) {
                 $.getJSON(`/Encomendas/GetPecasPorCliente?clienteId=${clienteId}`, function (data) {
                     pecasData = {};
@@ -140,6 +142,7 @@
                 });
             }
 
+            // Mostra todos os cartoes das peças
             function renderAllCards() {
                 const $cards = $('#pecasCards');
                 $cards.empty();
@@ -150,6 +153,7 @@
                 toggleAddButton();
             }
 
+            // Muda os totais de acordo com a quatidade e o preço da peças
             function updateTotals() {
                 let totalQty = 0, totalPrice = 0;
                 $('#pecasCards .card-body').each(function () {
@@ -166,6 +170,7 @@
                 $('input[name="TotalPrecoUnit"]').val(totalPrice.toFixed(2));
             }
 
+            // Cria os cartões das peças de acordo com o cliente selecionado
             function createCard(id) {
                 const p = pecasData[id];
                 const displayPrice = parseFloat(p.preco).toFixed(2).replace('.', ',');
@@ -185,11 +190,14 @@
                                     </div>`;
             }
 
+            
+
             function toggleAddButton() {
                 const count = $('#pecasCards .card').length;
                 $('#addPecaBtn').toggle(count === 0);
             }
 
+            // Esconde o botao adicionar peças
             function hideAddButton() {
                 $('#addPecaBtn').hide();
             }
@@ -202,6 +210,7 @@
 
             $(document).on('input change', '.peca-qty', updateTotals);
 
+            // Autocomplete do form clientes
             $('#cliente-nome').autocomplete({
                 source: '/Clientes/Search',
                 minLength: 1,
