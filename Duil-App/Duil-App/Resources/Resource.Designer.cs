@@ -1330,6 +1330,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Termos/Referências/Sobre.
+        /// </summary>
+        public static string policy {
+            get {
+                return ResourceManager.GetString("policy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Por favor, selecione um cliente para ver as peças.
         /// </summary>
         public static string PorfavorAdicioneClienteParaPecas {

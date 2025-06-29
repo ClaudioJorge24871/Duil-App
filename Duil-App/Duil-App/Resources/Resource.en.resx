@@ -696,4 +696,7 @@
   <data name="telemovelnao" xml:space="preserve">
     <value>The inserted phone dont correpond to the saved Country</value>
   </data>
+  <data name="policy" xml:space="preserve">
+    <value>Policy/Sources/About</value>
+  </data>
 </root>
