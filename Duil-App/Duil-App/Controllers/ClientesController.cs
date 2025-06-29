@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +6,6 @@ using Duil_App.Data;
 using Duil_App.Models;
 using Microsoft.AspNetCore.Authorization;
 using Duil_App.Code;
-using Duil_App;
 
 namespace Duil_App.Controllers
 {
@@ -17,6 +13,7 @@ namespace Duil_App.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+        // Método auxiliar para obter lista de páises 
         private List<SelectListItem> ObterPaises()
         {
             return ListasHelper.ObterListaDePaises();
@@ -27,7 +24,7 @@ namespace Duil_App.Controllers
             _context = context;
         }
 
-        // GET: Clientes
+        // Listagem de clientes apenas acessível para Admin e Funcionário
         [Authorize(Roles = "Admin, Funcionario")]
         public async Task<IActionResult> Index(string texto, int? pageNumber)
         {
@@ -36,6 +33,7 @@ namespace Duil_App.Controllers
                 return Problem("Clientes é um valor null.");
             }
 
+            // Aplicar filtro se houver texto de pesquisa
             var clientes = from c in _context.Clientes
                            select c;
 
@@ -44,12 +42,13 @@ namespace Duil_App.Controllers
                 clientes = clientes.Where(s => s.Nome!.ToUpper().Contains(texto.ToUpper()));
             }
 
+            // Paginação com 10 resultados
             int pageSize = 10;
             return View(await PaginatedList<Clientes>.CreateAsync(clientes.AsNoTracking(), pageNumber ?? 1, pageSize));
 
         }
 
-        // GET: Clientes
+        // Retorna sugestões de nomes de clientes para autocomplete
         [HttpGet]
         public IActionResult Search(string term)
         {
@@ -66,7 +65,7 @@ namespace Duil_App.Controllers
             return Json(resultados);
         }
 
-        // GET: Clientes/Details/5
+        // Detalhes de um cliente 
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -85,8 +84,9 @@ namespace Duil_App.Controllers
             return View(cliente);
         }
 
+        // Criação de cliente
         [Authorize(Roles = "Admin")]
-        // GET: Clientes/Create
+  
         public IActionResult Create()
         {
             ViewBag.Pais = ObterPaises();
@@ -94,13 +94,13 @@ namespace Duil_App.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        // POST: Clientes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        // Submissão do formulário de criação
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MoradaCarga,Nif,Nome,Morada,CodPostal,Pais,Telemovel,Email")] Clientes cliente)
         {
+            // Validação de nif
             if (_context.Clientes.Any(c => c.Nif == cliente.Nif))
             {
                 ModelState.AddModelError("Nif", "Já existe um cliente com este NIF.");
@@ -125,8 +125,8 @@ namespace Duil_App.Controllers
 
         }
 
+        // Formulário de edição de um cliente
         [Authorize(Roles = "Admin")]
-        // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -143,10 +143,8 @@ namespace Duil_App.Controllers
             return View(cliente);
         }
 
+        // Submissão do formulario de edição
         [Authorize(Roles = "Admin")]
-        // POST: Clientes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("MoradaCarga,Nif,Nome,Morada,CodPostal,Pais,Telemovel,Email")] Clientes cliente)
@@ -182,8 +180,8 @@ namespace Duil_App.Controllers
             return View(cliente);
         }
 
+        // Confirmação da eliminação de um cliente
         [Authorize(Roles = "Admin")]
-        // GET: Clientes/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -201,8 +199,8 @@ namespace Duil_App.Controllers
             return View(cliente);
         }
 
+
         [Authorize(Roles = "Admin")]
-        // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

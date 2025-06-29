@@ -1,21 +1,13 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Duil_App.Data;
 using Duil_App.Models;
-using System.Configuration;
-using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyModel.Resolution;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 
 namespace Duil_App.Controllers
 {
+    // Acessível apenas para Admin e Funcionario
     [Authorize(Roles = "Admin,Funcionario")]
     public class PecasController : Controller
     {
@@ -26,7 +18,7 @@ namespace Duil_App.Controllers
             _context = context;
         }
 
-        // GET: Pecas
+        // Listagem de peças
         public async Task<IActionResult> Index(string texto, int? pageNumber)
         {
             var pecas = _context.Pecas
@@ -34,16 +26,18 @@ namespace Duil_App.Controllers
                 .Include(p => p.Cliente)
                 .AsQueryable();
 
+            // Aplicar filtro se houver texto de pesquisa
             if (!string.IsNullOrEmpty(texto))
             {
                 pecas = pecas.Where(s => s.Designacao.ToUpper().Contains(texto.ToUpper()));
             }
 
+            // Paginação com 10 resultados
             int pageSize = 10;
             return View(await PaginatedList<Pecas>.CreateAsync(pecas.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        // GET: Pecas/Details/5
+        // Detalhes de uma peça
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -67,15 +61,13 @@ namespace Duil_App.Controllers
             return View(pecas);
         }
 
-        // GET: Pecas/Create
+        //  Criação de peça
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Pecas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Submissão do formulário de criação
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Referencia,Designacao,PrecoUnit,FabricaId,ClienteId")] Pecas pecas,
@@ -83,9 +75,11 @@ namespace Duil_App.Controllers
             [FromServices] IWebHostEnvironment hostingEnvironment)
         {
             if (ModelState.IsValid)
-            {
+            {   
+                // Colocar imagem default se nenhuma for fornecida
                 if (imagemFile != null && imagemFile.Length > 0)
                 {
+                    // Validação deoficheiro imagem
                     var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
                     var fileExtension = Path.GetExtension(imagemFile.FileName).ToLowerInvariant();
 
@@ -134,7 +128,7 @@ namespace Duil_App.Controllers
             return View(pecas);
         }
 
-        // GET: Pecas/Edit/5
+        // Formulario de edição de uma peça
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -170,9 +164,7 @@ namespace Duil_App.Controllers
             return View(peca);
         }
 
-        // POST: Pecas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       // sSubmissão do formulário de uma peça
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
@@ -274,7 +266,7 @@ namespace Duil_App.Controllers
         }
 
 
-        // GET: Pecas/Delete/5
+        // Confirmação da elimnação de uma peça
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -307,7 +299,7 @@ namespace Duil_App.Controllers
             return View(peca);
         }
 
-        // POST: Pecas/Delete/5
+        // Eliminação de uma peça
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -315,7 +307,7 @@ namespace Duil_App.Controllers
             var peca = await _context.Pecas.FindAsync(id);
             if (peca != null)
             {
-                // Se a Peça tiver encomendas associadas a elas, não deve poder apagar
+                // Se a Peça tiver encomendas associadas, não apaga a peça
                 bool temEncomendas = await _context.LinhasEncomendas
             .AnyAsync(le => le.PecaId == id);
 
