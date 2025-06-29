@@ -1,11 +1,13 @@
 @model Duil_App.Models.Encomendas
 
 @using Duil_App.Models
+@using Duil_App.Resources
+@using Duil_App.Code
 
 @{
-    ViewData["Title"] = "Nova Encomenda";
+    ViewData["Title"] = Resource.CriarEncomenda;
     var clienteId = ViewBag.ClienteId as string;
-    ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(Estados)));
+    ViewData["Estado"] = EstadosTraduzidosHelper.GetEstadosTraduzidos();
 }
 
 @if (!User.IsInRole("Cliente"))
@@ -17,7 +19,7 @@
 
 <div class="d-flex justify-content-center mt-5 min-vh-100">
     <div class="container mt-5" style="width:80%">
-        <h3 class="mb-2 grey-text">Nova encomenda</h3>
+        <h3 class="mb-2 grey-text">@Resource.NovaEncomenda</h3>
         <hr />
 
         <form asp-action="Create" id="encomendaForm">
@@ -26,7 +28,7 @@
 
             <div class="row mt-3">
                 <div class="col-md-6 mb-3">
-                    <input asp-for="IdLadoCliente" class="form-control" placeholder="Ordem de Encomenda" />
+                    <input asp-for="IdLadoCliente" class="form-control" placeholder=@Resource.OrdemDeEncomenda />
                     <span asp-validation-for="IdLadoCliente" class="text-danger"></span>
                 </div>
                 @if (User.IsInRole("Cliente"))
@@ -46,7 +48,7 @@
 
             <div class="row mb-3">
                 <div class="col-md-6 mb-3">
-                    <input asp-for="Transportadora" class="form-control" placeholder="Transportadora" />
+                    <input asp-for="Transportadora" class="form-control" placeholder=@Resource.EmpresaTrans />
                     <span asp-validation-for="Transportadora" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -57,7 +59,7 @@
                     else
                     {
                         <input type="hidden" asp-for="ClienteId" id="ClienteId" />
-                        <input type="text" id="cliente-nome" class="form-control" placeholder="Nome do cliente" autocomplete="off" />
+                        <input type="text" id="cliente-nome" class="form-control" placeholder=@Resource.NomeDoCliente autocomplete="off" />
                         <span asp-validation-for="ClienteId" class="text-danger"></span>
                     }
                 </div>
@@ -65,11 +67,11 @@
 
             <div id="pecasSection">
                 <div id="sem-cliente" class="text-center mt-4">
-                    <h5 class="text-muted">Por favor, adicione um cliente para ver as peças</h5>
+                    <h5 class="text-muted">@Resource.PorfavorAdicioneClienteParaPecas</h5>
                 </div>
                 <div id="pecasCards" class="row g-3"></div>
                 <div class="mt-2">
-                    <button type="button" id="addPecaBtn" class="btn btn-secondary btn-sm" style="display:none;">Adicionar Peça</button>
+                    <button type="button" id="addPecaBtn" class="btn btn-secondary btn-sm" style="display:none;">@Resource.AdicionarPecaemEncomendas</button>
                 </div>
             </div>
 
@@ -79,9 +81,9 @@
             {
                 <div class="row mt-3">
                     <div class="col-md-6 mb-3">
-                        <label asp-for="Estado" class="form-label">Estado</label>
+                        <label asp-for="Estado" class="form-label">@Resource.Estado</label>
                         <select asp-for="Estado" asp-items="ViewBag.Estado" class="form-control">
-                            <option value="">-- Selecione Estado --</option>
+                            <option value="">-- @Resource.SelecioneEstado --</option>
                         </select>
                         <span asp-validation-for="Estado" class="text-danger"></span>
                     </div>
@@ -90,17 +92,17 @@
 
             <div class="row mt-3">
                 <div class="col-md-6 mb-3">
-                    <input type="text" id="QuantidadeTotal_Visivel" class="form-control" placeholder="Quantidade Total" readonly />
+                    <input type="text" id="QuantidadeTotal_Visivel" class="form-control" placeholder=@Resource.QuantidadeTotal readonly />
                     <input type="hidden" asp-for="QuantidadeTotal" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <input type="text" id="TotalPrecoUnit_Visivel" class="form-control" placeholder="Preço Total (€)" readonly />
+                    <input type="text" id="TotalPrecoUnit_Visivel" class="form-control" placeholder=@Resource.PrecoTotal readonly />
                     <input type="hidden" asp-for="TotalPrecoUnit" />
                 </div>
             </div>
 
             <div class="form-group mb-3">
-                <input type="submit" value="Criar" class="btn btn-custom mt-2" />
+                <input type="submit" value=@Resource.Criar class="btn btn-custom mt-2" />
             </div>
         </form>
     </div>
@@ -168,19 +170,19 @@
                 const p = pecasData[id];
                 const displayPrice = parseFloat(p.preco).toFixed(2).replace('.', ',');
                 return `
-                            <div class="col-md-4">
-                                <div class="card shadow-sm">
-                                    <img src="${p.imagem}" class="card-img-top img-fluid" alt="${p.nome}" style="max-width:100%; max-height:100px; object-fit:contain;" />
-                                    <div class="card-body" data-id="${id}">
-                                        <h6 class="card-title">${p.nome}</h6>
-                                        <p class="card-text small">Preço unitário: ${displayPrice} €</p>
-                                        <div class="input-group input-group-sm mb-2">
-                                            <input type="number" class="form-control peca-qty" value="1" min="1">
-                                            <button class="btn btn-danger btn-sm remove-card">Remover</button>
+                                    <div class="col-md-4">
+                                        <div class="card shadow-sm">
+                                            <img src="${p.imagem}" class="card-img-top img-fluid" alt="${p.nome}" style="max-width:100%; max-height:100px; object-fit:contain;" />
+                                            <div class="card-body" data-id="${id}">
+                                                <h6 class="card-title">${p.nome}</h6>
+                                                <p class="card-text small">@Resource.PrecoUnit: ${displayPrice} �</p>
+                                                <div class="input-group input-group-sm mb-2">
+                                                    <input type="number" class="form-control peca-qty" value="1" min="1">
+                                                    <button class="btn btn-danger btn-sm remove-card">@Resource.Remover</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>`;
+                                    </div>`;
             }
 
             function toggleAddButton() {
@@ -211,7 +213,7 @@
                 }
             }).on('input', function () {
                 $('#ClienteId').val('');
-                loaded = false; // carrega as peças novamente quando muda de cliente
+                loaded = false; // carrega as pe�as novamente quando muda de cliente
                 toggleSection();
             });
 

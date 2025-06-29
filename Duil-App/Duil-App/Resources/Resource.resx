@@ -666,4 +666,16 @@
   <data name="Fechar" xml:space="preserve">
     <value>Fechar</value>
   </data>
+  <data name="PWAlterada" xml:space="preserve">
+    <value>A sua palavra-passe foi alterada com sucesso</value>
+  </data>
+  <data name="PWATual" xml:space="preserve">
+    <value>Palavra-passe atual</value>
+  </data>
+  <data name="errotelm" xml:space="preserve">
+    <value>Ocorreu um erro ao alterar o número de telemóvel.</value>
+  </data>
+  <data name="telemovelnao" xml:space="preserve">
+    <value>O telémovel introduzido não corresponde com o País guardado.</value>
+  </data>
 </root>

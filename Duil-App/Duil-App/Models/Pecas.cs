@@ -50,7 +50,6 @@ namespace Duil_App.Models
         public required string FabricaId { get; set; }
 
         [Display(Name = "Fabrica", ResourceType = typeof(Resources.Resource))]
-
         [ValidateNever]
         public required Fabricas Fabrica { get; set; }
 
@@ -63,7 +62,6 @@ namespace Duil_App.Models
         public required string ClienteId { get; set; }
 
         [Display(Name = "Cliente", ResourceType = typeof(Resources.Resource))]
-
         [ValidateNever]
         public required Clientes Cliente { get; set; }
 

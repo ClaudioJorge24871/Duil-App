@@ -53,19 +53,19 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required (ErrorMessage = "A {0} é obrigatória")]
+            [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
             [DataType(DataType.Password)]
-            [Display(Name = "Palavra-passe atual")]
+            [Display(Name = "PWATual", ResourceType = typeof(Resources.Resource))]
             public string OldPassword { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required (ErrorMessage = "A {0} é obrigatória")]
+            [Required(ErrorMessageResourceName = "CampoObrigatorio", ErrorMessageResourceType = typeof(Resources.Resource))]
             [StringLength(100, ErrorMessage = "A {0} tem de ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Nova palavra-passe")]
+            [Display(Name = "newPW", ResourceType = typeof(Resources.Resource))]
             public string NewPassword { get; set; }
 
             /// <summary>
@@ -73,8 +73,8 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Repita a palavra-passe")]
-            [Compare("NewPassword", ErrorMessage = "A nova palavra-passe e a repetição não coincidem.")]
+            [Display(Name = "newPW", ResourceType = typeof(Resources.Resource))]
+            [Compare("NewPassword", ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "confnewPW")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -120,7 +120,7 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
 
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "A sua palavra-passe foi alterada com sucesso";
+            StatusMessage = Resources.Resource.PWAlterada;
 
             return RedirectToPage();
         }

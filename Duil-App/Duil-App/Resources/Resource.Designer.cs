@@ -673,6 +673,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ocorreu um erro ao alterar o número de telemóvel..
+        /// </summary>
+        public static string errotelm {
+            get {
+                return ResourceManager.GetString("errotelm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Esqueceu a password?.
         /// </summary>
         public static string esqueceu {
@@ -1312,6 +1321,24 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A sua palavra-passe foi alterada com sucesso.
+        /// </summary>
+        public static string PWAlterada {
+            get {
+                return ResourceManager.GetString("PWAlterada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palavra-passe atual.
+        /// </summary>
+        public static string PWATual {
+            get {
+                return ResourceManager.GetString("PWATual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Por favor confirme a sua password.
         /// </summary>
         public static string PWCONFirm {
@@ -1587,6 +1614,15 @@ namespace Duil_App.Resources {
         public static string Telemovel {
             get {
                 return ResourceManager.GetString("Telemovel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O telémovel introduzido não corresponde com o País guardado..
+        /// </summary>
+        public static string telemovelnao {
+            get {
+                return ResourceManager.GetString("telemovelnao", resourceCulture);
             }
         }
         

@@ -123,7 +123,7 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
 
             if (!ValidaTelemovel(Input.Telemovel, user.Pais))
             {
-                StatusMessage = "Error: O telémovel introduzido não corresponde com o País guardado.";
+                StatusMessage = "Error: " + Resources.Resource.telemovelnao;
                 return RedirectToPage();
             }
 
@@ -133,7 +133,7 @@ namespace Duil_App.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.Telemovel);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Ocorreu um erro ao alterar o número de telemóvel.";
+                    StatusMessage = Resources.Resource.errotelm;
                     return RedirectToPage();
                 }
             }
