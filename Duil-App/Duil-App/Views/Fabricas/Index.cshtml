@@ -22,7 +22,7 @@
           style="bottom: 0; transform: translateY(50%); left: 100px; border-radius: 10px;">
         <input type="text" name="texto"
                value="@Context.Request.Query["texto"]"
-               placeholder="Pesquisa por nome"
+               placeholder=@Resource.PesquisarPorNome
                class="form-control me-2"
                style="min-width: 300px;" />
 
@@ -86,7 +86,7 @@
        asp-route-pageNumber="@(Model.PageIndex - 1)"
        asp-route-currentFilter="@ViewData["CurrentFilter"]"
        class="btn btn-secondary @prevDisabled">
-        Anterior
+        @Resource.Anterior
     </a>
 
     <a asp-action="Index"
@@ -94,6 +94,6 @@
        asp-route-pageNumber="@(Model.PageIndex + 1)"
        asp-route-currentFilter="@ViewData["CurrentFilter"]"
        class="btn btn-secondary @nextDisabled">
-        Seguinte
+        @Resource.Seguinte
     </a>
 </div>

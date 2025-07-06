@@ -205,6 +205,15 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anterior.
+        /// </summary>
+        public static string Anterior {
+            get {
+                return ResourceManager.GetString("Anterior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apagar Fábrica.
         /// </summary>
         public static string ApagarFabricaViewTitle {
@@ -1330,6 +1339,33 @@ namespace Duil_App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pesquisar por Cliente.
+        /// </summary>
+        public static string PesquisarCliente {
+            get {
+                return ResourceManager.GetString("PesquisarCliente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pesquisar por designação.
+        /// </summary>
+        public static string PesquisarDesignacao {
+            get {
+                return ResourceManager.GetString("PesquisarDesignacao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pesquisar por nome.
+        /// </summary>
+        public static string PesquisarPorNome {
+            get {
+                return ResourceManager.GetString("PesquisarPorNome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Termos/Referências/Sobre.
         /// </summary>
         public static string policy {
@@ -1551,6 +1587,15 @@ namespace Duil_App.Resources {
         public static string Role {
             get {
                 return ResourceManager.GetString("Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seguinte.
+        /// </summary>
+        public static string Seguinte {
+            get {
+                return ResourceManager.GetString("Seguinte", resourceCulture);
             }
         }
         

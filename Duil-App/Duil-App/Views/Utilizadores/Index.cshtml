@@ -102,7 +102,7 @@
 	   asp-route-pageNumber="@(Model.PageIndex - 1)"
 	   asp-route-currentFilter="@ViewData["CurrentFilter"]"
 	   class="btn btn-secondary @prevDisabled">
-		Anterior
+		@Resource.Anterior
 	</a>
 
 	<a asp-action="Index"
@@ -110,6 +110,6 @@
 	   asp-route-pageNumber="@(Model.PageIndex + 1)"
 	   asp-route-currentFilter="@ViewData["CurrentFilter"]"
 	   class="btn btn-secondary @nextDisabled">
-		Seguinte
+		@Resource.Seguinte
 	</a>
 </div>

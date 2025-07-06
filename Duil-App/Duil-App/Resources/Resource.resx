@@ -699,4 +699,19 @@
   <data name="policy" xml:space="preserve">
     <value>Termos/Referências/Sobre</value>
   </data>
+  <data name="Anterior" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="PesquisarCliente" xml:space="preserve">
+    <value>Pesquisar por Cliente</value>
+  </data>
+  <data name="PesquisarDesignacao" xml:space="preserve">
+    <value>Pesquisar por designação</value>
+  </data>
+  <data name="PesquisarPorNome" xml:space="preserve">
+    <value>Pesquisar por nome</value>
+  </data>
+  <data name="Seguinte" xml:space="preserve">
+    <value>Seguinte</value>
+  </data>
 </root>
